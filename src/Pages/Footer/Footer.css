@@ -1,0 +1,18 @@
+a {
+  cursor: pointer;
+}
+.footerIcon svg {
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 3em;
+}
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #c6e9f8;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
