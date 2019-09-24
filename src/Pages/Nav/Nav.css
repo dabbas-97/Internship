@@ -3,7 +3,8 @@
   cursor: pointer;
 }
 .logo {
-  width: 170px;
+  height: 65px;
+  width: 300px;
   left: 15px;
 }
 .navbar {
