@@ -9,8 +9,108 @@ export default class StudentSignUp extends Component {
   render() {
     return (
       <div className='container '>
-        <form onSubmit={this.signupSubmit}>
-          <h1 className='h-1 text-center'>Sign Up As a Student</h1>
+        <form
+          className=' studentSignup'
+          autoComplete='on'
+          onSubmit={this.signupSubmit}
+        >
+          <h1 className='h-6 text-center'>Student Signup</h1>
+          <br></br>
+          <hr></hr>
+
+          <div className='form-group my-4 '>
+            <label for='emailAddress'>Email address</label>
+            <input
+              type='email'
+              className=' form-control'
+              id='emailAddress'
+              placeholder='Enter your email'
+            />
+          </div>
+          <div className='form-group my-4 '>
+            <label for='password'>Passowrd</label>
+            <input
+              type='password'
+              className='form-control'
+              id='userPassword'
+              placeholder='Type your password'
+            />
+            <input
+              type='password'
+              className='form-control mt-2'
+              placeholder='Retype your password'
+            />
+          </div>
+          <div className='form-group my-4 '>
+            <label>Your Name</label>
+            <input
+              type='text'
+              className=' form-control'
+              placeholder='Your full name'
+            />
+          </div>
+          <div className='form-group my-4'>
+            <div className='form-check form-check-inline'>
+              <label className='form-check-label'>
+                {' '}
+                <input
+                  className='form-check-input'
+                  type='radio'
+                  name='gender'
+                  value='female'
+                  checked
+                />
+                Female
+              </label>
+            </div>
+            <div className='form-check form-check-inline'>
+              <label className='form-check-label'>
+                <input
+                  className='form-check-input'
+                  type='radio'
+                  name='gender'
+                  value='male'
+                />
+                Male
+              </label>
+            </div>
+          </div>
+          <div className='form-group my-4 '>
+            <label for='phonenumber'>Phone Number</label>
+            <input
+              type='tel'
+              className=' form-control'
+              id='phoneNumber'
+              placeholder='079XXXXXXX'
+              maxLength='10'
+              required
+            />
+          </div>
+          <div className='form-group my-4 '>
+            <label>Hometown</label>
+            <input
+              type='text'
+              className=' form-control'
+              placeholder="Amman\Jordan's street"
+            />
+          </div>
+          <div className='form-group my-4 '>
+            <label>Student Bio (optional)</label>
+            <textarea className=' form-control' placeholder="Student's bio" />
+          </div>
+          <div className='text-center my-4'>
+            <button type='submit' className='btn'>
+              Sign Up
+            </button>
+          </div>
+          <hr></hr>
+          <br></br>
+          <div>
+            <h3 className='h3'>Sign Up As a Company</h3>
+            <p className='p-1'>
+              From <Link to='/SignUp/Company'>here</Link>
+            </p>
+          </div>
         </form>
       </div>
     );
