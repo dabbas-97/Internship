@@ -20,7 +20,7 @@ export function RegisterNav() {
         </li>
         <li className='nav-item'>
           <Link className='nav-link ' to='/login'>
-            Sign In <FontAwesomeIcon icon={faSignInAlt} />
+            Login <FontAwesomeIcon icon={faSignInAlt} />
           </Link>
         </li>
       </ul>

@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import './Login.css';
+import '../SignUp.css';
 import { Link } from 'react-router-dom';
 
-export default class Login extends Component {
-  loginSubmit = e => {
+export default class CompanySignUp extends Component {
+  signupSubmit = e => {
     e.preventDefault();
   };
 
   render() {
     return (
       <div className='container '>
-        <form onSubmit={this.loginSubmit}>
-          <h1 className='h-6 text-center'>Login</h1>
-          <br></br>
-          <hr></hr>
+        <form onSubmit={this.signupSubmit}>
+          <h1 className='h-6 text-center'>Company Signup</h1>
           <br></br>
           <div class='form-group my-4 '>
             <label for='emailAddress'>Email address</label>
@@ -33,20 +31,10 @@ export default class Login extends Component {
               placeholder='Enter your password'
             />
           </div>
-
           <div className='text-center my-4'>
             <button type='submit' className='btn'>
-              Sign In
+              Sign Up
             </button>
-          </div>
-
-          <hr></hr>
-
-          <div>
-            <h3 className='h3'>Not a member?</h3>
-            <p className='p-1'>
-              Sign Up <Link to='/SignUp'>here</Link>
-            </p>
           </div>
         </form>
       </div>

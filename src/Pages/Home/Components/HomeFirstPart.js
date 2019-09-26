@@ -9,7 +9,7 @@ export function HomeFirstPart() {
           Internship Platform is a platform that is built to help IT students
           find companies who offer internships opportunities.
         </p>
-        <Link to='/signin'>
+        <Link to='/signup'>
           <button type='button' className='btn btn-lg'>
             Register now
           </button>

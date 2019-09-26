@@ -9,3 +9,6 @@ body {
   font-family: 'Lexend Deca', 'Big Shoulders Display' !important;
   font-weight: 400;
 }
+.root {
+  height: calc(100% - 60px);
+}

@@ -9,7 +9,9 @@ import Chat from './Pages/Chat/Chat';
 import Footer from './Pages/Footer/Footer';
 import InternShips from './Pages/InternShips/InternShips';
 import NotFound from './Pages/NotFound';
-
+import SignUp from './Pages/SignUp/SignUp';
+import StudentSignUp from './Pages/SignUp/Components/StudentSignUp';
+import CompanySignUp from './Pages/SignUp/Components/CompanySignUp';
 class App extends React.Component {
   render() {
     return (
@@ -22,6 +24,9 @@ class App extends React.Component {
             <Route exact path='/Profile' component={Profile} />
             <Route exact path='/Chat' component={Chat} />
             <Route exact path='/Login' component={Login} />
+            <Route exact path='/SignUp' component={SignUp} />
+            <Route exact path='/SignUp/company' component={CompanySignUp} />
+            <Route exact path='/SignUp/student' component={StudentSignUp} />
             <Route exact path='/Internships' component={InternShips} />
             <Route path='/:notfound' component={NotFound} />
           </Switch>

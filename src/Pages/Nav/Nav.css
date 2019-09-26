@@ -16,6 +16,7 @@
   border-width: 0;
 }
 .nav-link {
+  margin: 3px;
   font-size: 1em;
   color: #000;
   -webkit-transition: 0.35s;
