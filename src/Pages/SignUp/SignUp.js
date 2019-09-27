@@ -3,6 +3,30 @@ import './SignUp.css';
 import { Link } from 'react-router-dom';
 
 export default class SignUp extends Component {
+  state = {
+    signup: [
+      {
+        step: 1,
+        name: '',
+        email: '',
+        password: '',
+        sex: '',
+        bday: '',
+        phone: '',
+        city: '',
+        bio: ''
+      },
+      {
+        step: 1,
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        city: '',
+        bio: ''
+      }
+    ]
+  };
   render() {
     return (
       <div className='container '>

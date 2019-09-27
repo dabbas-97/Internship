@@ -17,6 +17,14 @@ export default class StudentSignUp extends Component {
           <h1 className='h-6 text-center'>Student Signup</h1>
           <br></br>
           <hr></hr>
+          <div className='form-group my-4 '>
+            <label>Your Name</label>
+            <input
+              type='text'
+              className=' form-control'
+              placeholder='Your full name'
+            />
+          </div>
 
           <div className='form-group my-4 '>
             <label for='emailAddress'>Email address</label>
@@ -41,18 +49,10 @@ export default class StudentSignUp extends Component {
               placeholder='Retype your password'
             />
           </div>
-          <div className='form-group my-4 '>
-            <label>Your Name</label>
-            <input
-              type='text'
-              className=' form-control'
-              placeholder='Your full name'
-            />
-          </div>
+          <hr></hr>
           <div className='form-group my-4'>
             <div className='form-check form-check-inline'>
               <label className='form-check-label'>
-                {' '}
                 <input
                   className='form-check-input'
                   type='radio'
@@ -74,6 +74,10 @@ export default class StudentSignUp extends Component {
                 Male
               </label>
             </div>
+          </div>
+          <div className='form-group my-4 '>
+            <label>Birthday</label>
+            <input type='date' className=' form-control' id='bday' />
           </div>
           <div className='form-group my-4 '>
             <label for='phonenumber'>Phone Number</label>

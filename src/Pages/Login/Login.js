@@ -14,7 +14,7 @@ export default class Login extends Component {
           <h1 className='h-6 text-center'>Login</h1>
           <br></br>
           <hr></hr>
-          <br></br>
+          
           <div class='form-group my-4 '>
             <label for='emailAddress'>Email address</label>
             <input
