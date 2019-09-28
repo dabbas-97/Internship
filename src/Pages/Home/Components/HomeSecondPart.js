@@ -48,7 +48,7 @@ function Card(props) {
   const info = cards.map(x => {
     return (
       <div className='card' key={x.id}>
-        <img src={x.src} className='card-img-top' alt='{props.name}' />
+        <img src={x.src} className='card-img-top' alt={x.name} />
         <div className='card-body'>
           <h5 className='card-title'>{x.name}</h5>
           <p className='card-text'>{x.description}</p>
