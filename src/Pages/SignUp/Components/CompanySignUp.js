@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
-import { UserInfo } from './UserInfo';
+import { UserInfo } from './Company/UserInfo';
 import { CompanyInfo } from './Company/CompanyInfo';
+import { Confirm } from './Company/Confirm';
 
 export default class CompanySignUp extends Component {
   signupSubmit = e => {
@@ -41,8 +42,8 @@ export default class CompanySignUp extends Component {
   getPassmatch = () => this.state.passmatch;
   formReturner() {
     const { step } = this.state;
-    const { name, email, password, phone, city, bio } = this.state;
-    const values = { name, email, password, phone, city, bio };
+    const { name, email, password, phone, city, bio, passmatch } = this.state;
+    const values = { name, email, password, phone, city, bio, passmatch };
     switch (step) {
       case 1:
         return (
@@ -106,18 +107,9 @@ export default class CompanySignUp extends Component {
 
 class Success extends Component {
   render() {
-    return <React.Fragment></React.Fragment>;
-  }
-}
-class Confirm extends Component {
-  render() {
     return (
       <React.Fragment>
-        <div className='text-center my-4'>
-          <button type='submit' className='btn'>
-            Confirm & SignUp
-          </button>
-        </div>
+        <h1 className='h1 text-center m-lg-5'>Success!</h1>
       </React.Fragment>
     );
   }
