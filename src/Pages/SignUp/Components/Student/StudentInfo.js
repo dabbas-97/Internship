@@ -100,6 +100,7 @@ export class StudentInfo extends Component {
               name='gender'
               value='female'
               defaultChecked
+              checked={this.props.values.sex === 'female'}
             />
             Female
           </label>
@@ -110,6 +111,7 @@ export class StudentInfo extends Component {
               type='radio'
               name='gender'
               value='male'
+              checked={this.props.values.sex === 'male'}
             />
             Male
           </label>

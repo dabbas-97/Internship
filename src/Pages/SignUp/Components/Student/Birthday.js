@@ -8,6 +8,7 @@ export class Birthday extends Component {
             name='month'
             className='mr-1'
             onChange={this.props.handleChange('month')}
+            value={this.props.values.month}
           >
             <option value='January'>January</option>
             <option value='February'>February</option>
@@ -28,6 +29,7 @@ export class Birthday extends Component {
             name='day'
             className='mr-1'
             onChange={this.props.handleChange('day')}
+            value={this.props.values.day}
           >
             <option value='1'>1</option>
             <option value='2'>2</option>
@@ -67,6 +69,7 @@ export class Birthday extends Component {
             name='year'
             className='mr-1'
             onChange={this.props.handleChange('year')}
+            value={this.props.values.year}
           >
             <option value='2019'>2019</option>
             <option value='2018'>2018</option>
