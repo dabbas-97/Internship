@@ -8,3 +8,9 @@ li span {
 li {
   overflow: hidden;
 }
+.studentSignup {
+  background: linear-gradient(to top, #0095ff70 0%, #c6e9f8 100%);
+}
+form label {
+  font-weight: bold;
+}

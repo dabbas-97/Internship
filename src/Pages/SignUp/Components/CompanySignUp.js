@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
-import { UserInfo } from './Company/UserInfo';
+import { UserInfo } from './UserInfo';
 import { CompanyInfo } from './Company/CompanyInfo';
 import { Confirm } from './Company/Confirm';
 
 export default class CompanySignUp extends Component {
-  signupSubmit = e => {
-    e.preventDefault();
-  };
   state = {
     step: 1,
     name: '',
@@ -39,7 +36,7 @@ export default class CompanySignUp extends Component {
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
   };
-  getPassmatch = () => this.state.passmatch;
+
   formReturner() {
     const { step } = this.state;
     const { name, email, password, phone, city, bio, passmatch } = this.state;
@@ -81,27 +78,24 @@ export default class CompanySignUp extends Component {
   }
 
   render() {
-    if (this.state.finished === true) {
-    } else {
-      return (
-        <div className='container '>
-          <form onSubmit={this.signupSubmit}>
-            <h1 className='h-6 text-center'>Company Signup</h1>
-            <br></br>
-            <hr></hr>
-            {this.formReturner()}
-            <hr></hr>
-            <br></br>
-            <div>
-              <h3 className='h3'>You're a student?</h3>
-              <p className='p-1'>
-                Sign Up <Link to='/SignUp/Student'>here</Link>
-              </p>
-            </div>
-          </form>
-        </div>
-      );
-    }
+    return (
+      <div className='container '>
+        <form>
+          <h1 className='h-6 text-center'>Company Signup</h1>
+          <br></br>
+          <hr></hr>
+          {this.formReturner()}
+          <hr></hr>
+          <br></br>
+          <div>
+            <h3 className='h3'>You're a student?</h3>
+            <p className='p-1'>
+              Sign Up <Link to='/SignUp/Student'>here</Link>
+            </p>
+          </div>
+        </form>
+      </div>
+    );
   }
 }
 

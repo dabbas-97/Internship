@@ -1,122 +1,137 @@
 import React, { Component } from 'react';
 import '../SignUp.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { UserInfo } from './UserInfo';
+import { StudentInfo } from './Student/StudentInfo';
+import { Confirm } from './Student/Confirm';
 
 export default class StudentSignUp extends Component {
-  signupSubmit = e => {
-    e.preventDefault();
+  state = {
+    step: 1,
+    name: '',
+    email: '',
+    sex: 'female',
+    day: '1',
+    month: 'January',
+    year: '2019',
+    password: '',
+    passmatch: '',
+    phone: '',
+    city: '',
+    bio: ''
   };
+  // Proceed to next step
+  nextStep = () => {
+    const { step } = this.state;
+    this.setState({
+      step: step + 1
+    });
+  };
+
+  // Go back to prev step
+  prevStep = () => {
+    const { step } = this.state;
+    this.setState({
+      step: step - 1
+    });
+  };
+
+  // Handle fields change
+  handleChange = input => e => {
+    this.setState({ [input]: e.target.value });
+  };
+
+  formReturner() {
+    const { step } = this.state;
+    const {
+      name,
+      email,
+      password,
+      phone,
+      city,
+      bio,
+      passmatch,
+      year,
+      day,
+      month,
+      sex
+    } = this.state;
+    const values = {
+      name,
+      email,
+      password,
+      phone,
+      city,
+      bio,
+      passmatch,
+      year,
+      day,
+      month,
+      sex
+    };
+    switch (step) {
+      case 1:
+        return (
+          <UserInfo
+            nextStep={this.nextStep}
+            handleChange={this.handleChange}
+            values={values}
+            prevStep={this.prevStep}
+            getPassmatch={this.getPassmatch}
+          />
+        );
+      case 2:
+        return (
+          <StudentInfo
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 3:
+        return (
+          <Confirm
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 4:
+        return <Success />;
+      default:
+        return <Redirect to='/signup' />;
+    }
+  }
   render() {
     return (
       <div className='container '>
-        <form
-          className=' studentSignup'
-          autoComplete='on'
-          onSubmit={this.signupSubmit}
-        >
-          <h1 className='h-6 text-center'>Student Signup</h1>
+        <form className=' studentSignup'>
+          <h1 className='h-6 text-center'>Students Signup</h1>
           <br></br>
           <hr></hr>
-          <div className='form-group my-4 '>
-            <label>Your Name</label>
-            <input
-              type='text'
-              className=' form-control'
-              placeholder='Your full name'
-            />
-          </div>
-
-          <div className='form-group my-4 '>
-            <label for='emailAddress'>Email address</label>
-            <input
-              type='email'
-              className=' form-control'
-              id='emailAddress'
-              placeholder='Enter your email'
-            />
-          </div>
-          <div className='form-group my-4 '>
-            <label for='password'>Passowrd</label>
-            <input
-              type='password'
-              className='form-control'
-              id='userPassword'
-              placeholder='Type your password'
-            />
-            <input
-              type='password'
-              className='form-control mt-2'
-              placeholder='Retype your password'
-            />
-          </div>
-          <hr></hr>
-          <div className='form-group my-4'>
-            <div className='form-check form-check-inline'>
-              <label className='form-check-label'>
-                <input
-                  className='form-check-input'
-                  type='radio'
-                  name='gender'
-                  value='female'
-                  checked
-                />
-                Female
-              </label>
-            </div>
-            <div className='form-check form-check-inline'>
-              <label className='form-check-label'>
-                <input
-                  className='form-check-input'
-                  type='radio'
-                  name='gender'
-                  value='male'
-                />
-                Male
-              </label>
-            </div>
-          </div>
-          <div className='form-group my-4 '>
-            <label>Birthday</label>
-            <input type='date' className=' form-control' id='bday' />
-          </div>
-          <div className='form-group my-4 '>
-            <label for='phonenumber'>Phone Number</label>
-            <input
-              type='tel'
-              className=' form-control'
-              id='phoneNumber'
-              placeholder='079XXXXXXX'
-              maxLength='10'
-              required
-            />
-          </div>
-          <div className='form-group my-4 '>
-            <label>Hometown</label>
-            <input
-              type='text'
-              className=' form-control'
-              placeholder="Amman\Jordan's street"
-            />
-          </div>
-          <div className='form-group my-4 '>
-            <label>Student Bio (optional)</label>
-            <textarea className=' form-control' placeholder="Student's bio" />
-          </div>
-          <div className='text-center my-4'>
-            <button type='submit' className='btn'>
-              Sign Up
-            </button>
-          </div>
+          {this.formReturner()}
           <hr></hr>
           <br></br>
           <div>
-            <h3 className='h3'>Sign Up As a Company</h3>
+            <h3 className='h3'>Signup as a company</h3>
             <p className='p-1'>
               From <Link to='/SignUp/Company'>here</Link>
             </p>
           </div>
         </form>
       </div>
+    );
+  }
+}
+
+class Success extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <h1 className='h1 text-center m-lg-5'>Success!</h1>
+      </React.Fragment>
     );
   }
 }
