@@ -5,8 +5,9 @@
 li span {
   font-weight: 900;
 }
-li {
+form li {
   overflow: hidden;
+  word-wrap: break-word;
 }
 .studentSignup {
   background: linear-gradient(to top, #0095ff70 0%, #c6e9f8 100%);

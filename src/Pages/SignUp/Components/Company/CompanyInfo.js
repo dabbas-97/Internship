@@ -67,7 +67,8 @@ export class CompanyInfo extends Component {
     };
     const validateName = e => {
       this.props.handleChange('name')(e);
-      if (e.target.value !== '') {
+      let re = /^[A-Za-z]+$/;
+      if (e.target.value !== '' && re.test(String(e.target.value))) {
         isValidName(true);
       } else {
         isValidName(false);
@@ -91,7 +92,7 @@ export class CompanyInfo extends Component {
           <input
             type='tel'
             className={this.state.validPhoneClass}
-            placeholder='07XXXXXXXX'
+            placeholder='07XXXXXXXX or 06XXXXXXX'
             maxLength='10'
             onChange={validatePhone}
             defaultValue={phone}

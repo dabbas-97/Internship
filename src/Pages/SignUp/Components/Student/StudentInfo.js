@@ -68,7 +68,8 @@ export class StudentInfo extends Component {
     };
     const validateName = e => {
       this.props.handleChange('name')(e);
-      if (e.target.value !== '') {
+      let re = /^[A-Za-z]+$/;
+      if (e.target.value !== '' && re.test(String(e.target.value))) {
         isValidName(true);
       } else {
         isValidName(false);
