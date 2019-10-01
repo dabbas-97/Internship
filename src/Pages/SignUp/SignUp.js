@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './SignUp.css';
 import { Link } from 'react-router-dom';
+import logoImg from '../../images/logo.PNG';
 
 export default class SignUp extends Component {
   state = {
@@ -18,6 +19,7 @@ export default class SignUp extends Component {
     return (
       <div className='container '>
         <form className='Signup-form'>
+          <img src={logoImg} className='logo' alt='' />
           <h1 className='h-1 text-center'>Sign Up</h1>
 
           <br></br>

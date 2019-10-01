@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
 import { CompanyInfo } from './Company/CompanyInfo';
 import { Confirm } from './Company/Confirm';
+import logoImg from '../../../images/logo.PNG';
 
 export default class CompanySignUp extends Component {
   state = {
@@ -81,6 +82,7 @@ export default class CompanySignUp extends Component {
     return (
       <div className='container '>
         <form>
+          <img src={logoImg} className='logo' alt='' />
           <h1 className='h-6 text-center'>Company Signup</h1>
           <br></br>
           <hr></hr>

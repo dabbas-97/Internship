@@ -109,12 +109,12 @@ export class UserInfo extends Component {
 
     return (
       <React.Fragment>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label htmlFor='emailAddress'>Email address</label>
           <input
             type='email'
             className={this.state.emailValidClass}
-            placeholder='eg. mohammad@email.com'
+            placeholder='eg. Name@email.com'
             onChange={validateEmail}
             defaultValue={email}
           />
@@ -123,7 +123,7 @@ export class UserInfo extends Component {
           </div>
         </div>
 
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label htmlFor='password'>Passowrd</label>
           <input
             type='password'
@@ -144,8 +144,8 @@ export class UserInfo extends Component {
           />
           <div className={this.state.matchFeedback}>Passwords dont match.</div>
         </div>
-        <div className='form-group my-4'>
-          <div className=' form-inline justify-content-center form-row my-4'>
+        <div className='form-group my-1'>
+          <div className=' form-inline justify-content-center form-row my-1'>
             <div className='text-center m-4 '>
               <button
                 type='button'

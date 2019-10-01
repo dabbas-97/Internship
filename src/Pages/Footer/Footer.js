@@ -7,7 +7,7 @@ import { IoLogoGithub } from 'react-icons/io';
 export default class Footer extends Component {
   render() {
     return (
-      <div className=' p-lg-5 mt-lg-5 footer text-center '>
+      <div className='  mt-lg-5 footer text-center '>
         <a className='footerIcon'>
           <IoLogoFacebook color='#3b5998' />
         </a>

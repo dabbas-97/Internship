@@ -31,13 +31,13 @@ export class Confirm extends Component {
             Company's Description: <span>{this.props.values.bio}</span>
           </li>
         </ul>
-        <div className=' form-inline justify-content-center form-row my-4'>
+        <div className=' form-inline justify-content-center form-row my-1'>
           <div className='text-center m-4 '>
             <button type='button' className='btn' onClick={this.props.prevStep}>
               <IoIosArrowBack /> Back
             </button>
           </div>
-          <div className='text-center my-4'>
+          <div className='text-center my-1'>
             <button type='submit' className='btn' onClick={this.props.nextStep}>
               Confirm & SignUp
             </button>

@@ -32,20 +32,17 @@ export class Confirm extends Component {
           <li className='list-group-item' aria-disabled='true'>
             Location: <span>{this.props.values.city}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
-            Phone Number: <span>{this.props.values.phone}</span>
-          </li>
           <li className={isBio()} aria-disabled='true'>
-            Company's Description: <span>{this.props.values.bio}</span>
+            Students Bio: <span>{this.props.values.bio}</span>
           </li>
         </ul>
-        <div className=' form-inline justify-content-center form-row my-4'>
+        <div className=' form-inline justify-content-center form-row my-1'>
           <div className='text-center m-4 '>
             <button type='button' className='btn' onClick={this.props.prevStep}>
               <IoIosArrowBack /> Back
             </button>
           </div>
-          <div className='text-center my-4'>
+          <div className='text-center my-1'>
             <button type='submit' className='btn' onClick={this.props.nextStep}>
               Confirm & SignUp
             </button>

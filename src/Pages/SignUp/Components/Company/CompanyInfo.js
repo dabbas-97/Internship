@@ -67,7 +67,7 @@ export class CompanyInfo extends Component {
     };
     const validateName = e => {
       this.props.handleChange('name')(e);
-      let re = /^[A-Za-z]+$/;
+      let re = /^[A-Za-z ]+$/;
       if (e.target.value !== '' && re.test(String(e.target.value))) {
         isValidName(true);
       } else {
@@ -77,7 +77,7 @@ export class CompanyInfo extends Component {
 
     return (
       <React.Fragment>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label htmlFor='companyname'>Company Name</label>
           <input
             type='text'
@@ -87,7 +87,7 @@ export class CompanyInfo extends Component {
             defaultValue={name}
           />
         </div>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label htmlFor='phonenumber'>Phone Number</label>
           <input
             type='tel'
@@ -98,7 +98,7 @@ export class CompanyInfo extends Component {
             defaultValue={phone}
           />
         </div>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label>Location</label>
           <input
             className={this.state.validCityClass}
@@ -107,7 +107,7 @@ export class CompanyInfo extends Component {
             placeholder='Amman\Jordan street'
           />
         </div>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label>Company's Description (optional)</label>
           <textarea
             className=' form-control'
@@ -117,7 +117,7 @@ export class CompanyInfo extends Component {
           />
         </div>
 
-        <div className=' form-inline justify-content-center form-row my-4'>
+        <div className=' form-inline justify-content-center form-row my-1'>
           <div className='text-center m-4 '>
             <button type='button' className='btn' onClick={this.props.prevStep}>
               <IoIosArrowBack /> Back

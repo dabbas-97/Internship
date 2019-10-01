@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
 import { StudentInfo } from './Student/StudentInfo';
 import { Confirm } from './Student/Confirm';
+import logoImg from '../../../images/logo.PNG';
 
 export default class StudentSignUp extends Component {
   state = {
@@ -108,7 +109,8 @@ export default class StudentSignUp extends Component {
     return (
       <div className='container '>
         <form className=' studentSignup'>
-          <h1 className='h-6 text-center'>Students Signup</h1>
+          <img src={logoImg} className='logo' alt='' />
+          <h1 className='h-6 text-center '>Students Signup</h1>
           <br></br>
           <hr></hr>
           {this.formReturner()}

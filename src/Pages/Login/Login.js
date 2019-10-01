@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
-
+import logoImg from '../../images/logo.PNG';
 export default class Login extends Component {
   loginSubmit = e => {
     e.preventDefault();
@@ -11,10 +11,11 @@ export default class Login extends Component {
     return (
       <div className='container '>
         <form onSubmit={this.loginSubmit}>
+          <img src={logoImg} className='logo' alt='' />
           <h1 className='h-6 text-center'>Login</h1>
           <br></br>
           <hr></hr>
-          
+
           <div class='form-group my-4 '>
             <label for='emailAddress'>Email address</label>
             <input

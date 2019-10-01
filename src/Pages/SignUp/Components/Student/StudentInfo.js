@@ -68,7 +68,7 @@ export class StudentInfo extends Component {
     };
     const validateName = e => {
       this.props.handleChange('name')(e);
-      let re = /^[A-Za-z]+$/;
+      let re = /^[A-Za-z ]+$/;
       if (e.target.value !== '' && re.test(String(e.target.value))) {
         isValidName(true);
       } else {
@@ -78,7 +78,7 @@ export class StudentInfo extends Component {
 
     return (
       <React.Fragment>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label htmlFor='studentname'>Your Full Name</label>
           <input
             type='text'
@@ -89,43 +89,45 @@ export class StudentInfo extends Component {
           />
         </div>
         <hr></hr>
+        <div className='row'>
+          <div
+            className='form-check  form-group my-1 col-4'
+            onChange={this.props.handleChange('sex')}
+          >
+            <label className='form-check-label mr-1'>
+              <input
+                className=''
+                type='radio'
+                name='gender'
+                value='female'
+                defaultChecked
+                checked={this.props.values.sex === 'female'}
+              />
+              Female
+            </label>
 
-        <div
-          className='form-check form-check-inline form-group my-4'
-          onChange={this.props.handleChange('sex')}
-        >
-          <label className='form-check-label mr-4'>
-            <input
-              className='form-check-input'
-              type='radio'
-              name='gender'
-              value='female'
-              defaultChecked
-              checked={this.props.values.sex === 'female'}
+            <label className='form-check-label mx-1'>
+              <input
+                className=''
+                type='radio'
+                name='gender'
+                value='male'
+                checked={this.props.values.sex === 'male'}
+              />
+              Male
+            </label>
+          </div>
+
+          <div className='form-group my-1 col-8 '>
+            <label className='mr-1'>Birthday: </label>
+            <Birthday
+              handleChange={this.props.handleChange}
+              values={this.props.values}
             />
-            Female
-          </label>
-
-          <label className='form-check-label mx-4'>
-            <input
-              className='form-check-input'
-              type='radio'
-              name='gender'
-              value='male'
-              checked={this.props.values.sex === 'male'}
-            />
-            Male
-          </label>
+          </div>
         </div>
-
-        <div className='form-group my-4 '>
-          <label className='mr-4'>Birthday: </label>
-          <Birthday
-            handleChange={this.props.handleChange}
-            values={this.props.values}
-          />
-        </div>
-        <div className='form-group my-4 '>
+        <hr />
+        <div className='form-group my-1 '>
           <label htmlFor='phonenumber'>Phone Number</label>
           <input
             type='tel'
@@ -136,7 +138,7 @@ export class StudentInfo extends Component {
             defaultValue={phone}
           />
         </div>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label>Hometown</label>
           <input
             className={this.state.validCityClass}
@@ -145,7 +147,7 @@ export class StudentInfo extends Component {
             placeholder='Amman\Jordan st.'
           />
         </div>
-        <div className='form-group my-4 '>
+        <div className='form-group my-1 '>
           <label>Student's Bio (optional)</label>
           <textarea
             className=' form-control'
@@ -155,7 +157,7 @@ export class StudentInfo extends Component {
           />
         </div>
 
-        <div className=' form-inline justify-content-center form-row my-4'>
+        <div className=' form-inline justify-content-center form-row my-1'>
           <div className='text-center m-4 '>
             <button type='button' className='btn' onClick={this.props.prevStep}>
               <IoIosArrowBack /> Back
