@@ -14,12 +14,13 @@ form .form-group input {
   border-radius: 2rem;
 }
 form .form-group .form-control:focus {
-  box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.25);
-  border-color: #000000;
+  box-shadow: 0 0 4px 0.2rem rgb(223, 223, 228);
+  border-color: rgb(223, 223, 228);
 }
 form {
   background: #c6e9f8;
-  width: 60%;
+  width: 100%;
+  max-width: 600px;
   margin: 50px auto;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   padding: 5%;

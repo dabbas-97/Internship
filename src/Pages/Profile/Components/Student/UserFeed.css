@@ -1,0 +1,14 @@
+.profileFeed .title {
+  color: #c58c46;
+  margin: 20px 10px;
+}
+.feedContent {
+  margin: 30px auto;
+}
+.feedContent .card {
+  max-width: 250px;
+  margin: 0 30px;
+}
+.feedContent .card-img-top {
+  height: 42%;
+}

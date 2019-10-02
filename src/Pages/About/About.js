@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './About.css';
+import AddFooter from '../AddFooter';
 
-export default class About extends Component {
+class About extends Component {
   render() {
     return null;
   }
 }
+
+export default AddFooter(About);

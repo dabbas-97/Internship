@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 export class Confirm extends Component {
+  continue = e => {
+    e.preventDefault();
+    this.props.nextStep();
+  };
   render() {
     const isBio = () => {
       if (this.props.values.bio === '') return 'd-none';
@@ -9,25 +13,25 @@ export class Confirm extends Component {
     return (
       <React.Fragment>
         <ul className='list-group text-center'>
-          <li className='list-group-item ' aria-disabled='true'>
+          <li className='list-group-item '>
             Email: <span>{this.props.values.email}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
+          <li className='list-group-item'>
             Password: <span>{this.props.values.password}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
+          <li className='list-group-item'>
             Name: <span>{this.props.values.name}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
+          <li className='list-group-item'>
             Phone Number: <span>{this.props.values.phone}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
+          <li className='list-group-item'>
             Location: <span>{this.props.values.city}</span>
           </li>
-          <li className='list-group-item' aria-disabled='true'>
+          <li className='list-group-item'>
             Phone Number: <span>{this.props.values.phone}</span>
           </li>
-          <li className={isBio()} aria-disabled='true'>
+          <li className={isBio()}>
             Company's Description: <span>{this.props.values.bio}</span>
           </li>
         </ul>
@@ -38,7 +42,7 @@ export class Confirm extends Component {
             </button>
           </div>
           <div className='text-center my-1'>
-            <button type='submit' className='btn' onClick={this.props.nextStep}>
+            <button type='submit' className='btn' onClick={this.continue}>
               Confirm & SignUp
             </button>
           </div>

@@ -6,7 +6,6 @@ import About from './Pages/About/About';
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
 import Chat from './Pages/Chat/Chat';
-import Footer from './Pages/Footer/Footer';
 import InternShips from './Pages/InternShips/InternShips';
 import NotFound from './Pages/NotFound';
 import SignUp from './Pages/SignUp/SignUp';
@@ -30,7 +29,6 @@ class App extends React.Component {
             <Route exact path='/Internships' component={InternShips} />
             <Route path='/:notfound' component={NotFound} />
           </Switch>
-          <Footer />
         </div>
       </BrowserRouter>
     );

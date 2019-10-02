@@ -3,8 +3,9 @@ import './Home.css';
 import { HomeFirstPart } from './Components/HomeFirstPart';
 import { HomeSecondPart } from './Components/HomeSecondPart';
 import { HomeThirdPart } from './Components/HomeThirdPart';
+import AddFooter from '../AddFooter';
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
     return (
       <div>
@@ -15,3 +16,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default AddFooter(Home);
