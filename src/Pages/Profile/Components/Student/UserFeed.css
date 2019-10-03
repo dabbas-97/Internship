@@ -1,14 +1,43 @@
 .profileFeed .title {
-  color: #c58c46;
-  margin: 20px 10px;
+  color: black;
+  margin: 20px 20px;
 }
-.feedContent {
-  margin: 30px auto;
-}
+
 .feedContent .card {
-  max-width: 250px;
-  margin: 0 30px;
+  max-width: 270px;
+  max-height: 270px;
+  margin-left: 9%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .feedContent .card-img-top {
-  height: 42%;
+  height: 100px;
+}
+.accepted {
+  color: green;
+}
+.rejected {
+  color: red;
+}
+.pending {
+  color: #c3c32c;
+}
+
+.rejected,
+.accepted,
+.pending,
+.applied {
+  background: #ececec !important;
+}
+.profileFeed li span {
+  float: left;
+
+  margin-right: -20px;
+  border-radius: 50% !important;
+  background-color: #c6e9f8;
+  height: 30px;
+  width: 30px;
+}
+.appliedFor {
+  overflow: hidden;
 }

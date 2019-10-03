@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export function Logo() {
   return (
     <React.Fragment>
-      <NavLink className='navbar-brand' to='/'>
+      <NavLink className='' to='/'>
         <img src={logoImg} className='logo' alt='' />
       </NavLink>
       <button

@@ -13,19 +13,19 @@ export function MainNav() {
         </li>
         <li className='nav-item'>
           <NavLink className='nav-link' to='/internships'>
-            Find Internships
+            Seek opportunities
           </NavLink>
         </li>
 
         <li className='nav-item'>
-          <NavLink className='nav-link ' to='/about'>
-            About
-          </NavLink>
-        </li>
-        <li className='nav-item'>
           <NavLink className='nav-link ' to='/chat'>
             Chat
             <FontAwesomeIcon color='#e74c3c' icon={faComments} />
+          </NavLink>
+        </li>
+        <li className='nav-item'>
+          <NavLink className='nav-link ' to='/about'>
+            About
           </NavLink>
         </li>
       </ul>
