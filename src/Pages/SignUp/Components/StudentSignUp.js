@@ -108,7 +108,7 @@ export default class StudentSignUp extends Component {
   render() {
     return (
       <div className='container '>
-        <form className=' studentSignup'>
+        <form className=' formLog '>
           <img src={logoImg} className='logo' alt='' />
           <h1 className='h-6 text-center '>Students Signup</h1>
           <br></br>

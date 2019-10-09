@@ -10,14 +10,14 @@ export default class Login extends Component {
   render() {
     return (
       <div className='container '>
-        <form onSubmit={this.loginSubmit}>
+        <form onSubmit={this.loginSubmit} className='formLog'>
           <img src={logoImg} className='logo' alt='' />
           <h1 className='h-6 text-center'>Login</h1>
           <br></br>
           <hr></hr>
 
-          <div class='form-group my-4 '>
-            <label for='emailAddress'>Email address</label>
+          <div className='form-group my-4 '>
+            <label htmlFor='emailAddress'>Email address</label>
             <input
               type='email'
               className=' form-control'
@@ -25,8 +25,8 @@ export default class Login extends Component {
               placeholder='Enter your email'
             />
           </div>
-          <div class='form-group my-4 '>
-            <label for='password'>Passowrd</label>
+          <div className='form-group my-4 '>
+            <label htmlFor='password'>Passowrd</label>
             <input
               type='password'
               className='form-control'

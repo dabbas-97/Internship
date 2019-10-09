@@ -35,7 +35,7 @@ export class HomeSecondPart extends Component {
   render() {
     return (
       <div className='secondPart container my-4'>
-        <h3 className='text-center m-5 '>Recently Added Offers</h3>
+        <h3 className='text-center m-5 '>Recently Posted Opportunities</h3>
         <div className=' card-deck'>
           <Card cards={this.state.cards} />
         </div>

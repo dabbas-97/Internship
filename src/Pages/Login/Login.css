@@ -17,7 +17,7 @@ form .form-group .form-control:focus {
   box-shadow: 0 0 4px 0.2rem rgb(223, 223, 228);
   border-color: rgb(223, 223, 228);
 }
-form {
+.formLog {
   background: #c6e9f8;
   width: 100%;
   max-width: 600px;
@@ -27,7 +27,7 @@ form {
   border-radius: 10%;
   margin-bottom: 120px;
 }
-form .logo {
+.formLog .logo {
   display: block;
   margin: auto;
 }

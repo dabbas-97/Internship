@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './UserFeed.css';
+import StudentCV from './StudentCV';
 import { MdBusiness } from 'react-icons/md';
 import { IoLogoApple, IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import {
@@ -29,19 +30,18 @@ export default class UserFeed extends Component {
     const { internshipsApplied } = this.props;
 
     return (
-      <div className='container'>
-        <div className='profileFeed'>
-          <h4 className='text-uppercase title'>My feed</h4>
-          <ul className='list-group list-group-flush text-center '>
-            <li className='list-group-item'>Companies you applied for</li>
-            <li className='list-group-item'>
-              <CompaniesAppliedForComponent
-                internshipsApplied={internshipsApplied}
-              />
-            </li>
-            <li className='list-group-item'>kathem al saher</li>
-          </ul>
-        </div>
+      <div className='profileFeed'>
+        <h4 className='text-uppercase title'>My feed</h4>
+        <ul className='list-group list-group-flush text-center '>
+          <li className='list-group-item'>
+            <StudentCV />
+          </li>
+          <li className='list-group-item'>
+            <CompaniesAppliedForComponent
+              internshipsApplied={internshipsApplied}
+            />
+          </li>
+        </ul>
       </div>
     );
   }
@@ -51,13 +51,13 @@ class CompaniesAppliedForComponent extends Component {
   state = {
     pages: 0
   };
-  //to split the companies applied for into 6 elements chunks
+  //to split the companies applied for into 2 elements chunks
   pageRenderer() {
     const { internshipsApplied } = this.props;
     let i,
       j,
       pages = [],
-      chunk = 3;
+      chunk = 2;
     for (i = 0, j = internshipsApplied.length; i < j; i += chunk) {
       pages.push(internshipsApplied.slice(i, i + chunk));
     }
@@ -66,7 +66,6 @@ class CompaniesAppliedForComponent extends Component {
 
   render() {
     const appliedChunks = this.pageRenderer();
-    console.log(appliedChunks.length);
     const nextPage = () => {
       let { pages } = this.state;
       if (pages < appliedChunks.length - 1) this.setState({ pages: pages + 1 });
@@ -89,6 +88,7 @@ class CompaniesAppliedForComponent extends Component {
 
     return (
       <div className='appliedFor'>
+        <h3 className=''>Companies You Applied For</h3>
         <div className='row feedContent '>
           <CompaniesAppliedFor
             internshipsApplied={appliedChunks[this.state.pages]}
@@ -139,19 +139,19 @@ function CompaniesAppliedFor(props) {
       else return 'pending list-group-item text-uppercase';
     };
     return (
-      <div className='col-md-4' key={x.id}>
+      <div className='col-md-6' key={x.id}>
         <div className='card '>
           <img src={x.imgsrc} className='card-img-top' alt={x.name} />
 
           <ul className='list-group list-group-flush text-center'>
             <li className='list-group-item applied '>
-              <span>
+              <span className='job'>
                 <MdBusiness />
               </span>
               {x.name}
             </li>
             <li className='list-group-item applied '>
-              <span>{jobIcon()}</span>
+              <span className='job'>{jobIcon()}</span>
               {x.job}
             </li>
             <li className={statusClass()}>{x.status}</li>

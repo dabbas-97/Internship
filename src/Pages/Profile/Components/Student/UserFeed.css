@@ -29,15 +29,98 @@
 .applied {
   background: #ececec !important;
 }
-.profileFeed li span {
+.profileFeed li .job {
   float: left;
-
   margin-right: -20px;
   border-radius: 50% !important;
   background-color: #c6e9f8;
   height: 30px;
   width: 30px;
+  background-image: linear-gradient(to bottom, #a7cfdf, #c6e9f8);
 }
 .appliedFor {
   overflow: hidden;
+}
+
+.cv-form label {
+  font-size: 12px;
+}
+.tagsClass {
+  font-size: 30px;
+  font-weight: lighter !important;
+  padding: 10px;
+}
+
+.tagInputClass {
+  color: #61b8dd;
+  font-size: 1.3rem;
+  font-weight: lighter;
+}
+.tagInputFieldClass {
+  outline: none;
+  margin: 20px;
+  transition: border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1.3rem;
+  width: 60%;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+}
+.tagInputFieldClass:focus {
+  box-shadow: 0 0 4px 0.2rem rgb(198, 233, 248);
+  border-color: rgb(223, 223, 228);
+}
+.selectedClass {
+  margin-top: 20px;
+}
+
+.tagClass {
+  font-weight: lighter !important;
+  margin: 15px;
+  background-color: #c6e9f8;
+  color: black;
+  border-radius: 39px;
+  padding: 15px;
+  position: relative;
+  transition: 0.4s ease-in-out;
+  font-size: medium;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  display: inline-grid;
+}
+.removeClass {
+  font-weight: lighter !important;
+  font-size: 16px;
+  color: white !important;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: grey;
+  position: absolute;
+  top: -10%;
+  right: -7%;
+}
+.suggestionsClass {
+  padding: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #ececec;
+  position: absolute;
+  left: 20%;
+  z-index: 100;
+}
+
+.activeSuggestionClass {
+  background-color: white;
+  transition: 0.2s ease-in-out;
+}
+.form-row h6 {
+  border-bottom: 2px solid #c6e9f8;
+  display: inline-block;
+  text-shadow: 2px 2px #c6e9f8;
 }

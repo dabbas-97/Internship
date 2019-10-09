@@ -5,7 +5,7 @@ import UserFeed from './Components/Company/UserFeed';
 export default class CompanyProfile extends Component {
   state = {
     userInfo: {
-      name: 'Khaled Mohammad',
+      name: 'Microsoft',
       date: '2 Months ago',
       bio: 'bio...bio...bio...bio...',
       location: 'Jarash'

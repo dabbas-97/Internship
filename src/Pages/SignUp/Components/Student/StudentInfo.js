@@ -89,7 +89,7 @@ export class StudentInfo extends Component {
           />
         </div>
         <hr></hr>
-        <div className='row'>
+        <div className='form-row'>
           <div
             className='form-check  form-group my-1 col-4'
             onChange={this.props.handleChange('sex')}
