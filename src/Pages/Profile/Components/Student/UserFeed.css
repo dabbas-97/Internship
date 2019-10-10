@@ -101,6 +101,10 @@
   position: absolute;
   top: -10%;
   right: -7%;
+  transition-property: background, color;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.53, 0.26, 0.06, 0.6);
+  transition-delay: 0.1s;
 }
 .suggestionsClass {
   padding: 5px;
@@ -123,4 +127,8 @@
   border-bottom: 2px solid #c6e9f8;
   display: inline-block;
   font-size: 1.3em;
+}
+.removeClass:hover {
+  background: #e5e5e5;
+  color: black !important;
 }
