@@ -11,14 +11,17 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class StudentCV extends Component {
   state = {
     step: 1,
-    isCV: false,
+    isCV: true,
     socialStatus: 'Single',
     education: {
       school: 'Hashemite University',
       field: 'Computer Science'
     },
     gpa: 'Good',
-    tags: [],
+    tags: [
+      { id: 'IOS Developer', text: 'IOS Developer' },
+      { id: 'Python Developer', text: 'Python Developer' }
+    ],
     suggestions: [
       { id: 'IOS Developer', text: 'IOS Developer' },
       { id: 'Android Developer', text: 'Android Developer' },
@@ -83,7 +86,6 @@ export default class StudentCV extends Component {
   };
   submitCV = e => {
     e.preventDefault();
-    console.log(this.state);
   };
   render() {
     const { socialStatus, education, tags, gpa } = this.state;
@@ -114,8 +116,14 @@ export default class StudentCV extends Component {
           <EditCV
             nextStep={this.nextStep}
             handleChange={this.handleChange}
-            values={values}
             step={this.state.step}
+            tags={this.state.tags}
+            suggestions={this.state.suggestions}
+            handleDelete={this.handleDelete}
+            handleAddition={this.handleAddition}
+            handleDrag={this.handleDrag}
+            onSubmit={this.submitCV}
+            values={values}
           />
         );
     };
@@ -359,20 +367,70 @@ class EditCV extends Component {
         case 1:
         default:
           return (
-            <Button nextStep={this.props.nextStep} type={this.state.type} />
+            <div className='m-3'>
+              <h4 className='h4 m-4'>Edit your CV info.</h4>
+              <ul className='list-group text-center '>
+                <li className='list-group-item py-2 '>
+                  <div className='row'>
+                    <div className='col-4'>Social Status:</div>
+                    <div className='col-8'>
+                      <span>{this.props.values.socialStatus}</span>
+                    </div>
+                  </div>
+                </li>
+                <li className='list-group-item py-2'>
+                  <div className='row'>
+                    <div className='col-4'> Degree:</div>
+                    <div className='col-8'>
+                      <span>{this.props.values.education.field}</span>
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-4'>University:</div>
+                    <div className='col-8'>
+                      <span>{this.props.values.education.school}</span>
+                    </div>
+                  </div>
+
+                  <div className='row'>
+                    <div className='col-4'> GPA :</div>
+                    <div className='col-8'>
+                      <span>{this.props.values.gpa}</span>
+                    </div>
+                  </div>
+                </li>
+                <li className='list-group-item py-2'>
+                  <div className='row'>
+                    <div className='col-4'>Specialties:</div>
+                    <div className='col-8'>
+                      {this.props.values.tags.map(x => (
+                        <span key={x.id}>{x.text} , </span>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <Button nextStep={this.props.nextStep} type={this.state.type} />
+            </div>
           );
         case 2:
-          return <CVEditForm values={this.props.values} />;
+          return (
+            <CVCreateForm
+              values={this.props.values}
+              handleChange={this.props.handleChange}
+              tags={this.props.tags}
+              suggestions={this.props.suggestions}
+              handleDelete={this.props.handleDelete}
+              handleAddition={this.props.handleAddition}
+              handleDrag={this.props.handleDrag}
+              onSubmit={this.props.onSubmit}
+            />
+          );
       }
     };
     return <React.Fragment>{formRenderer()} </React.Fragment>;
   }
-}
-
-function CVEditForm(props) {
-  const { values } = props;
-  console.log(values);
-  return <div></div>;
 }
 
 function Button(props) {

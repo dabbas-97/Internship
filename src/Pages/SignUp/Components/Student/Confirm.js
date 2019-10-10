@@ -12,32 +12,72 @@ export class Confirm extends Component {
     };
     return (
       <React.Fragment>
-        <ul className='list-group text-center  '>
+        <ul className='list-group text-center'>
           <li className='list-group-item '>
-            Email: <span>{this.props.values.email}</span>
+            <div className='row'>
+              <div className='col-4'>Email:</div>
+              <div className='col-8'>
+                <span>{this.props.values.email}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item '>
-            Password: <span>{this.props.values.password}</span>
+            <div className='row'>
+              <div className='col-4'>Password: </div>
+              <div className='col-8'>
+                <span>{this.props.values.password}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item'>
-            Name: <span>{this.props.values.name}</span>
+            <div className='row'>
+              <div className='col-4'> Name:</div>
+              <div className='col-8'>
+                <span>{this.props.values.name}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item'>
-            Gender: <span>{this.props.values.sex}</span>
+            <div className='row'>
+              <div className='col-4'> Gender:</div>
+              <div className='col-8'>
+                <span>{this.props.values.sex}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item'>
-            Birthday: <span>{this.props.values.day}</span>/
-            <span>{this.props.values.month}</span>/
-            <span>{this.props.values.year}</span>
+            <div className='row'>
+              <div className='col-4'> Birthday:</div>
+              <div className='col-8'>
+                <span>{this.props.values.day}</span>/
+                <span>{this.props.values.month}</span>/
+                <span>{this.props.values.year}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item'>
-            Phone Number: <span>{this.props.values.phone}</span>
+            <div className='row'>
+              <div className='col-4'> Phone Number:</div>
+              <div className='col-8'>
+                <span>{this.props.values.phone}</span>
+              </div>
+            </div>
           </li>
           <li className='list-group-item'>
-            Location: <span>{this.props.values.city}</span>
+            <div className='row'>
+              <div className='col-4'> Location:</div>
+              <div className='col-8'>
+                <span>{this.props.values.city}</span>
+              </div>
+            </div>
           </li>
           <li className={isBio()}>
-            Students Bio: <span>{this.props.values.bio}</span>
+            <div className='row'>
+              <div className='col-4'> Students Bio: </div>
+              <div className='col-8'>
+                <span>{this.props.values.bio}</span>
+              </div>
+            </div>
           </li>
         </ul>
         <div className=' form-inline justify-content-center form-row my-1'>
