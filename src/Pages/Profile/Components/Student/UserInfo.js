@@ -5,20 +5,28 @@ import {
   FaBirthdayCake,
   FaUserGraduate,
   FaQuoteLeft,
-  FaQuoteRight
+  FaQuoteRight,
+  FaPen
 } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn } from 'react-icons/md';
 
 export default class UserInfo extends Component {
+  state = { info: 'view' };
   render() {
     //icons for gender
     const genderIcon = () => {
       if (this.props.userInfo.sex === 'male') return <IoMdMale />;
       else if (this.props.userInfo.sex === 'female') return <IoMdFemale />;
     };
+    const changeView = () => {
+      this.setState({ info: 'edit' });
+    };
 
     return (
       <div className=' profileInfo'>
+        <span className='editSpan' onClick={changeView}>
+          <FaPen />
+        </span>
         <img
           src={profileImg}
           className='proImg rounded-circle'

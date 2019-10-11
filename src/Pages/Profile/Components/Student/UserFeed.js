@@ -31,17 +31,14 @@ export default class UserFeed extends Component {
 
     return (
       <div className='profileFeed'>
-        <h4 className='text-uppercase title'>My feed</h4>
-        <ul className='list-group list-group-flush text-center '>
-          <li className='list-group-item'>
-            <StudentCV />
-          </li>
-          <li className='list-group-item'>
-            <CompaniesAppliedForComponent
-              internshipsApplied={internshipsApplied}
-            />
-          </li>
-        </ul>
+        <div className=' text-center mb-5 cv'>
+          <StudentCV />
+        </div>
+        <div className=' appliedList text-center'>
+          <CompaniesAppliedForComponent
+            internshipsApplied={internshipsApplied}
+          />
+        </div>
       </div>
     );
   }
@@ -87,8 +84,8 @@ class CompaniesAppliedForComponent extends Component {
     };
 
     return (
-      <div className='appliedFor'>
-        <h3 className=''>Companies You Applied For</h3>
+      <div className='appliedFor m-3'>
+        <h5 className='h5'>Companies You Applied For</h5>
         <div className='row feedContent '>
           <CompaniesAppliedFor
             internshipsApplied={appliedChunks[this.state.pages]}
@@ -104,8 +101,8 @@ function CompaniesAppliedFor(props) {
   const { internshipsApplied } = props;
   if (!internshipsApplied) {
     return (
-      <div className='text-center col-12'>
-        <h1 className='text-center'>you havnt applied to any company</h1>
+      <div className='appliedFor m-4 '>
+        <h6>you havnt applied to any company</h6>
       </div>
     );
   }

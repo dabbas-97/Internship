@@ -8,7 +8,6 @@ li span {
 form li {
   overflow: hidden;
   word-wrap: break-word;
-  pointer-events: none;
 }
 
 form label {

@@ -58,7 +58,6 @@
 }
 .tagInputFieldClass {
   outline: none;
-  margin: 20px;
   transition: border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
@@ -73,8 +72,9 @@
   box-shadow: 0 0 4px 0.2rem rgb(198, 233, 248);
   border-color: rgb(223, 223, 228);
 }
-.selectedClass {
+.selectedClass span {
   margin-top: 20px;
+  transition: 1s 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tagClass {
@@ -114,21 +114,53 @@
   text-align: center;
   border-radius: 5px;
   background-color: #ececec;
-  position: absolute;
-  left: 20%;
-  z-index: 100;
+  cursor: pointer;
 }
 
-.activeSuggestionClass {
-  background-color: white;
+.suggestionsClass li:hover {
+  background: #e3e3e3;
+  transition: 0.2s ease-in-out;
+}
+.suggestionsClass li:focus {
+  background-color: blue;
   transition: 0.2s ease-in-out;
 }
 .form-row h6 {
-  border-bottom: 2px solid #c6e9f8;
-  display: inline-block;
   font-size: 1.3em;
 }
 .removeClass:hover {
   background: #e5e5e5;
   color: black !important;
+}
+
+.cvul .fill {
+  background: #c6e9f8;
+  color: #2ca5d6;
+}
+.cvul li {
+  background: white;
+  color: #2ca5d6;
+}
+.cvul h5 {
+  font-size: 1.9em;
+  border-radius: 20px;
+  margin: 20px;
+  background: #f3f3f3;
+  padding: 15px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0), 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+}
+.cvul h6 {
+  font-size: 1.5em;
+  border-radius: 20px 0px;
+  background: #c5c5c536;
+  line-height: 1.5em;
+}
+
+.appliedList {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.16),
+    0 2px 14px 0px rgba(0, 0, 0, 0.12);
+}
+.cvul h6 span {
+  float: left;
+  margin-left: 10px;
 }

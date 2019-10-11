@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
+import { GoHeart } from 'react-icons/go';
+import { IoMdSchool } from 'react-icons/io';
+import { FaLaptopCode } from 'react-icons/fa';
 
 const KeyCodes = {
   comma: 188,
@@ -127,7 +130,7 @@ export default class StudentCV extends Component {
           />
         );
     };
-    return <div className='cv'>{showCV()}</div>;
+    return <React.Fragment>{showCV()}</React.Fragment>;
   }
 }
 //************************************************************************creacte CV Class ***********************************************/
@@ -141,7 +144,7 @@ class CreateCV extends Component {
         default:
           return (
             <div className='m-3'>
-              <h6 className='h6'>You haven't created your CV yet.</h6>
+              <h5 className='h5'>You haven't created your CV yet.</h5>
               <Button nextStep={this.props.nextStep} type={this.state.type} />
             </div>
           );
@@ -167,126 +170,141 @@ function CVCreateForm(props) {
   const { values } = props;
   return (
     <React.Fragment>
-      <form className='cv-form' onSubmit={props.onSubmit}>
-        <h5 className='h-5 text-center '>Fill Out Your CV Info</h5>
-        <hr />
-        <div className='form-row'>
-          <div className='col-12'>
-            <h6 className=' mt-1 h-6'>Social Status</h6>
-          </div>
-        </div>
-        <div className='form-row my-3'>
-          <div className='col-12'>
-            <select
-              name='socialStatus'
-              className='mx-1 custom-select w-50 '
-              onChange={props.handleChange('socialStatus')}
-              value={values.socialStatus}
-            >
-              <option value='single'>Single</option>
-              <option value='married'>Married</option>
-              <option value='engaged'>Engaged</option>
-            </select>
-          </div>
-        </div>
-        <hr />
-        <div className='form-row my-1'>
-          <div className='col-12'>
-            <h6 className=' mt-1 h-6'>Degree</h6>
-          </div>
-        </div>
-        <div className='form-row'>
-          <div className='col-4'>
-            <div className='form-group my-1 '>
-              <select
-                name='field'
-                className='mx-1 custom-select '
-                onChange={props.handleChange('education', 'field')}
-                value={values.education.field}
-              >
-                <option value='Computer Science'>Computer Science</option>
-                <option value='Computer Information Systems'>
-                  Computer Information Systems
-                </option>
-                <option value='Business Information Technology'>
-                  Business Information Technology
-                </option>
-                <option value='Software Engineering'>
-                  Software Engineering
-                </option>
-                <option value='Management information system'>
-                  Management information system
-                </option>
-                <option value='Cyber Security'>Cyber Security</option>
-                <option value='Artificial Intelligence'>
-                  Artificial Intelligence
-                </option>
-              </select>
+      <form onSubmit={props.onSubmit}>
+        <ul className='list-group text-center cvul'>
+          <li className='list-group-item py-2 fill'>
+            <h5 className='h-5 text-center '>Fill Out Your CV Info</h5>
+          </li>
+
+          <li className='list-group-item py-2 '>
+            <h6 className=' mt-1 h-6'>
+              <span>
+                <GoHeart />
+              </span>
+              Social Status
+            </h6>
+
+            <div className='form-row my-3'>
+              <div className='col-12'>
+                <select
+                  name='socialStatus'
+                  className='mx-1 custom-select w-50 '
+                  onChange={props.handleChange('socialStatus')}
+                  value={values.socialStatus}
+                >
+                  <option value='single'>Single</option>
+                  <option value='married'>Married</option>
+                  <option value='engaged'>Engaged</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className='col-5'>
-            <div className='form-group my-1 '>
-              <Universities
-                school={values.education.school}
-                handleChange={props.handleChange}
-              />
+          </li>
+
+          <li className='list-group-item py-2 '>
+            <h6 className=' mt-1 h-6'>
+              <span>
+                <IoMdSchool />
+              </span>
+              Degree
+            </h6>
+
+            <div className='form-row'>
+              <div className='col-4'>
+                <div className='form-group my-1 '>
+                  <select
+                    name='field'
+                    className='mx-1 custom-select '
+                    onChange={props.handleChange('education', 'field')}
+                    value={values.education.field}
+                  >
+                    <option value='Computer Science'>Computer Science</option>
+                    <option value='Computer Information Systems'>
+                      Computer Information Systems
+                    </option>
+                    <option value='Business Information Technology'>
+                      Business Information Technology
+                    </option>
+                    <option value='Software Engineering'>
+                      Software Engineering
+                    </option>
+                    <option value='Management information system'>
+                      Management information system
+                    </option>
+                    <option value='Cyber Security'>Cyber Security</option>
+                    <option value='Artificial Intelligence'>
+                      Artificial Intelligence
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div className='col-5'>
+                <div className='form-group my-1 '>
+                  <Universities
+                    school={values.education.school}
+                    handleChange={props.handleChange}
+                  />
+                </div>
+              </div>
+              <div className='from-col-3'>
+                <div className='from-group my-1'>
+                  <select
+                    name='gpa'
+                    className='mx-1 custom-select '
+                    onChange={props.handleChange('gpa')}
+                    value={values.gpa}
+                  >
+                    <option value='Excellent'>Excellent</option>
+                    <option value='Very Good'>Very Good</option>
+                    <option value='Good'>Good</option>
+                    <option value='Pass'>Pass</option>
+                    <option value='Weak'>Weak</option>
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className='from-col-3'>
-            <div className='from-group my-1'>
-              <select
-                name='gpa'
-                className='mx-1 custom-select '
-                onChange={props.handleChange('gpa')}
-                value={values.gpa}
-              >
-                <option value='Excellent'>Excellent</option>
-                <option value='Very Good'>Very Good</option>
-                <option value='Good'>Good</option>
-                <option value='Pass'>Pass</option>
-                <option value='Weak'>Weak</option>
-              </select>
+          </li>
+          <li className='list-group-item py-2 '>
+            <h6 className=' mt-1 h-6'>
+              <span>
+                <FaLaptopCode />
+              </span>
+              Specialty
+            </h6>
+
+            <div className='form-row'>
+              <div className='col-12'>
+                <ReactTags
+                  inputFieldPosition='top'
+                  tags={props.tags}
+                  suggestions={props.suggestions}
+                  handleDelete={props.handleDelete}
+                  handleAddition={props.handleAddition}
+                  handleDrag={props.handleDrag}
+                  delimiters={delimiters}
+                  minQueryLength={1}
+                  renderSuggestion={({ text }) => <div style={{}}>{text}</div>}
+                  placeholder={'Java, PHP, etc.'}
+                  autocomplete={1}
+                  classNames={{
+                    tags: 'tagsClass',
+                    tagInput: 'tagInputClass',
+                    tagInputField: 'tagInputFieldClass',
+                    selected: 'selectedClass',
+                    tag: 'tagClass',
+                    remove: 'removeClass',
+                    suggestions: 'suggestionsClass',
+                    activeSuggestion: 'activeSuggestionClass'
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        </div>
-        <br></br>
-        <hr />
-        <div className='form-row mt-1'>
-          <div className='col-12'>
-            <h6 className=' mt-1 h-6'>Specialty</h6>
-          </div>
-        </div>
-        <div className='form-row'>
-          <div className='col-12'>
-            <ReactTags
-              inputFieldPosition='top'
-              tags={props.tags}
-              suggestions={props.suggestions}
-              handleDelete={props.handleDelete}
-              handleAddition={props.handleAddition}
-              handleDrag={props.handleDrag}
-              delimiters={delimiters}
-              minQueryLength={1}
-              renderSuggestion={({ text }) => <div style={{}}>{text}</div>}
-              placeholder={'Java, PHP, etc.'}
-              autocomplete={1}
-              classNames={{
-                tags: 'tagsClass',
-                tagInput: 'tagInputClass',
-                tagInputField: 'tagInputFieldClass',
-                selected: 'selectedClass',
-                tag: 'tagClass',
-                remove: 'removeClass',
-                suggestions: 'suggestionsClass',
-                activeSuggestion: 'activeSuggestionClass'
-              }}
-            />
-          </div>
-        </div>
-        <hr />
-        <button className='btn m-5 px-3' type='submit'>
-          Submit CV
-        </button>
+          </li>
+          <li className='list-group-item py-2 '>
+            <button className='btn m-3 px-3 py-2' type='submit'>
+              Submit CV
+            </button>
+          </li>
+        </ul>
       </form>
     </React.Fragment>
   );
@@ -367,8 +385,8 @@ class EditCV extends Component {
         case 1:
         default:
           return (
-            <div className='m-3'>
-              <h4 className='h4 m-4'>Edit your CV info.</h4>
+            <div className='m-3 editCV'>
+              <h5 className='h5'>Edit your CV info.</h5>
               <ul className='list-group text-center '>
                 <li className='list-group-item py-2 '>
                   <div className='row'>
@@ -441,7 +459,7 @@ function Button(props) {
   };
   return (
     <React.Fragment>
-      <button className='btn m-5 p-3' onClick={nextStep}>
+      <button className='btn m-4 px-5 py-2' onClick={nextStep}>
         {buttonName()}
       </button>
     </React.Fragment>
