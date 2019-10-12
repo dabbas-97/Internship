@@ -13,51 +13,43 @@ import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 
 export default class UserInfo extends Component {
   state = {
-    info: 'view',
-    newName: '',
-    newSex: '',
-    day: '',
-    month: '',
-    year: '',
-    newLocation: '',
-    newPhone: '',
-    newBio: ''
+    info: 'view'
   };
   render() {
-    let { userInfo } = this.props;
+    const { userInfo } = this.props;
     //icons for gender
     const genderIcon = () => {
-      if (this.props.userInfo.sex === 'male') return <IoMdMale />;
-      else if (this.props.userInfo.sex === 'female') return <IoMdFemale />;
+      if (userInfo.sex === 'male') return <IoMdMale />;
+      else if (userInfo.sex === 'female') return <IoMdFemale />;
     };
     const changeView = () => {
       this.setState({ info: 'edit' });
     };
     const handleChange = input => e => {
-      this.setState({ [input]: e.target.value });
+      userInfo[input] = e.target.value;
     };
     const renderName = () => {
-      if (this.state.info === 'view') return this.props.userInfo.name;
+      if (this.state.info === 'view') return userInfo.name;
       else
         return (
           <input
             type='text'
             className=''
             placeholder='Your Name'
-            onChange={handleChange('newName')}
-            defaultValue={this.props.userInfo.name}
+            onChange={handleChange('name')}
+            defaultValue={userInfo.name}
           />
         );
     };
     const renderSex = () => {
-      if (this.state.info === 'view') return this.props.userInfo.sex;
+      if (this.state.info === 'view') return userInfo.sex;
       else
         return (
           <select
             name='sex'
             className=''
-            onChange={handleChange('newSex')}
-            value={this.props.userInfo.sex}
+            onChange={handleChange('sex')}
+            value={userInfo.sex}
           >
             <option value='female'>Female</option>
             <option value='male'>Male</option>
@@ -65,49 +57,44 @@ export default class UserInfo extends Component {
         );
     };
     const renderBday = () => {
-      const values = {
-        day: this.props.userInfo.day,
-        month: this.props.userInfo.month,
-        year: this.props.userInfo.year
-      };
       if (this.state.info === 'view')
-        return `${values.day}/${values.month}/${values.year}`;
-      else return <Birthday handleChange={handleChange} values={values} />;
+        return `${userInfo.day}/${userInfo.month}/${userInfo.year}`;
+      else return <Birthday handleChange={handleChange} values={userInfo} />;
     };
     const renderLocation = () => {
-      if (this.state.info === 'view') return this.props.userInfo.location;
+      if (this.state.info === 'view') return userInfo.location;
       else
         return (
           <input
             type='text'
             className=''
             placeholder='Location'
-            onChange={handleChange('newLocation')}
-            defaultValue={this.props.userInfo.location}
+            onChange={handleChange('location')}
+            defaultValue={userInfo.location}
           />
         );
     };
     const renderPhone = () => {
-      if (this.state.info === 'view') return this.props.userInfo.phone;
+      if (this.state.info === 'view') return userInfo.phone;
       else
         return (
           <input
             type='text'
             className=''
             placeholder='Phone Number'
-            onChange={handleChange('newPhone')}
-            defaultValue={this.props.userInfo.phone}
+            onChange={handleChange('phone')}
+            defaultValue={userInfo.phone}
           />
         );
     };
     const renderBio = () => {
-      if (this.state.info === 'view') return this.props.userInfo.bio;
+      if (this.state.info === 'view') return userInfo.bio;
       else
         return (
           <textarea
             className=' form-control'
-            onChange={handleChange('newBio')}
-            defaultValue={this.props.userInfo.bio}
+            onChange={handleChange('bio')}
+            defaultValue={userInfo.bio}
             placeholder='Bio'
           />
         );
@@ -129,6 +116,7 @@ export default class UserInfo extends Component {
     };
     const submitChanges = () => {
       this.setState({ info: 'view' });
+      // send new values to the data
     };
 
     return (
@@ -191,7 +179,7 @@ export default class UserInfo extends Component {
             <span>
               <MdAssignmentInd />
             </span>
-            {this.props.userInfo.date}
+            {userInfo.date}
           </li>
         </ul>
         {renderButton()}
