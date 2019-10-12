@@ -127,7 +127,9 @@ export default class UserInfo extends Component {
           </button>
         );
     };
-    const submitChanges = () => {};
+    const submitChanges = () => {
+      this.setState({ info: 'view' });
+    };
 
     return (
       <div className=' profileInfo'>
