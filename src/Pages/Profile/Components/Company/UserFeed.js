@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import '../../UserFeed.css';
 import InternshipsPost from './InternshipsPost';
-import { MdBusiness } from 'react-icons/md';
-import { IoLogoApple, IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import { MdLocationOn, MdSchool, MdClose, MdCheck } from 'react-icons/md';
+import {
+  IoLogoApple,
+  IoIosArrowForward,
+  IoIosArrowBack,
+  IoMdMale,
+  IoMdFemale
+} from 'react-icons/io';
 import {
   FaAndroid,
   FaJava,
   FaPython,
   FaLinux,
-  FaDatabase
+  FaDatabase,
+  FaUserGraduate,
+  FaSchool
 } from 'react-icons/fa';
+import { FiPercent } from 'react-icons/fi';
 import {
   DiUnitySmall,
   DiAngularSimple,
@@ -46,6 +55,9 @@ class StudentsAppliesComponent extends Component {
   state = {
     pages: 0
   };
+  acceptStudent = () => {};
+  rejectStudent = () => {};
+
   //to split the companies applied for into 2 elements chunks
   pageRenderer() {
     const { studentsApplied } = this.props;
@@ -85,7 +97,11 @@ class StudentsAppliesComponent extends Component {
       <div className='appliedFor m-3'>
         <h5 className='h5'>Students who have applied to your internships.</h5>
         <div className='row feedContent '>
-          <StudentsApplies studentsApplied={appliedChunks[this.state.pages]} />
+          <StudentsApplies
+            studentsApplied={appliedChunks[this.state.pages]}
+            acceptStudent={this.state.acceptStudent}
+            rejectStudent={this.state.rejectStudent}
+          />
         </div>
         {showButtons()}
       </div>
@@ -104,52 +120,115 @@ function StudentsApplies(props) {
       </div>
     );
   }
-  const info = studentsApplied.map(x => {
-    const jobIcon = () => {
-      if (x.job === 'IOS Developer') return <IoLogoApple />;
-      else if (x.job === 'IOS Developer') return <IoLogoApple />;
-      else if (x.job === 'Android Developer') return <FaAndroid />;
-      else if (x.job === 'Java Developer') return <FaJava />;
-      else if (x.job === 'Python Developer') return <FaPython />;
-      else if (x.job === 'Linux Developer') return <FaLinux />;
-      else if (x.job === 'Unity Developer') return <DiUnitySmall />;
-      else if (x.job === 'Angular Developer') return <DiAngularSimple />;
-      else if (x.job === 'PHP Developer') return <DiPhp />;
-      else if (x.job === 'React JS Developer') return <DiReact />;
-      else if (x.job === 'Wordpress Developer') return <DiWordpress />;
-      else if (x.job === 'Javascript Developer') return <DiJavascript1 />;
-      else if (x.job === 'HTML5 Developer') return <DiHtml5 />;
-      else if (x.job === 'Database Developer') return <FaDatabase />;
-      else if (x.job === '.NET Developer') return <DiDotnet />;
-      else if (x.job === 'Larvel Developer') return <DiLaravel />;
-      else if (x.job === 'Windows Applications Developer') return <DiWindows />;
-      else if (x.job === 'Swift Developer') return <DiSwift />;
-      else if (x.job === 'Web Developer') return <DiCodeBadge />;
-    };
-    const statusClass = () => {
-      if (x.status === 'accepted')
-        return 'accepted list-group-item text-uppercase ';
-      else if (x.status === 'rejected')
-        return 'rejected list-group-item text-uppercase';
-      else return 'pending list-group-item text-uppercase';
+  const info = studentsApplied.map(data => {
+    const renderSpecialties = data.specialties.map(specialty => {
+      const jobIcon = () => {
+        if (specialty === 'IOS Developer') return <IoLogoApple />;
+        else if (specialty === 'IOS Developer') return <IoLogoApple />;
+        else if (specialty === 'Android Developer') return <FaAndroid />;
+        else if (specialty === 'Java Developer') return <FaJava />;
+        else if (specialty === 'Python Developer') return <FaPython />;
+        else if (specialty === 'Linux Developer') return <FaLinux />;
+        else if (specialty === 'Unity Developer') return <DiUnitySmall />;
+        else if (specialty === 'Angular Developer') return <DiAngularSimple />;
+        else if (specialty === 'PHP Developer') return <DiPhp />;
+        else if (specialty === 'React JS Developer') return <DiReact />;
+        else if (specialty === 'Wordpress Developer') return <DiWordpress />;
+        else if (specialty === 'Javascript Developer') return <DiJavascript1 />;
+        else if (specialty === 'HTML5 Developer') return <DiHtml5 />;
+        else if (specialty === 'Database Developer') return <FaDatabase />;
+        else if (specialty === '.NET Developer') return <DiDotnet />;
+        else if (specialty === 'Larvel Developer') return <DiLaravel />;
+        else if (specialty === 'Windows Applications Developer')
+          return <DiWindows />;
+        else if (specialty === 'Swift Developer') return <DiSwift />;
+        else if (specialty === 'Web Developer') return <DiCodeBadge />;
+      };
+
+      return (
+        <div className='row' key={Math.random()}>
+          <div className='col my-1'>
+            <span className='job'>{jobIcon()}</span>
+            {specialty}
+          </div>
+        </div>
+      );
+    });
+    const genderIcon = () => {
+      if (data.gender === 'Female') return <IoMdFemale />;
+      else return <IoMdMale />;
     };
     return (
-      <div className='col-md-6' key={x.id}>
+      <div className='col-md-6' key={data.id}>
         <div className='card '>
-          <img src={x.imgsrc} className='card-img-top' alt={x.name} />
+          <img src={data.imgsrc} className='card-img-top' alt={data.name} />
 
           <ul className='list-group list-group-flush text-center'>
             <li className='list-group-item applied '>
               <span className='job'>
-                <MdBusiness />
+                <FaUserGraduate />
               </span>
-              {x.name}
+              {data.name}
             </li>
             <li className='list-group-item applied '>
-              <span className='job'>{jobIcon()}</span>
-              {x.job}
+              <span className='job'>{genderIcon()}</span>
+              {data.gender}
             </li>
-            <li className={statusClass()}>{x.status}</li>
+            <li className='list-group-item applied '>
+              <span className='job'>
+                <MdLocationOn />
+              </span>
+              {data.location}
+            </li>
+            <li className='list-group-item applied '>
+              <div className='row my-1'>
+                <div className='col'>
+                  <span className='job'>
+                    <FaSchool />
+                  </span>
+                  {data.education.school}
+                </div>
+              </div>
+              <div className='row my-1'>
+                <div className='col'>
+                  <span className='job'>
+                    <MdSchool />
+                  </span>
+                  {data.education.field}
+                </div>
+              </div>
+              <div className='row my-1'>
+                <div className='col'>
+                  <span className='job'>
+                    <FiPercent />
+                  </span>
+                  {data.education.gpa}
+                </div>
+              </div>
+            </li>
+            <li className='list-group-item applied '>{renderSpecialties}</li>
+            <li className='list-group-item applied '>
+              <div className='form-inline justify-content-center my-1'>
+                <div className='text-center mx-1 '>
+                  <button
+                    type='button'
+                    className='btn rejected'
+                    onClick={props.rejectStudent}
+                  >
+                    Reject <MdClose />
+                  </button>
+                </div>
+                <div className='text-center mx-1 '>
+                  <button
+                    type='button'
+                    className='btn accepted'
+                    onClick={props.acceptStudent}
+                  >
+                    Accept <MdCheck />
+                  </button>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

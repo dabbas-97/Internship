@@ -18,44 +18,60 @@ export default class CompanyProfile extends Component {
         {
           id: 1,
           name: 'Mohammad Khaled',
-          gender: 'male',
-          job: 'Web Developer',
-          status: 'pending',
+          gender: 'Male',
+          specialties: ['Web Developer', 'PHP Developer', 'Larvel Developer'],
+          socialStatus: 'Engaged',
+          education: {
+            school: 'Al Al-Bait University',
+            field: 'Computer Science',
+            gpa: 'Excellent'
+          },
+          location: 'Amman',
           imgsrc: profileImg
         },
         {
           id: 2,
-          name: '2',
-          job: 'Java Developer',
-          status: 'accepted',
+          name: 'Mohammad Khaled',
+          gender: 'Male',
+          specialties: ['Web Developer'],
+          socialStatus: 'Single',
+          education: {
+            school: 'Al-Balqa Applied University',
+            field: 'Software Engineering',
+            gpa: 'Very Good'
+          },
+
+          location: 'Amman',
           imgsrc: profileImg
         },
         {
           id: 3,
-          name: '3',
-          job: 'Swift Developer',
-          status: 'rejected',
+          name: 'Mohammad Khaled',
+          gender: 'Male',
+          specialties: ['Web Developer'],
+          socialStatus: 'Single',
+          education: {
+            school: ' Al-Hussein Bin Talal University',
+            field: ' Computer Information Systems',
+            gpa: 'Good'
+          },
+
+          location: 'Amman',
           imgsrc: profileImg
         },
         {
           id: 4,
-          name: '4',
-          job: '.NET Developer',
-          status: 'pending',
-          imgsrc: profileImg
-        },
-        {
-          id: 5,
-          name: '5',
-          job: 'Javascript Developer',
-          status: 'accepted',
-          imgsrc: profileImg
-        },
-        {
-          id: 6,
-          name: '6',
-          job: 'Larvel Developer',
-          status: 'rejected',
+          name: 'Mohammad Khaled',
+          gender: 'Male',
+          specialties: ['Web Developer'],
+          socialStatus: 'Single',
+          education: {
+            school: 'Hashemite University',
+            field: 'Business Information Technology',
+            gpa: 'Good'
+          },
+
+          location: 'Amman',
           imgsrc: profileImg
         }
       ]
