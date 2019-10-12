@@ -10,7 +10,10 @@ export default class StudentProfile extends Component {
     userInfo: {
       name: 'Khaled Mohammad',
       sex: 'male',
-      birthday: '9/AUG/1995',
+      phone: '0791478523',
+      day: '9',
+      month: 'AUG',
+      year: '1995',
       date: '2 Months ago',
       bio: 'bio...bio...bio...bio...',
       location: 'Amman'

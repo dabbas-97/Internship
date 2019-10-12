@@ -46,6 +46,8 @@
   cursor: pointer;
   color: white;
 }
+.profileInfo .editInfoBtn {
+}
 
 .profileInfo li {
   background-image: linear-gradient(to bottom, #d4d4d482, #e0e0e0);
@@ -73,7 +75,7 @@
 }
 .editCV li:nth-child(odd),
 .formLog li:nth-child(odd) {
-  background: #cacaca59;
+  background: #cacacac9;
 }
 
 .cv {

@@ -85,7 +85,7 @@ class CompaniesAppliedForComponent extends Component {
 
     return (
       <div className='appliedFor m-3'>
-        <h5 className='h5'>Companies You Applied For</h5>
+        <h5 className='h5'>Internships You've Applied For</h5>
         <div className='row feedContent '>
           <CompaniesAppliedFor
             internshipsApplied={appliedChunks[this.state.pages]}
@@ -101,8 +101,8 @@ function CompaniesAppliedFor(props) {
   const { internshipsApplied } = props;
   if (!internshipsApplied) {
     return (
-      <div className='appliedFor m-4 '>
-        <h6>you havnt applied to any company</h6>
+      <div className='appliedFor m-4  col  '>
+        <h6 className='text-muted'>You havn't applied to any internships</h6>
       </div>
     );
   }

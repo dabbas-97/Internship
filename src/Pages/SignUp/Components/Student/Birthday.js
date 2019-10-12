@@ -5,27 +5,6 @@ export class Birthday extends Component {
       <React.Fragment>
         <span>
           <select
-            name='month'
-            className='mr-1'
-            onChange={this.props.handleChange('month')}
-            value={this.props.values.month}
-          >
-            <option value='January'>January</option>
-            <option value='February'>February</option>
-            <option value='March'>March</option>
-            <option value='April'>April</option>
-            <option value='May'>May</option>
-            <option value='June'>June</option>
-            <option value='July'>July</option>
-            <option value='August'>August</option>
-            <option value='September'>September</option>
-            <option value='October'>October</option>
-            <option value='November'>November</option>
-            <option value='December'>December</option>
-          </select>
-        </span>
-        <span>
-          <select
             name='day'
             className='mr-1'
             onChange={this.props.handleChange('day')}
@@ -62,6 +41,27 @@ export class Birthday extends Component {
             <option value='29'>29</option>
             <option value='30'>30</option>
             <option value='31'>31</option>
+          </select>
+        </span>
+        <span>
+          <select
+            name='month'
+            className='mr-1'
+            onChange={this.props.handleChange('month')}
+            value={this.props.values.month}
+          >
+            <option value='JAN'>January</option>
+            <option value='FEB'>February</option>
+            <option value='MAR'>March</option>
+            <option value='APR'>April</option>
+            <option value='MAY'>May</option>
+            <option value='JUN'>June</option>
+            <option value='JUL'>July</option>
+            <option value='AUG'>August</option>
+            <option value='SEP'>September</option>
+            <option value='OCT'>October</option>
+            <option value='NOV'>November</option>
+            <option value='DEC'>December</option>
           </select>
         </span>
         <span>

@@ -8,11 +8,23 @@ import {
   FaQuoteRight,
   FaPen
 } from 'react-icons/fa';
-import { MdAssignmentInd, MdLocationOn } from 'react-icons/md';
+import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
+import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 
 export default class UserInfo extends Component {
-  state = { info: 'view' };
+  state = {
+    info: 'view',
+    newName: '',
+    newSex: '',
+    day: '',
+    month: '',
+    year: '',
+    newLocation: '',
+    newPhone: '',
+    newBio: ''
+  };
   render() {
+    let { userInfo } = this.props;
     //icons for gender
     const genderIcon = () => {
       if (this.props.userInfo.sex === 'male') return <IoMdMale />;
@@ -21,12 +33,108 @@ export default class UserInfo extends Component {
     const changeView = () => {
       this.setState({ info: 'edit' });
     };
+    const handleChange = input => e => {
+      this.setState({ [input]: e.target.value });
+    };
+    const renderName = () => {
+      if (this.state.info === 'view') return this.props.userInfo.name;
+      else
+        return (
+          <input
+            type='text'
+            className=''
+            placeholder='Your Name'
+            onChange={handleChange('newName')}
+            defaultValue={this.props.userInfo.name}
+          />
+        );
+    };
+    const renderSex = () => {
+      if (this.state.info === 'view') return this.props.userInfo.sex;
+      else
+        return (
+          <select
+            name='sex'
+            className=''
+            onChange={handleChange('newSex')}
+            value={this.props.userInfo.sex}
+          >
+            <option value='female'>Female</option>
+            <option value='male'>Male</option>
+          </select>
+        );
+    };
+    const renderBday = () => {
+      const values = {
+        day: this.props.userInfo.day,
+        month: this.props.userInfo.month,
+        year: this.props.userInfo.year
+      };
+      if (this.state.info === 'view')
+        return `${values.day}/${values.month}/${values.year}`;
+      else return <Birthday handleChange={handleChange} values={values} />;
+    };
+    const renderLocation = () => {
+      if (this.state.info === 'view') return this.props.userInfo.location;
+      else
+        return (
+          <input
+            type='text'
+            className=''
+            placeholder='Location'
+            onChange={handleChange('newLocation')}
+            defaultValue={this.props.userInfo.location}
+          />
+        );
+    };
+    const renderPhone = () => {
+      if (this.state.info === 'view') return this.props.userInfo.phone;
+      else
+        return (
+          <input
+            type='text'
+            className=''
+            placeholder='Phone Number'
+            onChange={handleChange('newPhone')}
+            defaultValue={this.props.userInfo.phone}
+          />
+        );
+    };
+    const renderBio = () => {
+      if (this.state.info === 'view') return this.props.userInfo.bio;
+      else
+        return (
+          <textarea
+            className=' form-control'
+            onChange={handleChange('newBio')}
+            defaultValue={this.props.userInfo.bio}
+            placeholder='Bio'
+          />
+        );
+    };
+    const renderButton = () => {
+      if (this.state.info === 'edit')
+        return (
+          <button
+            type='button'
+            className='btn editInfoBtn'
+            onClick={submitChanges}
+          >
+            <span className=''>
+              <FaPen />
+            </span>
+            Submit Changes
+          </button>
+        );
+    };
+    const submitChanges = () => {};
 
     return (
       <div className=' profileInfo'>
         <span className='editSpan' onClick={changeView}>
           <FaPen />
         </span>
+
         <img
           src={profileImg}
           className='proImg rounded-circle'
@@ -38,33 +146,40 @@ export default class UserInfo extends Component {
             <span>
               <FaUserGraduate />
             </span>
-            {this.props.userInfo.name}
+            {renderName()}
           </li>
           {/* users gender */}
           <li className='list-group-item edit'>
             <span>{genderIcon()}</span>
-            {this.props.userInfo.sex}
+            {renderSex()}
           </li>
           {/* users birthday */}
           <li className='list-group-item edit'>
             <span>
               <FaBirthdayCake />
             </span>
-            {this.props.userInfo.birthday}
+            {renderBday()}
           </li>
           {/* users location */}
           <li className='list-group-item edit'>
             <span>
               <MdLocationOn />
             </span>
-            {this.props.userInfo.location}
+            {renderLocation()}
+          </li>
+          {/* user phone number */}
+          <li className='list-group-item edit'>
+            <span>
+              <MdPhone />
+            </span>
+            {renderPhone()}
           </li>
           {/* users bio */}
           <li className='list-group-item edit'>
             <span>
               <FaQuoteLeft />
             </span>
-            {this.props.userInfo.bio}
+            {renderBio()}
             <span>
               <FaQuoteRight />
             </span>
@@ -77,6 +192,7 @@ export default class UserInfo extends Component {
             {this.props.userInfo.date}
           </li>
         </ul>
+        {renderButton()}
       </div>
     );
   }

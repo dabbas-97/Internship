@@ -21,10 +21,7 @@ export default class StudentCV extends Component {
       field: 'Computer Science'
     },
     gpa: 'Good',
-    tags: [
-      { id: 'IOS Developer', text: 'IOS Developer' },
-      { id: 'Python Developer', text: 'Python Developer' }
-    ],
+    tags: [],
     suggestions: [
       { id: 'IOS Developer', text: 'IOS Developer' },
       { id: 'Android Developer', text: 'Android Developer' },
@@ -386,7 +383,7 @@ class EditCV extends Component {
         default:
           return (
             <div className='m-3 editCV'>
-              <h5 className='h5'>Edit your CV info.</h5>
+              <h5 className='h5 mb-4'>Edit your CV info.</h5>
               <ul className='list-group text-center '>
                 <li className='list-group-item py-2 '>
                   <div className='row'>
@@ -398,7 +395,7 @@ class EditCV extends Component {
                 </li>
                 <li className='list-group-item py-2'>
                   <div className='row'>
-                    <div className='col-4'> Degree:</div>
+                    <div className='col-4'> Field:</div>
                     <div className='col-8'>
                       <span>{this.props.values.education.field}</span>
                     </div>
