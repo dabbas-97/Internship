@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './UserFeed.css';
+import '../../UserFeed.css';
 import StudentCV from './StudentCV';
 import { MdBusiness } from 'react-icons/md';
 import { IoLogoApple, IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
