@@ -14,7 +14,7 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 export default class StudentCV extends Component {
   state = {
     step: 1,
-    isCV: true,
+    isCV: false,
     socialStatus: 'Single',
     education: {
       school: 'Hashemite University',
@@ -86,6 +86,8 @@ export default class StudentCV extends Component {
   };
   submitCV = e => {
     e.preventDefault();
+    if (this.state.isCV === false) this.setState({ isCV: true });
+    this.setState({ step: this.state.step - 1 });
   };
   render() {
     const { socialStatus, education, tags, gpa } = this.state;
@@ -189,9 +191,9 @@ function CVCreateForm(props) {
                   onChange={props.handleChange('socialStatus')}
                   value={values.socialStatus}
                 >
-                  <option value='single'>Single</option>
-                  <option value='married'>Married</option>
-                  <option value='engaged'>Engaged</option>
+                  <option value='Single'>Single</option>
+                  <option value='Married'>Married</option>
+                  <option value='Engaged'>Engaged</option>
                 </select>
               </div>
             </div>

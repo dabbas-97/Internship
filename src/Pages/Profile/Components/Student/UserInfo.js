@@ -123,8 +123,10 @@ export default class UserInfo extends Component {
       // send new values to the data
     };
     const imageUpload = file => {
-      let src = URL.createObjectURL(file[0]);
-      this.props.handleChangeImg(src);
+      if (file.length > 0) {
+        let src = URL.createObjectURL(file[0]);
+        this.props.handleChangeImg(src);
+      }
     };
 
     return (
@@ -134,7 +136,7 @@ export default class UserInfo extends Component {
         </span>
 
         <div className='profileImg'>
-          <InputFiles onChange={imageUpload}>
+          <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
             <img
               src={this.props.userInfo.userImg}
               className='proImg rounded-circle'
