@@ -4,6 +4,7 @@ import UserFeed from './Components/Student/UserFeed';
 import firstCompany from '../../images/firstCompany.jpg';
 import secondCompany from '../../images/secondCompany.jpg';
 import thirdCompany from '../../images/thirdCompany.jpg';
+import profileImg from '../../images/education.png';
 
 export default class StudentProfile extends Component {
   state = {
@@ -16,7 +17,8 @@ export default class StudentProfile extends Component {
       year: '1995',
       date: '2 Months ago',
       bio: 'bio...bio...bio...bio...',
-      location: 'Amman'
+      location: 'Amman',
+      userImg: profileImg
     },
     userFeed: {
       internshipsApplied: [
@@ -65,7 +67,16 @@ export default class StudentProfile extends Component {
       ]
     }
   };
-
+  handleChange = input => e => {
+    var userInfo = { ...this.state.userInfo };
+    userInfo[input] = e.target.value;
+    this.setState({ userInfo });
+  };
+  handleChangeImg = src => {
+    var userInfo = { ...this.state.userInfo };
+    userInfo.userImg = src;
+    this.setState({ userInfo });
+  };
   render() {
     return (
       <div className='container'>
@@ -76,7 +87,11 @@ export default class StudentProfile extends Component {
             />
           </div>
           <div className='col-md-4'>
-            <UserInfo userInfo={this.state.userInfo} />
+            <UserInfo
+              userInfo={this.state.userInfo}
+              handleChange={this.handleChange}
+              handleChangeImg={this.handleChangeImg}
+            />
           </div>
         </div>
       </div>

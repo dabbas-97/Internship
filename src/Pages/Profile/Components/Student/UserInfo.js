@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import profileImg from '../../../../images/education.png';
 import { IoMdMale, IoMdFemale } from 'react-icons/io';
 import {
   FaBirthdayCake,
@@ -10,6 +9,7 @@ import {
 } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
+import InputFiles from 'react-input-files';
 
 export default class UserInfo extends Component {
   state = {
@@ -25,9 +25,7 @@ export default class UserInfo extends Component {
     const changeView = () => {
       this.setState({ info: 'edit' });
     };
-    const handleChange = input => e => {
-      userInfo[input] = e.target.value;
-    };
+
     const renderName = () => {
       if (this.state.info === 'view') return userInfo.name;
       else
@@ -36,7 +34,7 @@ export default class UserInfo extends Component {
             type='text'
             className=''
             placeholder='Your Name'
-            onChange={handleChange('name')}
+            onChange={this.props.handleChange('name')}
             defaultValue={userInfo.name}
           />
         );
@@ -48,7 +46,7 @@ export default class UserInfo extends Component {
           <select
             name='sex'
             className=''
-            onChange={handleChange('sex')}
+            onChange={this.props.handleChange('sex')}
             value={userInfo.sex}
           >
             <option value='female'>Female</option>
@@ -58,8 +56,14 @@ export default class UserInfo extends Component {
     };
     const renderBday = () => {
       if (this.state.info === 'view')
-        return `${userInfo.day}/${userInfo.month}/${userInfo.year}`;
-      else return <Birthday handleChange={handleChange} values={userInfo} />;
+        return `${this.props.userInfo.day}/${this.props.userInfo.month}/${this.props.userInfo.year}`;
+      else
+        return (
+          <Birthday
+            handleChange={this.props.handleChange}
+            values={this.props.userInfo}
+          />
+        );
     };
     const renderLocation = () => {
       if (this.state.info === 'view') return userInfo.location;
@@ -69,7 +73,7 @@ export default class UserInfo extends Component {
             type='text'
             className=''
             placeholder='Location'
-            onChange={handleChange('location')}
+            onChange={this.props.handleChange('location')}
             defaultValue={userInfo.location}
           />
         );
@@ -82,7 +86,7 @@ export default class UserInfo extends Component {
             type='text'
             className=''
             placeholder='Phone Number'
-            onChange={handleChange('phone')}
+            onChange={this.props.handleChange('phone')}
             defaultValue={userInfo.phone}
           />
         );
@@ -93,7 +97,7 @@ export default class UserInfo extends Component {
         return (
           <textarea
             className=' form-control'
-            onChange={handleChange('bio')}
+            onChange={this.props.handleChange('bio')}
             defaultValue={userInfo.bio}
             placeholder='Bio'
           />
@@ -118,6 +122,10 @@ export default class UserInfo extends Component {
       this.setState({ info: 'view' });
       // send new values to the data
     };
+    const imageUpload = file => {
+      let src = URL.createObjectURL(file[0]);
+      this.props.handleChangeImg(src);
+    };
 
     return (
       <div className=' profileInfo'>
@@ -125,11 +133,16 @@ export default class UserInfo extends Component {
           <FaPen />
         </span>
 
-        <img
-          src={profileImg}
-          className='proImg rounded-circle'
-          alt='profile '
-        />
+        <div className='profileImg'>
+          <InputFiles onChange={imageUpload}>
+            <img
+              src={this.props.userInfo.userImg}
+              className='proImg rounded-circle'
+              alt='profile '
+            />
+          </InputFiles>
+        </div>
+
         <ul className='list-group list-group-flush text-center'>
           {/* name of the user */}
           <li className='list-group-item edit'>
