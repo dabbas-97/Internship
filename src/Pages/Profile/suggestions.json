@@ -1,0 +1,23 @@
+[
+  { "id": "IOS Developer", "text": "IOS Developer" },
+  { "id": "Android Developer", "text": "Android Developer" },
+  { "id": "Java Developer", "text": "Java Developer" },
+  { "id": "Python Developer", "text": "Python Developer" },
+  { "id": "Linux Developer", "text": "Linux Developer" },
+  { "id": "Unity Developer", "text": "Unity Developer" },
+  { "id": "Angular Developer", "text": "Angular Developer" },
+  { "id": "PHP Developer", "text": "PHP Developer" },
+  { "id": "React JS Developer", "text": "React JS Developer" },
+  { "id": "Wordpress Developer", "text": "Wordpress Developer" },
+  { "id": "Javascript Developer", "text": "Javascript Developer" },
+  { "id": "HTML5 Developer", "text": "HTML5 Developer" },
+  { "id": "Database Developer", "text": "Database Developer" },
+  { "id": ".NET Developer", "text": ".NET Developer" },
+  { "id": "Larvel Developer", "text": "Larvel Developer" },
+  {
+    "id": "Windows Applications Developer",
+    "text": "Windows Applications Developer"
+  },
+  { "id": "Swift Developer", "text": "Swift Developer" },
+  { "id": "Web Developer", "text": "Web Developer" }
+]

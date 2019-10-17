@@ -9,7 +9,7 @@ class Nav extends Component {
     return (
       <div className='navbar navbar-expand-lg sticky-top  '>
         <Logo />
-        <div className='collapse navbar-collapse' id='navbarTogglerDemo03'>
+        <div className='collapse navbar-collapse' id='navbarToggler'>
           <MainNav />
           <RegisterNav />
         </div>

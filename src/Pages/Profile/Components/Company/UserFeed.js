@@ -16,7 +16,9 @@ import {
   FaLinux,
   FaDatabase,
   FaUserGraduate,
-  FaSchool
+  FaSchool,
+  FaCode,
+  FaUniversity
 } from 'react-icons/fa';
 import { FiPercent } from 'react-icons/fi';
 import {
@@ -40,7 +42,7 @@ export default class UserFeed extends Component {
 
     return (
       <div className='profileFeed'>
-        <div className=' text-center mb-5 cv'>
+        <div className=' text-center mb-5 internshipPost'>
           <InternshipsPost />
         </div>
         <div className=' appliedList text-center'>
@@ -55,8 +57,8 @@ class StudentsAppliesComponent extends Component {
   state = {
     pages: 0
   };
-  acceptStudent = () => {};
-  rejectStudent = () => {};
+  acceptStudent = () => {}; //function for accepting a student
+  rejectStudent = () => {}; //function for rejecting a student
 
   //to split the companies applied for into 2 elements chunks
   pageRenderer() {
@@ -96,14 +98,16 @@ class StudentsAppliesComponent extends Component {
     return (
       <div className='appliedFor m-3'>
         <h5 className='h5'>Students who have applied to your internships.</h5>
-        <div className='row feedContent '>
-          <StudentsApplies
-            studentsApplied={appliedChunks[this.state.pages]}
-            acceptStudent={this.state.acceptStudent}
-            rejectStudent={this.state.rejectStudent}
-          />
+        <div className='feedContent m-3'>
+          <div className='row  '>
+            <StudentsApplies
+              studentsApplied={appliedChunks[this.state.pages]}
+              acceptStudent={this.state.acceptStudent}
+              rejectStudent={this.state.rejectStudent}
+            />
+          </div>
+          {showButtons()}
         </div>
-        {showButtons()}
       </div>
     );
   }
@@ -180,11 +184,30 @@ function StudentsApplies(props) {
               </span>
               {data.location}
             </li>
-            <li className='list-group-item applied '>
-              <div className='row my-1'>
+            <li
+              className='list-group-item applied togglerLi '
+              data-toggle='collapse'
+              href={'#education' + data.id}
+              role='button'
+              aria-expanded='false'
+            >
+              <div className='row '>
                 <div className='col'>
                   <span className='job'>
                     <FaSchool />
+                  </span>
+                  Education
+                </div>
+              </div>
+            </li>
+            <li
+              className='list-group-item applied collapse'
+              id={'education' + data.id}
+            >
+              <div className='row my-1'>
+                <div className='col'>
+                  <span className='job'>
+                    <FaUniversity />
                   </span>
                   {data.education.school}
                 </div>
@@ -206,7 +229,28 @@ function StudentsApplies(props) {
                 </div>
               </div>
             </li>
-            <li className='list-group-item applied '>{renderSpecialties}</li>
+            <li
+              className='list-group-item applied togglerLi '
+              data-toggle='collapse'
+              href={'#specialties' + data.id}
+              role='button'
+              aria-expanded='false'
+            >
+              <div className='row '>
+                <div className='col'>
+                  <span className='job'>
+                    <FaCode />
+                  </span>
+                  Specialties
+                </div>
+              </div>
+            </li>
+            <li
+              className='list-group-item applied collapse'
+              id={'specialties' + data.id}
+            >
+              {renderSpecialties}
+            </li>
             <li className='list-group-item applied '>
               <div className='form-inline justify-content-center my-1'>
                 <div className='text-center mx-1 '>
@@ -240,36 +284,44 @@ function StudentsApplies(props) {
 function Buttons(props) {
   if (props.pages === 0)
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.nextPage}>
-            Next <IoIosArrowForward />
-          </button>
+      <div className='row'>
+        <div className='form-inline offset-6 col-6 my-1 '>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.nextPage}>
+              Next <IoIosArrowForward />
+            </button>
+          </div>
         </div>
       </div>
     );
   else if (props.pages === props.maxPages)
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.prevPage}>
-            <IoIosArrowBack /> Back
-          </button>
+      <div className='row'>
+        <div className='form-inline justify-content-end col-6 my-1'>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.prevPage}>
+              <IoIosArrowBack /> Back
+            </button>
+          </div>
         </div>
       </div>
     );
   else
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.prevPage}>
-            <IoIosArrowBack /> Back
-          </button>
+      <div className='row'>
+        <div className='form-inline justify-content-end col-6 my-1'>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.prevPage}>
+              <IoIosArrowBack /> Back
+            </button>
+          </div>
         </div>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.nextPage}>
-            Next <IoIosArrowForward />
-          </button>
+        <div className='form-inline col-6 my-1 '>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.nextPage}>
+              Next <IoIosArrowForward />
+            </button>
+          </div>
         </div>
       </div>
     );

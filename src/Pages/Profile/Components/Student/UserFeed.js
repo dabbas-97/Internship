@@ -86,12 +86,14 @@ class CompaniesAppliedForComponent extends Component {
     return (
       <div className='appliedFor m-3'>
         <h5 className='h5'>Internships You've Applied For</h5>
-        <div className='row feedContent '>
-          <CompaniesAppliedFor
-            internshipsApplied={appliedChunks[this.state.pages]}
-          />
+        <div className='feedContent m-3'>
+          <div className='row  '>
+            <CompaniesAppliedFor
+              internshipsApplied={appliedChunks[this.state.pages]}
+            />
+          </div>
+          {showButtons()}
         </div>
-        {showButtons()}
       </div>
     );
   }
@@ -163,36 +165,44 @@ function CompaniesAppliedFor(props) {
 function Buttons(props) {
   if (props.pages === 0)
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.nextPage}>
-            Next <IoIosArrowForward />
-          </button>
+      <div className='row'>
+        <div className='form-inline offset-6 col-6 my-1 '>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.nextPage}>
+              Next <IoIosArrowForward />
+            </button>
+          </div>
         </div>
       </div>
     );
   else if (props.pages === props.maxPages)
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.prevPage}>
-            <IoIosArrowBack /> Back
-          </button>
+      <div className='row'>
+        <div className='form-inline justify-content-end col-6 my-1'>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.prevPage}>
+              <IoIosArrowBack /> Back
+            </button>
+          </div>
         </div>
       </div>
     );
   else
     return (
-      <div className='form-inline justify-content-center col-12 my-1'>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.prevPage}>
-            <IoIosArrowBack /> Back
-          </button>
+      <div className='row'>
+        <div className='form-inline justify-content-end col-6 my-1'>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.prevPage}>
+              <IoIosArrowBack /> Back
+            </button>
+          </div>
         </div>
-        <div className='text-center m-4 '>
-          <button type='button' className='btn' onClick={props.nextPage}>
-            Next <IoIosArrowForward />
-          </button>
+        <div className='form-inline col-6 my-1 '>
+          <div className='text-center m-4 '>
+            <button type='button' className='btn' onClick={props.nextPage}>
+              Next <IoIosArrowForward />
+            </button>
+          </div>
         </div>
       </div>
     );

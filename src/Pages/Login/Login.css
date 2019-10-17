@@ -9,9 +9,7 @@ form .btn {
 
 form .form-group input {
   transition: border-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
-
   height: auto;
-  border-radius: 2rem;
 }
 form .form-group .form-control:focus {
   box-shadow: 0 0 4px 0.2rem rgb(223, 223, 228);
@@ -24,7 +22,7 @@ form .form-group .form-control:focus {
   margin: 50px auto;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   padding: 5%;
-  border-radius: 10%;
+  border-radius: 1%;
   margin-bottom: 120px;
 }
 .formLog .logo {
@@ -32,7 +30,6 @@ form .form-group .form-control:focus {
   margin: auto;
 }
 .btn:hover {
-  color: #212529;
-  text-decoration: none;
-  background-color: #bdbdbd;
+  background-color: #94abb7;
+  color: #c6e9f8 !important;
 }

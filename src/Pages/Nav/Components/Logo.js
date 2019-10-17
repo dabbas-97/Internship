@@ -11,8 +11,8 @@ export function Logo() {
         className='navbar-toggler'
         type='button'
         data-toggle='collapse'
-        data-target='#navbarTogglerDemo03'
-        aria-controls='navbarTogglerDemo03'
+        data-target='#navbarToggler'
+        aria-controls='navbarToggler'
         aria-expanded='false'
         aria-label='Toggle navigation'
       >

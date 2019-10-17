@@ -80,7 +80,7 @@ export default class StudentProfile extends Component {
   render() {
     return (
       <div className='container'>
-        <div className='row '>
+        <div className='row mt-3'>
           <div className='col-md-8 '>
             <UserFeed
               internshipsApplied={this.state.userFeed.internshipsApplied}

@@ -9,6 +9,7 @@
 body {
   font-family: 'Dosis', 'Lexend Deca', 'Big Shoulders Display' !important;
   font-weight: 400;
+  background-color: #fafafa !important;
 }
 .root {
   height: calc(100% - 60px);

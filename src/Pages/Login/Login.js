@@ -23,6 +23,7 @@ export default class Login extends Component {
               className=' form-control'
               id='emailAddress'
               placeholder='Enter your email'
+              required
             />
           </div>
           <div className='form-group my-4 '>
@@ -32,6 +33,7 @@ export default class Login extends Component {
               className='form-control'
               id='userPassword'
               placeholder='Enter your password'
+              required
             />
           </div>
 

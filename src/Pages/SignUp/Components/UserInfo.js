@@ -117,6 +117,7 @@ export class UserInfo extends Component {
             placeholder='eg. Name@email.com'
             onChange={validateEmail}
             defaultValue={email}
+            required
           />
           <div className={this.state.emailFeedback}>
             Please enter a valid email.
@@ -131,6 +132,7 @@ export class UserInfo extends Component {
             placeholder='Type your password'
             onChange={validatePassword}
             defaultValue={password}
+            required
           />
           <div className={this.state.passwordFeedback}>
             Password must contain at least 8 characters, one uppercase letters,
@@ -141,6 +143,7 @@ export class UserInfo extends Component {
             className={this.state.passwordMatchClass}
             placeholder='Retype your password'
             onChange={matchPassword}
+            required
           />
           <div className={this.state.matchFeedback}>Passwords dont match.</div>
         </div>

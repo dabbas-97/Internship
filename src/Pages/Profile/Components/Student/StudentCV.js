@@ -3,6 +3,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import { GoHeart } from 'react-icons/go';
 import { IoMdSchool } from 'react-icons/io';
 import { FaLaptopCode } from 'react-icons/fa';
+import jsonData from '../../suggestions.json';
 
 const KeyCodes = {
   comma: 188,
@@ -10,6 +11,7 @@ const KeyCodes = {
 };
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
+const loadData = () => JSON.parse(JSON.stringify(jsonData));
 
 export default class StudentCV extends Component {
   state = {
@@ -22,31 +24,12 @@ export default class StudentCV extends Component {
     },
     gpa: 'Good',
     tags: [],
-    suggestions: [
-      { id: 'IOS Developer', text: 'IOS Developer' },
-      { id: 'Android Developer', text: 'Android Developer' },
-      { id: 'Java Developer', text: 'Java Developer' },
-      { id: 'Python Developer', text: 'Python Developer' },
-      { id: 'Linux Developer', text: 'Linux Developer' },
-      { id: 'Unity Developer', text: 'Unity Developer' },
-      { id: 'Angular Developer', text: 'Angular Developer' },
-      { id: 'PHP Developer', text: 'PHP Developer' },
-      { id: 'React JS Developer', text: 'React JS Developer' },
-      { id: 'Wordpress Developer', text: 'Wordpress Developer' },
-      { id: 'Javascript Developer', text: 'Javascript Developer' },
-      { id: 'HTML5 Developer', text: 'HTML5 Developer' },
-      { id: 'Database Developer', text: 'Database Developer' },
-      { id: '.NET Developer', text: '.NET Developer' },
-      { id: 'Larvel Developer', text: 'Larvel Developer' },
-      {
-        id: 'Windows Applications Developer',
-        text: 'Windows Applications Developer'
-      },
-      { id: 'Swift Developer', text: 'Swift Developer' },
-      { id: 'Web Developer', text: 'Web Developer' }
-    ]
+    suggestions: []
   };
-
+  componentWillMount() {
+    let suggestions = loadData();
+    this.setState({ suggestions: suggestions }); // Filling data from the json file (suggestions.json)
+  }
   nextStep = () => {
     const { step } = this.state;
     this.setState({
@@ -61,6 +44,9 @@ export default class StudentCV extends Component {
       this.setState({ education });
     } else this.setState({ [input]: e.target.value });
   };
+
+  //------------------------------------------------Input module stuff-------------------------------------
+
   handleDelete = i => {
     const { tags } = this.state;
     this.setState({
@@ -84,6 +70,8 @@ export default class StudentCV extends Component {
     // re-render
     this.setState({ tags: newTags });
   };
+
+  //------------------------------------------------------------------------------------
   submitCV = e => {
     e.preventDefault();
     if (this.state.isCV === false) this.setState({ isCV: true });

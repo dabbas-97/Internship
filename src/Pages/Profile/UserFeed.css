@@ -4,16 +4,16 @@
 }
 
 .feedContent .card {
-  max-width: 270px;
-  background: #c6e9f8;
-  margin-left: 9%;
+  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
   margin-top: 20px;
   margin-bottom: 20px;
 }
 .feedContent .card-img-top {
   height: 100px;
-  width: 150px;
   margin: 0 auto;
+  object-fit: contain;
+}
+.feedContent {
 }
 .accepted {
   color: green !important;
@@ -31,13 +31,18 @@
 .applied {
   background: #ececec !important;
 }
+.applied:last-child {
+  background: #fafafa !important;
+}
 .profileFeed li .job {
   float: left;
   border-radius: 50% !important;
-  background-color: #c6e9f8;
   height: 30px;
   width: 30px;
-  background-image: linear-gradient(to bottom, #a7cfdf, #c6e9f8);
+  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
+}
+.profileFeed .togglerLi .job {
+  background: linear-gradient(to bottom, #fafafa, #989393);
 }
 .appliedFor {
   overflow: hidden;
@@ -135,7 +140,7 @@
 }
 
 .cvul .fill {
-  background: #c6e9f8;
+  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
   color: #2ca5d6;
 }
 .cvul li {
@@ -145,23 +150,24 @@
 .cvul h5 {
   font-size: 1.9em;
   border-radius: 20px;
-  margin: 20px;
+  margin: 10px;
   background: #f3f3f3;
   padding: 15px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0), 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  letter-spacing: 1.5px;
 }
 .cvul h6 {
   font-size: 1.5em;
   border-radius: 20px 0px;
   background: #c5c5c536;
   line-height: 1.5em;
+  letter-spacing: 1.5px;
 }
 
-.appliedList {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.16),
-    0 2px 14px 0px rgba(0, 0, 0, 0.12);
-}
 .cvul h6 span {
   float: left;
   margin-left: 10px;
+}
+.togglerLi {
+  background: #e9f4f9 !important;
+  cursor: pointer;
 }

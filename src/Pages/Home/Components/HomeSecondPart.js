@@ -32,12 +32,21 @@ export class HomeSecondPart extends Component {
       }
     ]
   };
+
   render() {
+    //to render only 3 cards
+    const newCards = () => {
+      const { cards } = this.state;
+      while (cards.length > 3) {
+        cards.shift();
+      }
+      return cards;
+    };
     return (
       <div className='secondPart container my-4'>
         <h3 className='text-center m-5 '>Recently Posted Opportunities</h3>
         <div className=' card-deck'>
-          <Card cards={this.state.cards} />
+          <Card cards={newCards()} />
         </div>
       </div>
     );
@@ -47,14 +56,16 @@ function Card(props) {
   const { cards } = props;
   const info = cards.map(x => {
     return (
-      <div className='card' key={x.id}>
-        <img src={x.src} className='card-img-top' alt={x.name} />
-        <div className='card-body'>
-          <h5 className='card-title'>{x.name}</h5>
-          <p className='card-text'>{x.description}</p>
-        </div>
-        <div className='card-footer'>
-          <small className='text-muted'>{x.timeAdded}</small>
+      <div className='col-md-4' key={x.id}>
+        <div className='card'>
+          <img src={x.src} className='card-img-top' alt={x.name} />
+          <div className='card-body'>
+            <h5 className='card-title'>{x.name}</h5>
+            <p className='card-text'>{x.description}</p>
+          </div>
+          <div className='card-footer'>
+            <small className='text-muted'>{x.timeAdded}</small>
+          </div>
         </div>
       </div>
     );
