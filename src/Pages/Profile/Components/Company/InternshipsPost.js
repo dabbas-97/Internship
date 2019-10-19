@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import jsonData from '../../suggestions.json';
+import { Modal } from 'react-bootstrap';
 //icons import
 import { GoPerson } from 'react-icons/go';
 import { FiPercent } from 'react-icons/fi';
@@ -47,14 +48,14 @@ const loadData = () => JSON.parse(JSON.stringify(jsonData));
 export default class InternshipsPost extends Component {
   state = {
     step: 1,
-    type: 'create', //[create,edit]
     jobdesc: '',
     jobtitle: '',
     gpa: 'Good Or Higher',
     gender: 'Male', //[Male,Female,Any Gender]
     tags: [],
     suggestions: [],
-    posts: []
+    posts: [],
+    postEdit: ''
   };
   componentDidMount() {
     let suggestions = loadData();
@@ -127,6 +128,39 @@ export default class InternshipsPost extends Component {
       posts: posts.filter(post => post.id !== id)
     });
   };
+  clearPostInfo = () => {
+    this.setState({ postEdit: '' });
+  };
+  submitEditedPost = newData => e => {
+    e.preventDefault();
+    const specialties = newData.tags.map(tag => tag.id);
+    let editedPost = {
+      id: newData.id,
+      jobtitle: newData.jobtitle,
+      jobdesc: newData.jobdesc,
+      gpa: newData.gpa,
+      gender: newData.gender,
+      specialties: specialties
+    };
+    let posts = [...this.state.posts];
+    const index = posts.findIndex(post => post.id === newData.id);
+    posts.splice(index, 1);
+    posts.splice(index, 0, editedPost);
+    this.setState({ posts: posts, postEdit: '' });
+  };
+  editModal = () => {
+    if (this.state.postEdit)
+      return (
+        <EditPostForm
+          values={this.state.postEdit}
+          clearPostInfo={this.clearPostInfo}
+          submitEditedPost={this.submitEditedPost}
+        />
+      );
+  };
+  handleEditPosts = postEdit => {
+    this.setState({ postEdit });
+  };
 
   render() {
     const { gender, gpa, jobtitle, jobdesc, step } = this.state;
@@ -149,7 +183,9 @@ export default class InternshipsPost extends Component {
           posts={this.state.posts}
           handleDeletePosts={this.handleDeletePosts}
           handleEditPosts={this.handleEditPosts}
+          getStudentsWhoApplied={this.props.getStudentsWhoApplied}
         />
+        {this.editModal()}
       </React.Fragment>
     );
   }
@@ -475,6 +511,7 @@ function Posts(props) {
           </React.Fragment>
         );
     };
+    //onclick={this.props.getStudentsWhoApplied(data.id)}
     return (
       <div className='col-md-6' key={data.id}>
         <div className='card '>
@@ -542,19 +579,30 @@ function Posts(props) {
             <li className='list-group-item applied'>
               <div className='row'>
                 <div className='col-6'>
-                  {' '}
                   <button
-                    className='rejected btn'
+                    className='rejected w-100 btn'
                     onClick={() => props.handleDeletePosts(data.id)}
                   >
                     Delete
                   </button>
                 </div>
                 <div className='col-6'>
-                  {' '}
                   <button
-                    className='rejected btn'
-                    onClick={() => props.handleEditPosts(data.id)}
+                    className='w-100 btn'
+                    data-target='#exampleModal'
+                    onClick={() =>
+                      props.handleEditPosts({
+                        id: data.id,
+                        jobdesc: data.jobdesc,
+                        jobtitle: data.jobtitle,
+                        gpa: data.gpa,
+                        gender: data.gender, //[Male,Female,Any Gender]
+                        tags: data.specialties.map(tag => {
+                          let newTag = { id: tag, text: tag };
+                          return newTag;
+                        })
+                      })
+                    }
                   >
                     Edit
                   </button>
@@ -613,4 +661,216 @@ function Buttons(props) {
         </div>
       </div>
     );
+}
+class EditPostForm extends Component {
+  state = {
+    jobdesc: '',
+    jobtitle: '',
+    gpa: 'Good Or Higher',
+    gender: 'Male',
+    tags: [],
+    suggestions: []
+  };
+
+  handleDelete = i => {
+    const { tags } = this.state;
+    this.setState({
+      tags: tags.filter((tag, index) => index !== i)
+    });
+  };
+
+  handleAddition = tag => {
+    if (this.state.suggestions.find(x => x === tag)) {
+      this.setState(state => ({ tags: [...state.tags, tag] }));
+    }
+  };
+
+  handleDrag = (tag, currPos, newPos) => {
+    const tags = [...this.state.tags];
+    const newTags = tags.slice();
+
+    newTags.splice(currPos, 1);
+    newTags.splice(newPos, 0, tag);
+
+    // re-render
+    this.setState({ tags: newTags });
+  };
+
+  componentDidMount() {
+    let suggestions = loadData();
+    const { values } = this.props;
+    this.setState({
+      id: values.id,
+      suggestions: suggestions,
+      jobdesc: values.jobdesc,
+      jobtitle: values.jobtitle,
+      gpa: values.gpa,
+      gender: values.gender,
+      tags: values.tags
+    });
+  }
+  handleChange = input => e => {
+    this.setState({ [input]: e.target.value });
+  };
+  render() {
+    const handleClose = () => {
+      this.props.clearPostInfo();
+    };
+    const genderIcon = () => {
+      if (this.state.gender === 'Male') return <IoMdMale />;
+      else if (this.state.gender === 'Female') return <IoMdFemale />;
+      else
+        return (
+          <React.Fragment>
+            <IoMdFemale /> , <IoMdMale />
+          </React.Fragment>
+        );
+    };
+    return (
+      <React.Fragment>
+        <Modal show={true} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Post</Modal.Title>
+          </Modal.Header>
+
+          <form onSubmit={this.props.submitEditedPost(this.state)}>
+            <ul className='list-group text-center cvul'>
+              <li className='list-group-item py-2 '>
+                <h6 className=' mt-1 h-6'>
+                  <span>
+                    <IoMdBriefcase />
+                  </span>
+                  Job Title
+                </h6>
+                <div className='form-row my-3'>
+                  <div className='col-12'>
+                    <input
+                      type='text'
+                      className=' form-control'
+                      onChange={this.handleChange('jobtitle')}
+                      placeholder='Full Stack Developer'
+                      defaultValue={this.state.jobtitle}
+                      required
+                    />
+                  </div>
+                </div>
+              </li>
+              <li className='list-group-item py-2 '>
+                <h6 className=' mt-1 h-6'>
+                  <span>
+                    <MdHelp />
+                  </span>
+                  Job Description
+                </h6>
+                <div className='form-row my-3'>
+                  <div className='col-12'>
+                    <input
+                      type='text'
+                      className=' form-control'
+                      onChange={this.handleChange('jobdesc')}
+                      placeholder='Describe the jobs nature'
+                      defaultValue={this.state.jobdesc}
+                      required
+                    />
+                  </div>
+                </div>
+              </li>
+              <li className='list-group-item py-2 '>
+                <h6 className=' mt-1 h-6'>
+                  <span>{genderIcon()}</span>
+                  Gender
+                </h6>
+
+                <div className='form-row my-3'>
+                  <div className='col-12'>
+                    <select
+                      name='socialStatus'
+                      className='mx-1 custom-select w-50 '
+                      onChange={this.handleChange('gender')}
+                      value={this.state.gender}
+                    >
+                      <option value='Male'>Male</option>
+                      <option value='Female'>Female</option>
+                      <option value='Any Gender'>Any Gender</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+
+              <li className='list-group-item py-2 '>
+                <h6 className=' mt-1 h-6'>
+                  <span>
+                    <FiPercent />
+                  </span>
+                  GPA
+                </h6>
+
+                <div className='form-row my-3'>
+                  <div className='col-12'>
+                    <select
+                      name='gpa'
+                      className=' custom-select w-50'
+                      onChange={this.handleChange('gpa')}
+                      value={this.state.gpa}
+                    >
+                      <option value='Excellent'>Excellent</option>
+                      <option value='Very Good Or Higher'>
+                        Very Good Or Higher
+                      </option>
+                      <option value='Good Or Higher'>Good Or Higher</option>
+                      <option value='Pass Or Higher'>Pass Or Higher</option>
+                      <option value='Weak Or Higher'>Weak Or Higher</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li className='list-group-item py-2 '>
+                <h6 className=' mt-1 h-6'>
+                  <span>
+                    <FaLaptopCode />
+                  </span>
+                  Specialty
+                </h6>
+
+                <div className='form-row'>
+                  <div className='col-12'>
+                    <ReactTags
+                      inputFieldPosition='top'
+                      tags={this.state.tags}
+                      suggestions={this.state.suggestions}
+                      handleDelete={this.handleDelete}
+                      handleAddition={this.handleAddition}
+                      handleDrag={this.handleDrag}
+                      delimiters={delimiters}
+                      minQueryLength={1}
+                      renderSuggestion={({ text }) => (
+                        <div style={{}}>{text}</div>
+                      )}
+                      placeholder={'Java, PHP, etc.'}
+                      autocomplete={1}
+                      classNames={{
+                        tags: 'tagsClass',
+                        tagInput: 'tagInputClass',
+                        tagInputField: 'tagInputFieldClass',
+                        selected: 'selectedClass',
+                        tag: 'tagClass',
+                        remove: 'removeClass',
+                        suggestions: 'suggestionsClass',
+                        activeSuggestion: 'activeSuggestionClass'
+                      }}
+                    />
+                  </div>
+                </div>
+              </li>
+              <li className='list-group-item py-2 '>
+                <button className='btn m-3 px-3 py-2' type='submit'>
+                  Post Internship
+                </button>
+              </li>
+            </ul>
+          </form>
+        </Modal>
+      </React.Fragment>
+    );
+  }
 }

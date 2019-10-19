@@ -146,12 +146,18 @@ export default class CompanyProfile extends Component {
     userInfo.userImg = src;
     this.setState({ userInfo });
   };
+  getStudentsWhoApplied = postId => {
+    //using ajax get from the server to get the students who applied to the postId
+  };
   render() {
     return (
       <div className='container'>
         <div className='row mt-3'>
           <div className='col-md-8 '>
-            <UserFeed studentsApplied={this.state.userFeed.studentsApplied} />
+            <UserFeed
+              studentsApplied={this.state.userFeed.studentsApplied}
+              getStudentsWhoApplied={this.getStudentsWhoApplied}
+            />
           </div>
           <div className='col-md-4'>
             <UserInfo

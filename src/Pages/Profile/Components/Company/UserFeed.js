@@ -43,7 +43,9 @@ export default class UserFeed extends Component {
     return (
       <div className='profileFeed'>
         <div className=' text-center mb-5 internshipPost'>
-          <InternshipsPost />
+          <InternshipsPost
+            getStudentsWhoApplied={this.props.getStudentsWhoApplied}
+          />
         </div>
         <div className=' appliedList text-center'>
           <StudentsAppliesComponent studentsApplied={studentsApplied} />
@@ -102,8 +104,8 @@ class StudentsAppliesComponent extends Component {
           <div className='row  '>
             <StudentsApplies
               studentsApplied={appliedChunks[this.state.pages]}
-              acceptStudent={this.state.acceptStudent}
-              rejectStudent={this.state.rejectStudent}
+              acceptStudent={this.acceptStudent}
+              rejectStudent={this.rejectStudent}
             />
           </div>
           {showButtons()}
