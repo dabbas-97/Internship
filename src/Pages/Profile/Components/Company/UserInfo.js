@@ -26,6 +26,7 @@ export default class UserInfo extends Component {
             placeholder='Your Name'
             onChange={this.props.handleChange('name')}
             defaultValue={userInfo.name}
+            required
           />
         );
     };
@@ -39,7 +40,7 @@ export default class UserInfo extends Component {
             className=''
             placeholder='Location'
             onChange={this.props.handleChange('location')}
-            defaultValue={userInfo.location}
+            defaultValue={userInfo.location} required
           />
         );
     };
@@ -52,7 +53,7 @@ export default class UserInfo extends Component {
             className=''
             placeholder='Phone Number'
             onChange={this.props.handleChange('phone')}
-            defaultValue={userInfo.phone}
+            defaultValue={userInfo.phone} required
           />
         );
     };
@@ -64,7 +65,7 @@ export default class UserInfo extends Component {
             className=' form-control'
             onChange={this.props.handleChange('bio')}
             defaultValue={userInfo.bio}
-            placeholder='Bio'
+            placeholder='Bio' required
           />
         );
     };
@@ -85,7 +86,7 @@ export default class UserInfo extends Component {
     };
     const submitChanges = () => {
       this.setState({ info: 'view' });
-      // send new values to the data
+      // send new values to the database
     };
     const imageUpload = file => {
       if (file.length > 0) {

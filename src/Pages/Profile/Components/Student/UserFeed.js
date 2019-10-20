@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import '../../UserFeed.css';
 import StudentCV from './StudentCV';
 import { MdBusiness } from 'react-icons/md';
-import { IoLogoApple, IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
+import Buttons from '../../../Buttons'
+import { IoLogoApple } from 'react-icons/io';
 import {
   FaAndroid,
   FaJava,
@@ -22,7 +23,7 @@ import {
   DiHtml5,
   DiWindows,
   DiSwift,
-  DiCodeBadge
+  DiCodeBadge, DiNodejsSmall
 } from 'react-icons/di';
 
 export default class UserFeed extends Component {
@@ -111,7 +112,7 @@ function CompaniesAppliedFor(props) {
   const info = internshipsApplied.map(x => {
     const jobIcon = () => {
       if (x.job === 'IOS Developer') return <IoLogoApple />;
-      else if (x.job === 'IOS Developer') return <IoLogoApple />;
+      else if (x.job === 'Node JS Developer') return <DiNodejsSmall />;
       else if (x.job === 'Android Developer') return <FaAndroid />;
       else if (x.job === 'Java Developer') return <FaJava />;
       else if (x.job === 'Python Developer') return <FaPython />;
@@ -162,48 +163,3 @@ function CompaniesAppliedFor(props) {
   return <React.Fragment>{info}</React.Fragment>;
 }
 
-function Buttons(props) {
-  if (props.pages === 0)
-    return (
-      <div className='row'>
-        <div className='form-inline offset-6 col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else if (props.pages === props.maxPages)
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-        <div className='form-inline col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-}

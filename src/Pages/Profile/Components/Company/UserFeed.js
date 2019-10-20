@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import '../../UserFeed.css';
 import InternshipsPost from './InternshipsPost';
+import Buttons from '../../../Buttons';
 import { MdLocationOn, MdSchool, MdClose, MdCheck } from 'react-icons/md';
 import {
   IoLogoApple,
-  IoIosArrowForward,
-  IoIosArrowBack,
   IoMdMale,
   IoMdFemale
 } from 'react-icons/io';
@@ -33,7 +32,7 @@ import {
   DiHtml5,
   DiWindows,
   DiSwift,
-  DiCodeBadge
+  DiCodeBadge, DiNodejsSmall
 } from 'react-icons/di';
 
 export default class UserFeed extends Component {
@@ -59,8 +58,8 @@ class StudentsAppliesComponent extends Component {
   state = {
     pages: 0
   };
-  acceptStudent = () => {}; //function for accepting a student
-  rejectStudent = () => {}; //function for rejecting a student
+  acceptStudent = () => { }; //function for accepting a student
+  rejectStudent = () => { }; //function for rejecting a student
 
   //to split the companies applied for into 2 elements chunks
   pageRenderer() {
@@ -130,7 +129,7 @@ function StudentsApplies(props) {
     const renderSpecialties = data.specialties.map(specialty => {
       const jobIcon = () => {
         if (specialty === 'IOS Developer') return <IoLogoApple />;
-        else if (specialty === 'IOS Developer') return <IoLogoApple />;
+        else if (specialty === 'Node JS Developer') return <DiNodejsSmall />;
         else if (specialty === 'Android Developer') return <FaAndroid />;
         else if (specialty === 'Java Developer') return <FaJava />;
         else if (specialty === 'Python Developer') return <FaPython />;
@@ -283,48 +282,3 @@ function StudentsApplies(props) {
   return <React.Fragment>{info}</React.Fragment>;
 }
 
-function Buttons(props) {
-  if (props.pages === 0)
-    return (
-      <div className='row'>
-        <div className='form-inline offset-6 col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else if (props.pages === props.maxPages)
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-        <div className='form-inline col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-}

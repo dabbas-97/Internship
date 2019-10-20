@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import jsonData from '../../suggestions.json';
 import { Modal } from 'react-bootstrap';
+import Buttons from '../../../Buttons';
 //icons import
 import { GoPerson } from 'react-icons/go';
 import { FiPercent } from 'react-icons/fi';
@@ -8,8 +9,6 @@ import { MdHelp } from 'react-icons/md';
 import {
   IoMdBriefcase,
   IoLogoApple,
-  IoIosArrowForward,
-  IoIosArrowBack,
   IoMdMale,
   IoMdFemale
 } from 'react-icons/io';
@@ -34,7 +33,7 @@ import {
   DiHtml5,
   DiWindows,
   DiSwift,
-  DiCodeBadge
+  DiCodeBadge, DiNodejsSmall
 } from 'react-icons/di';
 //------------
 import { WithContext as ReactTags } from 'react-tag-input';
@@ -425,26 +424,19 @@ class PostedInternships extends Component {
     };
 
     const internshipsPostsReturner = () => {
-      //to put all my posts into chunks of x number
-      if (!myPosts) {
-        return (
-          <div className='appliedFor m-4 '>
-            <h6 className='text-muted'>You haven't posted any internships.</h6>
+      //to put all my posts into chunks of x numbers 
+      return (
+        <div className=' m-5'>
+          <div className='row'>
+            <Posts
+              myPosts={myPosts[this.state.pages]}
+              handleDeletePosts={this.props.handleDeletePosts}
+              handleEditPosts={this.props.handleEditPosts}
+            />
           </div>
-        );
-      } else
-        return (
-          <div className=' m-5'>
-            <div className='row'>
-              <Posts
-                myPosts={myPosts[this.state.pages]}
-                handleDeletePosts={this.props.handleDeletePosts}
-                handleEditPosts={this.props.handleEditPosts}
-              />
-            </div>
-            {showButtons()}
-          </div>
-        );
+          {showButtons()}
+        </div>
+      );
     };
     return (
       <div className='my-2 internshipsPosting'>
@@ -462,7 +454,7 @@ function Posts(props) {
     return (
       <div className='appliedFor m-4  col  '>
         <h6 className='text-muted'>
-          No Students have applied to any of your Internship posts.
+          You don't have any Internship posts.
         </h6>
       </div>
     );
@@ -471,7 +463,7 @@ function Posts(props) {
     const renderSpecialties = data.specialties.map(specialty => {
       const jobIcon = () => {
         if (specialty === 'IOS Developer') return <IoLogoApple />;
-        else if (specialty === 'IOS Developer') return <IoLogoApple />;
+        else if (specialty === 'Node JS Developer') return <DiNodejsSmall />;
         else if (specialty === 'Android Developer') return <FaAndroid />;
         else if (specialty === 'Java Developer') return <FaJava />;
         else if (specialty === 'Python Developer') return <FaPython />;
@@ -617,51 +609,7 @@ function Posts(props) {
   return <React.Fragment>{info}</React.Fragment>;
 }
 
-function Buttons(props) {
-  if (props.pages === 0)
-    return (
-      <div className='row'>
-        <div className='form-inline offset-6 col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else if (props.pages === props.maxPages)
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  else
-    return (
-      <div className='row'>
-        <div className='form-inline justify-content-end col-6 my-1'>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.prevPage}>
-              <IoIosArrowBack /> Back
-            </button>
-          </div>
-        </div>
-        <div className='form-inline col-6 my-1 '>
-          <div className='text-center m-4 '>
-            <button type='button' className='btn' onClick={props.nextPage}>
-              Next <IoIosArrowForward />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-}
+
 class EditPostForm extends Component {
   state = {
     jobdesc: '',
@@ -864,7 +812,7 @@ class EditPostForm extends Component {
               </li>
               <li className='list-group-item py-2 '>
                 <button className='btn m-3 px-3 py-2' type='submit'>
-                  Post Internship
+                  Save Changes
                 </button>
               </li>
             </ul>
