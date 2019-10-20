@@ -226,8 +226,8 @@ function CompaniesPosts(props) {
   }
   const specialtyPosts = posts.map(post => {
     return (
-      <div className='col-md-3 col-sm-6' key={Math.round(Math.random() * 10000)}>
-        <div className='card'>
+      <div className='col-md-3 col-sm-6 ' key={Math.round(Math.random() * 10000)}>
+        <div className='card companyPost'>
           <img src={post.imgsrc} className='card-img-top' alt={post.companyname} />
           <ul className='list-group list-group-flush text-center'>
             <li className='list-group-item applied '>
@@ -236,7 +236,12 @@ function CompaniesPosts(props) {
             <li className='list-group-item applied '>
               {post.jobtitle}
             </li>
-            <li className='list-group-item applied '>
+            <li className='list-group-item togglerLi ' data-toggle='collapse'
+              href={'#description' + post.id}
+              role='button'>
+              Job Description
+            </li>
+            <li className='list-group-item applied collapse' id={'description' + post.id}>
               {post.jobdesc}
             </li>
             <li className='list-group-item applied '>
