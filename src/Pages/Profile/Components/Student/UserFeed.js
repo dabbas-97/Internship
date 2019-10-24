@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '../../UserFeed.css';
 import StudentCV from './StudentCV';
-import { MdBusiness } from 'react-icons/md';
+import { MdBusiness, MdHelp } from 'react-icons/md';
 import Buttons from '../../../Buttons'
-import { IoLogoApple } from 'react-icons/io';
+import { Modal } from 'react-bootstrap'
+import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
 import {
   FaAndroid,
   FaJava,
@@ -27,27 +28,59 @@ import {
 } from 'react-icons/di';
 
 export default class UserFeed extends Component {
+  state = { jobstatus: '' }
+  closeJobModal = () => {
+    this.setState({ jobstatus: '' });
+  };
+  getStatus = () => {
+    //axios get...
+    const jobstatus = {
+      status: 'Accepted',
+      companyname: 'Microsoft',
+      jobtitle: 'Software Engineer',
+      message: 'We are so happy to accept you nigga!',
+      accepted: { location: 'amman', contact: 'coco@yah.com', phone: '079555' }
+    }
+    this.setState({
+      jobstatus: jobstatus
+    });
+  }
+  showStatus = () => {
+    if (this.state.jobstatus)
+      return (
+        <InternshipStatus
+          values={this.state.jobstatus}
+          closeJobModal={this.closeJobModal}
+
+        />
+      );
+  };
   render() {
     const { internshipsApplied } = this.props;
 
     return (
-      <div className='profileFeed'>
-        <div className=' text-center mb-5 cv'>
-          <StudentCV />
+      <React.Fragment>
+        <div className='profileFeed'>
+          <div className=' text-center mb-5 mt-2 cv'>
+            <StudentCV />
+          </div>
+          <div className=' appliedList text-center'>
+            <CompaniesAppliedForComponent
+              internshipsApplied={internshipsApplied}
+              getStatus={this.getStatus}
+            />
+          </div>
+
         </div>
-        <div className=' appliedList text-center'>
-          <CompaniesAppliedForComponent
-            internshipsApplied={internshipsApplied}
-          />
-        </div>
-      </div>
+        {this.showStatus()}
+      </React.Fragment>
     );
   }
 }
 
 class CompaniesAppliedForComponent extends Component {
   state = {
-    pages: 0
+    pages: 0,
   };
   //to split the companies applied for into 2 elements chunks
   pageRenderer() {
@@ -91,6 +124,7 @@ class CompaniesAppliedForComponent extends Component {
           <div className='row  '>
             <CompaniesAppliedFor
               internshipsApplied={appliedChunks[this.state.pages]}
+              getStatus={this.props.getStatus}
             />
           </div>
           {showButtons()}
@@ -104,40 +138,41 @@ function CompaniesAppliedFor(props) {
   const { internshipsApplied } = props;
   if (!internshipsApplied) {
     return (
-      <div className='appliedFor m-4  col  '>
+      <div className='appliedFor m-4 col'>
         <h6 className='text-muted'>You havn't applied to any internships</h6>
       </div>
     );
   }
   const info = internshipsApplied.map(x => {
     const jobIcon = () => {
-      if (x.job === 'IOS Developer') return <IoLogoApple />;
-      else if (x.job === 'Node JS Developer') return <DiNodejsSmall />;
-      else if (x.job === 'Android Developer') return <FaAndroid />;
-      else if (x.job === 'Java Developer') return <FaJava />;
-      else if (x.job === 'Python Developer') return <FaPython />;
-      else if (x.job === 'Linux Developer') return <FaLinux />;
-      else if (x.job === 'Unity Developer') return <DiUnitySmall />;
-      else if (x.job === 'Angular Developer') return <DiAngularSimple />;
-      else if (x.job === 'PHP Developer') return <DiPhp />;
-      else if (x.job === 'React JS Developer') return <DiReact />;
-      else if (x.job === 'Wordpress Developer') return <DiWordpress />;
-      else if (x.job === 'Javascript Developer') return <DiJavascript1 />;
-      else if (x.job === 'HTML5 Developer') return <DiHtml5 />;
-      else if (x.job === 'Database Developer') return <FaDatabase />;
-      else if (x.job === '.NET Developer') return <DiDotnet />;
-      else if (x.job === 'Larvel Developer') return <DiLaravel />;
-      else if (x.job === 'Windows Applications Developer') return <DiWindows />;
-      else if (x.job === 'Swift Developer') return <DiSwift />;
-      else if (x.job === 'Web Developer') return <DiCodeBadge />;
+      if (x.specialty === 'IOS Developer') return <IoLogoApple />;
+      else if (x.specialty === 'Node JS Developer') return <DiNodejsSmall />;
+      else if (x.specialty === 'Android Developer') return <FaAndroid />;
+      else if (x.specialty === 'Java Developer') return <FaJava />;
+      else if (x.specialty === 'Python Developer') return <FaPython />;
+      else if (x.specialty === 'Linux Developer') return <FaLinux />;
+      else if (x.specialty === 'Unity Developer') return <DiUnitySmall />;
+      else if (x.specialty === 'Angular Developer') return <DiAngularSimple />;
+      else if (x.specialty === 'PHP Developer') return <DiPhp />;
+      else if (x.specialty === 'React JS Developer') return <DiReact />;
+      else if (x.specialty === 'Wordpress Developer') return <DiWordpress />;
+      else if (x.specialty === 'Javascript Developer') return <DiJavascript1 />;
+      else if (x.specialty === 'HTML5 Developer') return <DiHtml5 />;
+      else if (x.specialty === 'Database Developer') return <FaDatabase />;
+      else if (x.specialty === '.NET Developer') return <DiDotnet />;
+      else if (x.specialty === 'Larvel Developer') return <DiLaravel />;
+      else if (x.specialty === 'Windows Applications Developer') return <DiWindows />;
+      else if (x.specialty === 'Swift Developer') return <DiSwift />;
+      else if (x.specialty === 'Web Developer') return <DiCodeBadge />;
     };
-    const statusClass = () => {
-      if (x.status === 'accepted')
-        return 'accepted list-group-item text-uppercase ';
-      else if (x.status === 'rejected')
-        return 'rejected list-group-item text-uppercase';
-      else return 'pending list-group-item text-uppercase';
-    };
+
+    const status = () => {
+      if (x.status === 'accepted') {
+        return <li className='accepted list-group-item text-uppercase' onClick={props.getStatus}>{x.status}</li>
+      } else if (x.status === 'rejected') {
+        return <li className='rejected list-group-item text-uppercase' onClick={props.getStatus}>{x.status}</li>
+      } else return <li className='pending list-group-item text-uppercase'>{x.status}</li>
+    }
     return (
       <div className='col-md-6' key={x.id}>
         <div className='card '>
@@ -151,10 +186,30 @@ function CompaniesAppliedFor(props) {
               {x.name}
             </li>
             <li className='list-group-item applied '>
-              <span className='job'>{jobIcon()}</span>
-              {x.job}
+              <span className='job'><IoMdBriefcase /></span>
+              {x.jobtitle}
             </li>
-            <li className={statusClass()}>{x.status}</li>
+            <li className='list-group-item togglerLi ' data-toggle='collapse'
+              href={'#jobdesc' + x.id}
+              role='button'>
+              <span className='job'><MdHelp /></span>
+              Job Description
+            </li>
+            <li className='list-group-item applied collapse ' id={'jobdesc' + x.id}>
+              {x.jobdesc}
+            </li>
+            <li className='list-group-item togglerLi ' data-toggle='collapse'
+              href={'#specialty' + x.id}
+              role='button'>
+              <span className='job'><DiCodeBadge /></span>
+              Specialty
+            </li>
+            <li className='list-group-item applied collapse' id={'specialty' + x.id}>
+              <span className='job'>{jobIcon()}</span>
+              {x.specialty}
+            </li>
+            {status()}
+
           </ul>
         </div>
       </div>
@@ -163,3 +218,34 @@ function CompaniesAppliedFor(props) {
   return <React.Fragment>{info}</React.Fragment>;
 }
 
+class InternshipStatus extends Component {
+  render() {
+    const { status, companyname, jobtitle, message } = this.props.values;
+    const values = { status, companyname, jobtitle, message }
+
+    const returnMessage = () => { if (message) return (<p><span className='bold'>Message by {values.companyname}:</span>{message}</p>) }
+    const returnAccepted = () => {
+      if (values.status === 'Accepted') return (
+        <div>
+          <p><span className='bold'>Comapany Location:</span> We are located at {this.props.values.accepted.location}</p>
+          <p><span className='bold'>Comapany Phone Number:</span> {this.props.values.accepted.phone}</p>
+          <p><span className='bold'>Contact us:</span> {this.props.values.accepted.contact}</p>
+        </div>)
+    }
+    return (
+      <React.Fragment>
+        <Modal show={true} onHide={this.props.closeJobModal} >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
+          </Modal.Header>
+          <div>
+            <p>Your internships apply for {values.job} in {values.companyname} has been {values.status}.</p>
+            {returnMessage()}
+            {returnAccepted()}
+          </div>
+
+        </Modal>
+      </React.Fragment>
+    );
+  }
+}

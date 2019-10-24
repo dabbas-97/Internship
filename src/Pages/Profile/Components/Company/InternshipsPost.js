@@ -1,49 +1,23 @@
 import React, { Component } from 'react';
-import jsonData from '../../suggestions.json';
 import { Modal } from 'react-bootstrap';
 import Buttons from '../../../Buttons';
 //icons import
-import { GoPerson } from 'react-icons/go';
+
 import { FiPercent } from 'react-icons/fi';
 import { MdHelp } from 'react-icons/md';
 import {
   IoMdBriefcase,
-  IoLogoApple,
   IoMdMale,
   IoMdFemale
 } from 'react-icons/io';
 import {
-  FaAndroid,
-  FaJava,
-  FaPython,
-  FaLinux,
-  FaDatabase,
-  FaLaptopCode,
-  FaCode
-} from 'react-icons/fa';
-import {
-  DiUnitySmall,
-  DiAngularSimple,
-  DiPhp,
-  DiReact,
-  DiLaravel,
-  DiWordpress,
-  DiJavascript1,
-  DiDotnet,
-  DiHtml5,
-  DiWindows,
-  DiSwift,
-  DiCodeBadge, DiNodejsSmall
-} from 'react-icons/di';
-//------------
-import { WithContext as ReactTags } from 'react-tag-input';
-const KeyCodes = {
-  comma: 188,
-  enter: 13
-};
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
-const loadData = () => JSON.parse(JSON.stringify(jsonData));
+  FaLaptopCode,
+
+} from 'react-icons/fa';
+
+//------------
+
 export default class InternshipsPost extends Component {
   state = {
     step: 1,
@@ -51,15 +25,11 @@ export default class InternshipsPost extends Component {
     jobtitle: '',
     gpa: 'Good Or Higher',
     gender: 'Male', //[Male,Female,Any Gender]
-    tags: [],
-    suggestions: [],
+    specialty: 'IOS Developer',
     posts: [],
     postEdit: ''
   };
-  componentDidMount() {
-    let suggestions = loadData();
-    this.setState({ suggestions: suggestions });
-  }
+
 
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
@@ -68,52 +38,25 @@ export default class InternshipsPost extends Component {
     this.setState({ step: this.state.step + 1 });
   };
 
-  //------------------------------------------------Input module stuff-------------------------------------
-  handleDelete = i => {
-    const { tags } = this.state;
-    this.setState({
-      tags: tags.filter((tag, index) => index !== i)
-    });
-  };
 
-  handleAddition = tag => {
-    if (this.state.suggestions.find(x => x === tag)) {
-      this.setState(state => ({ tags: [...state.tags, tag] }));
-    }
-  };
-
-  handleDrag = (tag, currPos, newPos) => {
-    const tags = [...this.state.tags];
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    // re-render
-    this.setState({ tags: newTags });
-  };
-  //------------------------------------------------------------------------------------
   handlePost = e => {
     //we take submited data and push it into posts array in the state. to show evenutally in the posted internships section.
     e.preventDefault();
-    const { gpa, gender, tags, jobtitle, jobdesc } = this.state;
-    const specialties = tags.map(tag => tag.id);
+    const { gpa, gender, specialty, jobtitle, jobdesc } = this.state;
     let internshipsData = {
       id: Math.round(Math.random() * 10000),
       jobtitle: jobtitle,
       jobdesc: jobdesc,
       gpa: gpa,
       gender: gender,
-      specialties: specialties
+      specialty: specialty
     };
     this.setState(state => ({
       posts: [...state.posts, internshipsData]
     }));
-    while (tags.length > 0) {
-      tags.pop();
-    }
+
     this.setState({
-      tags: tags,
+      specialty: 'IOS Developer',
       step: 1,
       jobdesc: '',
       jobtitle: '',
@@ -132,14 +75,13 @@ export default class InternshipsPost extends Component {
   };
   submitEditedPost = newData => e => {
     e.preventDefault();
-    const specialties = newData.tags.map(tag => tag.id);
     let editedPost = {
       id: newData.id,
       jobtitle: newData.jobtitle,
       jobdesc: newData.jobdesc,
       gpa: newData.gpa,
       gender: newData.gender,
-      specialties: specialties
+      specialty: newData.specialty
     };
     let posts = [...this.state.posts];
     const index = posts.findIndex(post => post.id === newData.id);
@@ -162,19 +104,14 @@ export default class InternshipsPost extends Component {
   };
 
   render() {
-    const { gender, gpa, jobtitle, jobdesc, step } = this.state;
-    const values = { jobtitle, jobdesc, gender, gpa };
+    const { gender, gpa, jobtitle, jobdesc, step, specialty } = this.state;
+    const values = { jobtitle, jobdesc, gender, gpa, specialty };
     return (
       <React.Fragment>
         <InternshipsPoster
           nextStep={this.nextStep}
           handleChange={this.handleChange}
           values={values}
-          tags={this.state.tags}
-          suggestions={this.state.suggestions}
-          handleDelete={this.handleDelete}
-          handleAddition={this.handleAddition}
-          handleDrag={this.handleDrag}
           handlePost={this.handlePost}
           step={step}
         />
@@ -207,11 +144,6 @@ class InternshipsPoster extends Component {
           <InternshipsCreateForm
             values={this.props.values}
             handleChange={this.props.handleChange}
-            tags={this.props.tags}
-            suggestions={this.props.suggestions}
-            handleDelete={this.props.handleDelete}
-            handleAddition={this.props.handleAddition}
-            handleDrag={this.props.handleDrag}
             handlePost={this.props.handlePost}
           />
         );
@@ -344,31 +276,32 @@ class InternshipsCreateForm extends Component {
 
               <div className='form-row'>
                 <div className='col-12'>
-                  <ReactTags
-                    inputFieldPosition='top'
-                    tags={this.props.tags}
-                    suggestions={this.props.suggestions}
-                    handleDelete={this.props.handleDelete}
-                    handleAddition={this.props.handleAddition}
-                    handleDrag={this.props.handleDrag}
-                    delimiters={delimiters}
-                    minQueryLength={1}
-                    renderSuggestion={({ text }) => (
-                      <div style={{}}>{text}</div>
-                    )}
-                    placeholder={'Java, PHP, etc.'}
-                    autocomplete={1}
-                    classNames={{
-                      tags: 'tagsClass',
-                      tagInput: 'tagInputClass',
-                      tagInputField: 'tagInputFieldClass',
-                      selected: 'selectedClass',
-                      tag: 'tagClass',
-                      remove: 'removeClass',
-                      suggestions: 'suggestionsClass',
-                      activeSuggestion: 'activeSuggestionClass'
-                    }}
-                  />
+                  <select
+                    name='specialty'
+                    className='mx-1 custom-select w-50 '
+                    onChange={this.props.handleChange('specialty')}
+                    value={values.specialty}
+                  >
+                    <option value='IOS Developer'>IOS Developer</option>
+                    <option value='Node JS Developer'>Node JS Developer</option>
+                    <option value='Android Developer'>Android Developer</option>
+                    <option value='Java Developer'>Java Developer</option>
+                    <option value='Python Developer'>Python Developer</option>
+                    <option value='Linux Developer'>Linux Developer</option>
+                    <option value='Unity Developer'>Unity Developer</option>
+                    <option value='Angular Developer'>Angular Developer</option>
+                    <option value='PHP Developer'>PHP Developer</option>
+                    <option value='React JS Developer'>React JS Developer</option>
+                    <option value='Wordpress Developer'>Wordpress Developer</option>
+                    <option value='Javascript Developer'>Javascript Developer</option>
+                    <option value='HTML5 Developer'>HTML5 Developer</option>
+                    <option value='Database Developer'>Database Developer</option>
+                    <option value='.NET Developer'>.NET Developer</option>
+                    <option value='Larvel Developer'>Larvel Developer</option>
+                    <option value='Larvel Developer'>Windows Applications Developer</option>
+                    <option value='Larvel Developer'>Swift Developer</option>
+                    <option value='Larvel Developer'>Web Developer</option>
+                  </select>
                 </div>
               </div>
             </li>
@@ -460,119 +393,70 @@ function Posts(props) {
     );
   }
   const info = myPosts.map(data => {
-    const renderSpecialties = data.specialties.map(specialty => {
-      const jobIcon = () => {
-        if (specialty === 'IOS Developer') return <IoLogoApple />;
-        else if (specialty === 'Node JS Developer') return <DiNodejsSmall />;
-        else if (specialty === 'Android Developer') return <FaAndroid />;
-        else if (specialty === 'Java Developer') return <FaJava />;
-        else if (specialty === 'Python Developer') return <FaPython />;
-        else if (specialty === 'Linux Developer') return <FaLinux />;
-        else if (specialty === 'Unity Developer') return <DiUnitySmall />;
-        else if (specialty === 'Angular Developer') return <DiAngularSimple />;
-        else if (specialty === 'PHP Developer') return <DiPhp />;
-        else if (specialty === 'React JS Developer') return <DiReact />;
-        else if (specialty === 'Wordpress Developer') return <DiWordpress />;
-        else if (specialty === 'Javascript Developer') return <DiJavascript1 />;
-        else if (specialty === 'HTML5 Developer') return <DiHtml5 />;
-        else if (specialty === 'Database Developer') return <FaDatabase />;
-        else if (specialty === '.NET Developer') return <DiDotnet />;
-        else if (specialty === 'Larvel Developer') return <DiLaravel />;
-        else if (specialty === 'Windows Applications Developer')
-          return <DiWindows />;
-        else if (specialty === 'Swift Developer') return <DiSwift />;
-        else if (specialty === 'Web Developer') return <DiCodeBadge />;
-      };
 
-      return (
-        <div className='row' key={Math.random()}>
-          <div className='col my-1'>
-            <span className='job'>{jobIcon()}</span>
-            {specialty}
-          </div>
-        </div>
-      );
-    });
-    const genderIcon = () => {
-      if (data.gender === 'Female') return <IoMdFemale />;
-      else if (data.gender === 'Male') return <IoMdMale />;
-      else
-        return (
-          <React.Fragment>
-            <GoPerson />
-          </React.Fragment>
-        );
-    };
     //onclick={this.props.getStudentsWhoApplied(data.id)}
     return (
-      <div className='col-md-6' key={data.id}>
+      <div className='col-md-6 companyPosts ' key={data.id}>
         <div className='card '>
           <ul className='list-group list-group-flush text-center'>
             <li className='list-group-item applied '>
-              <span className='job'>
-                <IoMdBriefcase />
-              </span>
-              {data.jobtitle}
+              <div className='row'>
+                <div className='col-4'>
+                  <span className=' float-left text-center'>
+                    Job Title:
+              </span></div>
+                <div className='col-8'>
+                  {data.jobtitle}
+                </div></div>
             </li>
-            <li
-              className='list-group-item applied togglerLi '
-              data-toggle='collapse'
-              href={'#jobdesc' + data.id}
-              role='button'
-              aria-expanded='false'
-            >
+            <li className='list-group-item applied '>
               <div className='row '>
-                <div className='col'>
-                  <span className='job'>
-                    <MdHelp />
-                  </span>
-                  Job Description
+                <div className='col-4'>
+                  <span className='float-left text-center'>
+                    Description:
+                  </span></div>
+                <div className='col-8'>
+                  {data.jobdesc}
                 </div>
               </div>
             </li>
-            <li
-              className='list-group-item applied collapse'
-              id={'jobdesc' + data.id}
-            >
-              {data.jobdesc}
-            </li>
+
             <li className='list-group-item applied '>
-              <span className='job'>
-                <FiPercent />
-              </span>
-              {data.gpa}
-            </li>
-            <li className='list-group-item applied '>
-              <span className='job'>{genderIcon()}</span>
-              {data.gender}
-            </li>
-            <li
-              className='list-group-item applied togglerLi '
-              data-toggle='collapse'
-              href={'#specialties' + data.id}
-              role='button'
-              aria-expanded='false'
-            >
               <div className='row '>
-                <div className='col'>
-                  <span className='job'>
-                    <FaCode />
-                  </span>
-                  Specialties
+                <div className='col-4'>
+                  <span className='float-left'>GPA:
+              </span></div>
+                <div className='col-8'>
+                  {data.gpa}
                 </div>
               </div>
             </li>
-            <li
-              className='list-group-item applied collapse'
-              id={'specialties' + data.id}
-            >
-              {renderSpecialties}
+            <li className='list-group-item applied '>
+              <div className='row '>
+                <div className='col-4'>
+                  <span className='float-left'>Gender:</span></div>
+                <div className='col-8'>
+                  {data.gender}
+                </div>
+              </div>
+            </li>
+            <li className='list-group-item applied'>
+              <div className='row '>
+                <div className='col-4'>
+                  <span className='float-left'>
+                    Specialty:
+                  </span>
+                </div>
+                <div className='col-8'>
+                  {data.specialty}
+                </div>
+              </div>
             </li>
             <li className='list-group-item applied'>
               <div className='row'>
                 <div className='col-6'>
                   <button
-                    className='rejected w-100 btn'
+                    className=' w-100 btn'
                     onClick={() => props.handleDeletePosts(data.id)}
                   >
                     Delete
@@ -581,7 +465,6 @@ function Posts(props) {
                 <div className='col-6'>
                   <button
                     className='w-100 btn'
-                    data-target='#exampleModal'
                     onClick={() =>
                       props.handleEditPosts({
                         id: data.id,
@@ -589,10 +472,7 @@ function Posts(props) {
                         jobtitle: data.jobtitle,
                         gpa: data.gpa,
                         gender: data.gender, //[Male,Female,Any Gender]
-                        tags: data.specialties.map(tag => {
-                          let newTag = { id: tag, text: tag };
-                          return newTag;
-                        })
+                        specialty: data.specialty
                       })
                     }
                   >
@@ -616,45 +496,19 @@ class EditPostForm extends Component {
     jobtitle: '',
     gpa: 'Good Or Higher',
     gender: 'Male',
-    tags: [],
-    suggestions: []
+    specialty: '',
   };
 
-  handleDelete = i => {
-    const { tags } = this.state;
-    this.setState({
-      tags: tags.filter((tag, index) => index !== i)
-    });
-  };
-
-  handleAddition = tag => {
-    if (this.state.suggestions.find(x => x === tag)) {
-      this.setState(state => ({ tags: [...state.tags, tag] }));
-    }
-  };
-
-  handleDrag = (tag, currPos, newPos) => {
-    const tags = [...this.state.tags];
-    const newTags = tags.slice();
-
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-
-    // re-render
-    this.setState({ tags: newTags });
-  };
 
   componentDidMount() {
-    let suggestions = loadData();
     const { values } = this.props;
     this.setState({
       id: values.id,
-      suggestions: suggestions,
       jobdesc: values.jobdesc,
       jobtitle: values.jobtitle,
       gpa: values.gpa,
       gender: values.gender,
-      tags: values.tags
+      specialty: values.specialty
     });
   }
   handleChange = input => e => {
@@ -676,7 +530,7 @@ class EditPostForm extends Component {
     };
     return (
       <React.Fragment>
-        <Modal show={true} onHide={handleClose}>
+        <Modal show={true} onHide={handleClose} >
           <Modal.Header closeButton>
             <Modal.Title>Edit Post</Modal.Title>
           </Modal.Header>
@@ -782,31 +636,32 @@ class EditPostForm extends Component {
 
                 <div className='form-row'>
                   <div className='col-12'>
-                    <ReactTags
-                      inputFieldPosition='top'
-                      tags={this.state.tags}
-                      suggestions={this.state.suggestions}
-                      handleDelete={this.handleDelete}
-                      handleAddition={this.handleAddition}
-                      handleDrag={this.handleDrag}
-                      delimiters={delimiters}
-                      minQueryLength={1}
-                      renderSuggestion={({ text }) => (
-                        <div style={{}}>{text}</div>
-                      )}
-                      placeholder={'Java, PHP, etc.'}
-                      autocomplete={1}
-                      classNames={{
-                        tags: 'tagsClass',
-                        tagInput: 'tagInputClass',
-                        tagInputField: 'tagInputFieldClass',
-                        selected: 'selectedClass',
-                        tag: 'tagClass',
-                        remove: 'removeClass',
-                        suggestions: 'suggestionsClass',
-                        activeSuggestion: 'activeSuggestionClass'
-                      }}
-                    />
+                    <select
+                      name='specialty'
+                      className='mx-1 custom-select w-50 '
+                      onChange={this.handleChange('specialty')}
+                      value={this.state.specialty}
+                    >
+                      <option value='IOS Developer'>IOS Developer</option>
+                      <option value='Node JS Developer'>Node JS Developer</option>
+                      <option value='Android Developer'>Android Developer</option>
+                      <option value='Java Developer'>Java Developer</option>
+                      <option value='Python Developer'>Python Developer</option>
+                      <option value='Linux Developer'>Linux Developer</option>
+                      <option value='Unity Developer'>Unity Developer</option>
+                      <option value='Angular Developer'>Angular Developer</option>
+                      <option value='PHP Developer'>PHP Developer</option>
+                      <option value='React JS Developer'>React JS Developer</option>
+                      <option value='Wordpress Developer'>Wordpress Developer</option>
+                      <option value='Javascript Developer'>Javascript Developer</option>
+                      <option value='HTML5 Developer'>HTML5 Developer</option>
+                      <option value='Database Developer'>Database Developer</option>
+                      <option value='.NET Developer'>.NET Developer</option>
+                      <option value='Larvel Developer'>Larvel Developer</option>
+                      <option value='Larvel Developer'>Windows Applications Developer</option>
+                      <option value='Larvel Developer'>Swift Developer</option>
+                      <option value='Larvel Developer'>Web Developer</option>
+                    </select>
                   </div>
                 </div>
               </li>

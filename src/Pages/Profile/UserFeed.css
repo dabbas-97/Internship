@@ -4,7 +4,6 @@
 }
 
 .feedContent .card {
-  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -13,21 +12,49 @@
   margin: 0 auto;
   object-fit: contain;
 }
-.feedContent {
+.feedContent .list-group-item {
+  border: 0.2px solid rgba(0, 0, 0, 0.36);
+}
+.accepted,
+.rejected,
+.pending {
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  padding: 1px 10px !important;
+}
+.accepted,
+.rejected {
+  cursor: pointer;
 }
 .accepted {
-  color: green !important;
+  color: white !important;
+  background-image: -webkit-linear-gradient(top, #5ec122, #09b109) !important;
+}
+.acceptedbtn {
+  color: white !important;
+  background: #09b109 !important;
+}
+.acceptedbtn:hover {
+  color: white !important;
+  background: #15dc15 !important;
 }
 .rejected {
-  color: red !important;
+  color: white !important;
+  background-image: -webkit-linear-gradient(top, #f62b2b, #d20202);
+}
+.rejectedbtn {
+  color: white !important;
+  background: #d20202 !important;
+}
+.rejectedbtn:hover {
+  color: white !important;
+  background: #ec4141 !important;
 }
 .pending {
-  color: #c3c32c !important;
+  color: black !important;
+  background-image: -webkit-linear-gradient(top, #fcfac0, #f6f283);
 }
 
-.rejected,
-.accepted,
-.pending,
 .applied {
   background: #ececec !important;
 }
@@ -170,4 +197,33 @@
 .togglerLi {
   background: #e9f4f9 !important;
   cursor: pointer;
+}
+.companyPosts .list-group-item {
+  overflow: overlay;
+  max-height: 100px;
+}
+
+.companyPosts span {
+  font-size: 0.95em;
+}
+.modal-title {
+  margin: 0 auto !important;
+  line-height: 1.5;
+  font-size: 2em !important;
+  border-radius: 7px;
+  border: 1px solid #00000021;
+  background: #f1f1f178;
+  padding: 10px 50px;
+  color: #2ca5d6;
+}
+.modal-header .close {
+  display: contents;
+}
+.modal-content .cvul h6 {
+  padding-left: 11px;
+  text-align: initial;
+}
+.modal-header {
+  border-bottom: unset !important;
+  background: aliceblue;
 }

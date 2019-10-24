@@ -26,7 +26,7 @@ export default class StudentCV extends Component {
     tags: [],
     suggestions: []
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let suggestions = loadData();
     this.setState({ suggestions: suggestions }); // Filling data from the json file (suggestions.json)
   }

@@ -44,63 +44,56 @@ export default class InternShips extends Component {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
 
       }, {
         imgsrc: firstCompany,
         companyname: 'Eskadinia',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Android Developer'
-
-      }, {
-        imgsrc: secondCompany,
-        companyname: 'Microsoft',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
-        specialty: 'IOS Developer',
 
       }, {
         imgsrc: thirdCompany,
         companyname: 'Estarta ',
         jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a gay phagoot',
+        jobdesc: 'We are looking for a ',
         specialty: 'Node JS Developer',
 
       }],
@@ -132,11 +125,11 @@ export default class InternShips extends Component {
       const appliedChunks = pageRenderer();
 
 
-      console.log(appliedChunks)
+
       const nextPage = () => {
         var { specialtypages } = this.state
         let pages = specialtypages[count][0];
-        console.log(specialtypages)
+
         if (pages < appliedChunks.length - 1) {
           pages++;
           specialtypages[count][0] = pages
@@ -201,14 +194,15 @@ export default class InternShips extends Component {
               </h3>
             </div>
           </div>
-          <div className='row'>
-            <CompaniesPosts posts={appliedChunks[this.state.specialtypages[count]]} />
-          </div>
+          <div className='m-4'>
+            <div className='row'>
+              <CompaniesPosts posts={appliedChunks[this.state.specialtypages[count]]} />
+            </div></div>
           {showButtons()}
         </div>
       )
     })
-    console.log(this.state.specialtypages)
+
     return <div className='container opportunities'>
       {opporunities}
     </div>

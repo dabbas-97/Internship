@@ -11,82 +11,16 @@ export default class UserInfo extends Component {
   };
   render() {
     const { userInfo } = this.props;
+    //icons for gender
 
     const changeView = () => {
       this.setState({ info: 'edit' });
     };
 
-    const renderName = () => {
-      if (this.state.info === 'view') return userInfo.name;
-      else
-        return (
-          <input
-            type='text'
-            className=''
-            placeholder='Your Name'
-            onChange={this.props.handleChange('name')}
-            defaultValue={userInfo.name}
-            required
-          />
-        );
-    };
 
-    const renderLocation = () => {
-      if (this.state.info === 'view') return userInfo.location;
-      else
-        return (
-          <input
-            type='text'
-            className=''
-            placeholder='Location'
-            onChange={this.props.handleChange('location')}
-            defaultValue={userInfo.location} required
-          />
-        );
-    };
-    const renderPhone = () => {
-      if (this.state.info === 'view') return userInfo.phone;
-      else
-        return (
-          <input
-            type='text'
-            className=''
-            placeholder='Phone Number'
-            onChange={this.props.handleChange('phone')}
-            defaultValue={userInfo.phone} required
-          />
-        );
-    };
-    const renderBio = () => {
-      if (this.state.info === 'view') return userInfo.bio;
-      else
-        return (
-          <textarea
-            className=' form-control'
-            onChange={this.props.handleChange('bio')}
-            defaultValue={userInfo.bio}
-            placeholder='Bio' required
-          />
-        );
-    };
-    const renderButton = () => {
-      if (this.state.info === 'edit')
-        return (
-          <button
-            type='button'
-            className='btn editInfoBtn'
-            onClick={submitChanges}
-          >
-            <span className=''>
-              <FaPen />
-            </span>
-            Submit Changes
-          </button>
-        );
-    };
     const submitChanges = () => {
       this.setState({ info: 'view' });
-      // send new values to the database
+      // send new values to the data
     };
     const imageUpload = file => {
       if (file.length > 0) {
@@ -94,9 +28,65 @@ export default class UserInfo extends Component {
         this.props.handleChangeImg(src);
       }
     };
+    const userInfoPage = () => {
+      if (this.state.info === 'view') return (
+        <React.Fragment>
+          <span className='editSpan' onClick={changeView}>
+            <FaPen />
+          </span>
 
-    return (
-      <div className=' profileInfo'>
+          <div className='profileImg'>
+            <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
+              <img
+                src={this.props.userInfo.userImg}
+                className='proImg rounded-circle'
+                alt='profile '
+              />
+            </InputFiles>
+          </div>
+
+          <ul className='list-group list-group-flush text-center'>
+            {/* name of the user */}
+            <li className='list-group-item edit'>
+              <span>
+                <FaUserTie />
+              </span>
+              {userInfo.name}
+            </li>
+            {/* users location */}
+            <li className='list-group-item edit'>
+              <span>
+                <MdLocationOn />
+              </span>
+              {userInfo.location}
+            </li>
+            {/* user phone number */}
+            <li className='list-group-item edit'>
+              <span>
+                <MdPhone />
+              </span>
+              {userInfo.phone}
+            </li>
+            {/* users bio */}
+            <li className='list-group-item edit'>
+              <span>
+                <FaQuoteLeft />
+              </span>
+              {userInfo.bio}
+              <span>
+                <FaQuoteRight />
+              </span>
+            </li>
+            {/* date added */}
+            <li className='list-group-item'>
+              <span>
+                <MdAssignmentInd />
+              </span>
+              {userInfo.date}
+            </li>
+          </ul>
+        </React.Fragment>
+      ); else return (<form onSubmit={submitChanges}>
         <span className='editSpan' onClick={changeView}>
           <FaPen />
         </span>
@@ -113,46 +103,73 @@ export default class UserInfo extends Component {
 
         <ul className='list-group list-group-flush text-center'>
           {/* name of the user */}
-          <li className='list-group-item edit'>
+          <li className='list-group-item '>
             <span>
               <FaUserTie />
             </span>
-            {renderName()}
+            <input
+              type='text'
+              className=''
+              placeholder='Your Name'
+              onChange={this.props.handleChange('name')}
+              defaultValue={userInfo.name} required
+            />
           </li>
           {/* users location */}
-          <li className='list-group-item edit'>
+          <li className='list-group-item '>
             <span>
               <MdLocationOn />
             </span>
-            {renderLocation()}
+            <input
+              type='text'
+              className=''
+              placeholder='Location'
+              onChange={this.props.handleChange('location')}
+              defaultValue={userInfo.location} required
+            />
           </li>
           {/* user phone number */}
-          <li className='list-group-item edit'>
+          <li className='list-group-item '>
             <span>
               <MdPhone />
             </span>
-            {renderPhone()}
+            <input
+              type='text'
+              className=''
+              placeholder='Phone Number'
+              onChange={this.props.handleChange('phone')}
+              defaultValue={userInfo.phone} required
+            />
           </li>
           {/* users bio */}
-          <li className='list-group-item edit'>
+          <li className='list-group-item '>
             <span>
               <FaQuoteLeft />
             </span>
-            {renderBio()}
+            <textarea
+              className=' form-control'
+              onChange={this.props.handleChange('bio')}
+              defaultValue={userInfo.bio}
+              placeholder='Bio'
+            />
             <span>
               <FaQuoteRight />
             </span>
           </li>
-          {/* date added */}
-          <li className='list-group-item'>
-            <span>
-              <MdAssignmentInd />
-            </span>
-            {userInfo.date}
-          </li>
         </ul>
-        {renderButton()}
-      </div>
-    );
+        <button
+          type='submit'
+          className='btn editInfoBtn'
+        >
+          <span className=''>
+            <FaPen />
+          </span>
+          Submit Changes
+          </button>
+      </form>)
+    }
+
+
+    return <div className='profileInfo'>{userInfoPage()}</div>
   }
 }

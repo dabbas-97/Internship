@@ -9,7 +9,7 @@ export default class Buttons extends Component {
             return (
                 <div className='row'>
                     <div className='form-inline offset-6 col-6 my-1 '>
-                        <div className='text-center m-4 '>
+                        <div className='text-center mx-4 my-2 '>
                             <button type='button' className='btn' onClick={this.props.nextPage}>
                                 Next <IoIosArrowForward />
                             </button>
@@ -21,7 +21,7 @@ export default class Buttons extends Component {
             return (
                 <div className='row'>
                     <div className='form-inline justify-content-end col-6 my-1'>
-                        <div className='text-center m-4 '>
+                        <div className='text-center mx-4 my-2 '>
                             <button type='button' className='btn' onClick={this.props.prevPage}>
                                 <IoIosArrowBack /> Back
               </button>
@@ -33,14 +33,14 @@ export default class Buttons extends Component {
             return (
                 <div className='row'>
                     <div className='form-inline justify-content-end col-6 my-1'>
-                        <div className='text-center m-4 '>
+                        <div className='text-center mx-4 my-2 '>
                             <button type='button' className='btn' onClick={this.props.prevPage}>
                                 <IoIosArrowBack /> Back
               </button>
                         </div>
                     </div>
                     <div className='form-inline col-6 my-1 '>
-                        <div className='text-center m-4 '>
+                        <div className='text-center mx-4 my-2 '>
                             <button type='button' className='btn' onClick={this.props.nextPage}>
                                 Next <IoIosArrowForward />
                             </button>
