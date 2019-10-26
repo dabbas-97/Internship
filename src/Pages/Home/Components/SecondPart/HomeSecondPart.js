@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import firstCompany from '../../../images/firstCompany.jpg';
-import secondCompany from '../../../images/secondCompany.jpg';
-import thirdCompany from '../../../images/thirdCompany.jpg';
+import firstCompany from '../../../../images/firstCompany.jpg';
+import secondCompany from '../../../../images/secondCompany.jpg';
+import thirdCompany from '../../../../images/thirdCompany.jpg';
 
 export class HomeSecondPart extends Component {
   state = {

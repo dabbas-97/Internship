@@ -1,0 +1,62 @@
+import React, { Component } from 'react';
+import { Button } from './Button';
+import { CVCreateForm } from "./CVCreateForm";
+//************************************************************************Edit CV Class *****************************************/
+export class EditCV extends Component {
+    state = { type: 'edit' };
+    render() {
+        const formRenderer = () => {
+            switch (this.props.step) {
+                case 1:
+                default:
+                    return (<div className='m-3 editCV'>
+                        <h5 className='h5 mb-4'>Edit your CV info.</h5>
+                        <ul className='list-group text-center '>
+                            <li className='list-group-item py-2 '>
+                                <div className='row'>
+                                    <div className='col-4'>Social Status:</div>
+                                    <div className='col-8'>
+                                        <span>{this.props.values.socialStatus}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className='list-group-item py-2'>
+                                <div className='row'>
+                                    <div className='col-4'> Field:</div>
+                                    <div className='col-8'>
+                                        <span>{this.props.values.education.field}</span>
+                                    </div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col-4'>University:</div>
+                                    <div className='col-8'>
+                                        <span>{this.props.values.education.school}</span>
+                                    </div>
+                                </div>
+
+                                <div className='row'>
+                                    <div className='col-4'> GPA :</div>
+                                    <div className='col-8'>
+                                        <span>{this.props.values.gpa}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li className='list-group-item py-2'>
+                                <div className='row'>
+                                    <div className='col-4'>Specialties:</div>
+                                    <div className='col-8'>
+                                        {this.props.values.tags.map(x => (<span key={x.id}>{x.text} , </span>))}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <Button nextStep={this.props.nextStep} type={this.state.type} />
+                    </div>);
+                case 2:
+                    return (<CVCreateForm values={this.props.values} handleChange={this.props.handleChange} tags={this.props.tags} suggestions={this.props.suggestions} handleDelete={this.props.handleDelete} handleAddition={this.props.handleAddition} handleDrag={this.props.handleDrag} onSubmit={this.props.onSubmit} />);
+            }
+        };
+        return <React.Fragment>{formRenderer()} </React.Fragment>;
+    }
+}

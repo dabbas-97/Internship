@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Home.css';
-import { HomeFirstPart } from './Components/HomeFirstPart';
-import { HomeSecondPart } from './Components/HomeSecondPart';
-import { HomeThirdPart } from './Components/HomeThirdPart';
 import AddFooter from '../AddFooter';
+import { HomeFirstPart } from './Components/Firstpart/HomeFirstPart';
+import { HomeSecondPart } from './Components/SecondPart/HomeSecondPart';
+import { HomeThirdPart } from './Components/ThirdPart/HomeThirdPart';
 
 class Home extends Component {
   render() {

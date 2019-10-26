@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserInfo from './Components/Company/UserInfo';
-import UserFeed from './Components/Company/UserFeed';
+import UserFeed from './Components/Company/UserFeed/UserFeed';
 import profileImg from '../../images/education.png';
 
 export default class CompanyProfile extends Component {

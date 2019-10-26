@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../UserFeed.css';
-import StudentCV from './StudentCV';
+import StudentCV from './StudentCv/StudentCV';
 import { MdBusiness, MdHelp } from 'react-icons/md';
 import Buttons from '../../../Buttons'
 import { Modal } from 'react-bootstrap'

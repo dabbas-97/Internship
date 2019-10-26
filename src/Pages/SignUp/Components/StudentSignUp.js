@@ -5,6 +5,7 @@ import { UserInfo } from './UserInfo';
 import { StudentInfo } from './Student/StudentInfo';
 import { Confirm } from './Student/Confirm';
 import logoImg from '../../../images/logo.PNG';
+import { Success } from './Success';
 
 export default class StudentSignUp extends Component {
   state = {
@@ -128,12 +129,4 @@ export default class StudentSignUp extends Component {
   }
 }
 
-class Success extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <h1 className='h1 text-center m-lg-5'>Success!</h1>
-      </React.Fragment>
-    );
-  }
-}
+
