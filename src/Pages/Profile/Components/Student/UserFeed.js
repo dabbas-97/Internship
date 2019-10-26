@@ -227,7 +227,7 @@ class InternshipStatus extends Component {
     const returnAccepted = () => {
       if (values.status === 'Accepted') return (
         <div>
-          <p><span className='bold'>Comapany Location:</span> We are located at {this.props.values.accepted.location}</p>
+          <p><span className='bold'>Comapany Location:</span>  {this.props.values.accepted.location}</p>
           <p><span className='bold'>Comapany Phone Number:</span> {this.props.values.accepted.phone}</p>
           <p><span className='bold'>Contact us:</span> {this.props.values.accepted.contact}</p>
         </div>)
@@ -238,8 +238,8 @@ class InternshipStatus extends Component {
           <Modal.Header closeButton>
             <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
           </Modal.Header>
-          <div>
-            <p>Your internships apply for {values.job} in {values.companyname} has been {values.status}.</p>
+          <div className='statusMessage'>
+            <p>Your internship application for <span>{values.jobtitle}</span> in <span>{values.companyname}</span> has been <span className={values.status}>{values.status}</span>.</p>
             {returnMessage()}
             {returnAccepted()}
           </div>

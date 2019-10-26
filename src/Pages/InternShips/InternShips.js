@@ -203,9 +203,12 @@ export default class InternShips extends Component {
       )
     })
 
-    return <div className='container opportunities'>
-      {opporunities}
-    </div>
+    return <React.Fragment>
+      <div className='container opportunities'>
+        <h1>InternShips available for you</h1>
+        {opporunities}
+      </div>
+    </React.Fragment>
   }
 }
 

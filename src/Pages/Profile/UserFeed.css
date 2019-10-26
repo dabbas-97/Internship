@@ -188,6 +188,7 @@
   background: #c5c5c536;
   line-height: 1.5em;
   letter-spacing: 1.5px;
+  border: 1px solid #00000021;
 }
 
 .cvul h6 span {
@@ -212,7 +213,7 @@
   font-size: 2em !important;
   border-radius: 7px;
   border: 1px solid #00000021;
-  background: #f1f1f178;
+  background: #f1f1f1;
   padding: 10px 50px;
   color: #2ca5d6;
 }
@@ -225,5 +226,25 @@
 }
 .modal-header {
   border-bottom: unset !important;
-  background: aliceblue;
+  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
+}
+.statusMessage {
+  padding: 20px;
+  font-size: 1.3em;
+}
+.statusMessage p {
+  padding: 20px;
+  background: #f1f1f1;
+  border-radius: 5px;
+  color: #2ca5d6;
+}
+.statusMessage p span {
+  font-weight: bold;
+  color: #585858;
+}
+.Accepted {
+  color: #19e819 !important;
+}
+.Rejected {
+  color: red !important;
 }

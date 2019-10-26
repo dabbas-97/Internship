@@ -2,12 +2,24 @@ import React, { Component } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import logoImg from '../../images/logo.PNG';
+import { auth } from '../../Config/fbConfig'
 export default class Login extends Component {
+  state = {
+    email: '', password: ''
+  }
   loginSubmit = e => {
     e.preventDefault();
+    const { email, password } = this.state
+    console.log(email)
+    auth.signInWithEmailAndPassword(email, password).then(cred => {
+      console.log(cred.user)
+    }).catch((err) => console.log(err))
   };
 
   render() {
+    const handleChange = input => e => {
+      this.setState({ [input]: e.target.value })
+    }
     return (
       <div className='container '>
         <form onSubmit={this.loginSubmit} className='formLog'>
@@ -21,8 +33,8 @@ export default class Login extends Component {
             <input
               type='email'
               className=' form-control'
-              id='emailAddress'
               placeholder='Enter your email'
+              onChange={handleChange('email')}
               required
             />
           </div>
@@ -31,7 +43,7 @@ export default class Login extends Component {
             <input
               type='password'
               className='form-control'
-              id='userPassword'
+              onChange={handleChange('password')}
               placeholder='Enter your password'
               required
             />

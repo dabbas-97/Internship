@@ -103,6 +103,7 @@ export default class CompanySignUp extends Component {
 
 class Success extends Component {
   render() {
+    console.log(this.props.values)
     return (
       <React.Fragment>
         <h1 className='h1 text-center m-lg-5'>Success!</h1>

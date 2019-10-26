@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
+import { auth } from '../../../../Config/fbConfig'
 export class Confirm extends Component {
   continue = e => {
     e.preventDefault();
-    this.props.nextStep();
+
+    const { values } = this.props;
+    const { email, password } = values;
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(cred => {
+        console.log('signed up!!!');
+        this.props.nextStep();
+      }).catch(err => console.log(err))
+
   };
   render() {
     const isBio = () => {
