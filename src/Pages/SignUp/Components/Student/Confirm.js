@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { auth } from '../../../../Config/fbConfig'
+import firebase, { db } from '../../../../Config/fbConfig'
 export class Confirm extends Component {
   continue = e => {
     e.preventDefault();
     const { values } = this.props;
     const { email, password } = values;
-    auth.createUserWithEmailAndPassword(email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(cred => {
-        console.log('signed up!!!', cred);
-        this.props.nextStep();
-      }).catch(err => console.log(err.message))
+        return db.collection('users').doc(cred.user.uid).set({
+          name: values.name,
+          gender: values.sex,
+          birthday: `${values.day}/${values.month}/${values.year}`,
+          phone: values.phone,
+          hometown: values.city,
+          bio: values.bio,
+          type: 'student'
+        })
+      }).then(() => this.props.nextStep()).catch(err => console.log(err.message))
   };
   render() {
+    const { values } = this.props;
     const isBio = () => {
-      if (this.props.values.bio === '') return 'd-none';
+      if (values.bio === '') return 'd-none';
       else return 'list-group-item';
     };
     return (
@@ -24,7 +32,7 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'>Email:</div>
               <div className='col-8'>
-                <span>{this.props.values.email}</span>
+                <span>{values.email}</span>
               </div>
             </div>
           </li>
@@ -32,7 +40,7 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'>Password: </div>
               <div className='col-8'>
-                <span>{this.props.values.password}</span>
+                <span>{values.password}</span>
               </div>
             </div>
           </li>
@@ -40,7 +48,7 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'> Name:</div>
               <div className='col-8'>
-                <span>{this.props.values.name}</span>
+                <span>{values.name}</span>
               </div>
             </div>
           </li>
@@ -48,7 +56,7 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'> Gender:</div>
               <div className='col-8'>
-                <span>{this.props.values.sex}</span>
+                <span>{values.sex}</span>
               </div>
             </div>
           </li>
@@ -56,9 +64,9 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'> Birthday:</div>
               <div className='col-8'>
-                <span>{this.props.values.day}</span>/
-                <span>{this.props.values.month}</span>/
-                <span>{this.props.values.year}</span>
+                <span>{values.day}</span>/
+                <span>{values.month}</span>/
+                <span>{values.year}</span>
               </div>
             </div>
           </li>
@@ -66,15 +74,15 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'> Phone Number:</div>
               <div className='col-8'>
-                <span>{this.props.values.phone}</span>
+                <span>{values.phone}</span>
               </div>
             </div>
           </li>
           <li className='list-group-item'>
             <div className='row'>
-              <div className='col-4'> Location:</div>
+              <div className='col-4'> Hometown:</div>
               <div className='col-8'>
-                <span>{this.props.values.city}</span>
+                <span>{values.city}</span>
               </div>
             </div>
           </li>
@@ -82,7 +90,7 @@ export class Confirm extends Component {
             <div className='row'>
               <div className='col-4'> Students Bio: </div>
               <div className='col-8'>
-                <span>{this.props.values.bio}</span>
+                <span>{values.bio}</span>
               </div>
             </div>
           </li>

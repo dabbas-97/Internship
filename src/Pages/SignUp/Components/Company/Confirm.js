@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { auth } from '../../../../Config/fbConfig'
+import firebase, { db } from '../../../../Config/fbConfig'
 export class Confirm extends Component {
   continue = e => {
     e.preventDefault();
@@ -8,41 +8,48 @@ export class Confirm extends Component {
     const { values } = this.props;
     const { email, password } = values;
 
-    auth.createUserWithEmailAndPassword(email, password)
+    firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(cred => {
-        console.log('signed up!!!');
-        this.props.nextStep();
-      }).catch(err => console.log(err))
+        return db.collection('users').doc(cred.user.uid).set({
+          name: values.name,
+          phone: values.phone,
+          location: values.city,
+          bio: values.bio,
+          type: 'company'
+        })
+
+      }).then(() => this.props.nextStep()).catch(err => console.log(err))
 
   };
   render() {
+    const { values } = this.props;
     const isBio = () => {
-      if (this.props.values.bio === '') return 'd-none';
+      if (values.bio === '') return 'd-none';
       else return 'list-group-item';
     };
     return (
       <React.Fragment>
         <ul className='list-group text-center'>
           <li className='list-group-item '>
-            Email: <span>{this.props.values.email}</span>
+            Email: <span>{values.email}</span>
           </li>
           <li className='list-group-item'>
-            Password: <span>{this.props.values.password}</span>
+            Password: <span>{values.password}</span>
           </li>
           <li className='list-group-item'>
-            Name: <span>{this.props.values.name}</span>
+            Name: <span>{values.name}</span>
           </li>
           <li className='list-group-item'>
-            Phone Number: <span>{this.props.values.phone}</span>
+            Phone Number: <span>{values.phone}</span>
           </li>
           <li className='list-group-item'>
-            Location: <span>{this.props.values.city}</span>
+            Location: <span>{values.city}</span>
           </li>
           <li className='list-group-item'>
-            Phone Number: <span>{this.props.values.phone}</span>
+            Phone Number: <span>{values.phone}</span>
           </li>
           <li className={isBio()}>
-            Company's Description: <span>{this.props.values.bio}</span>
+            Company's Description: <span>{values.bio}</span>
           </li>
         </ul>
         <div className=' form-inline justify-content-center form-row my-1'>

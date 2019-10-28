@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Nav.css';
 import { Logo } from './Components/Logo';
 import RegisterNav from './Components/RegisterNav';
-import { MainNav } from './Components/MainNav';
+import MainNav from './Components/MainNav';
 
 class Nav extends Component {
   render() {

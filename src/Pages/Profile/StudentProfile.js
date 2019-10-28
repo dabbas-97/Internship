@@ -82,16 +82,10 @@ export default class StudentProfile extends Component {
       <div className='container'>
         <div className='row mt-3'>
           <div className='col-md-8 '>
-            <UserFeed
-              internshipsApplied={this.state.userFeed.internshipsApplied}
-            />
+            <UserFeed internshipsApplied={this.state.userFeed.internshipsApplied} />
           </div>
           <div className='col-md-4'>
-            <UserInfo
-              userInfo={this.state.userInfo}
-              handleChange={this.handleChange}
-              handleChangeImg={this.handleChangeImg}
-            />
+            <UserInfo userInfo={this.state.userInfo} handleChange={this.handleChange} handleChangeImg={this.handleChangeImg} />
           </div>
         </div>
       </div>

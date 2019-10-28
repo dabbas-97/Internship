@@ -5,27 +5,8 @@ import { MdBusiness, MdHelp } from 'react-icons/md';
 import Buttons from '../../../Buttons'
 import { Modal } from 'react-bootstrap'
 import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
-import {
-  FaAndroid,
-  FaJava,
-  FaPython,
-  FaLinux,
-  FaDatabase
-} from 'react-icons/fa';
-import {
-  DiUnitySmall,
-  DiAngularSimple,
-  DiPhp,
-  DiReact,
-  DiLaravel,
-  DiWordpress,
-  DiJavascript1,
-  DiDotnet,
-  DiHtml5,
-  DiWindows,
-  DiSwift,
-  DiCodeBadge, DiNodejsSmall
-} from 'react-icons/di';
+import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
+import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 
 export default class UserFeed extends Component {
   state = { jobstatus: '' }
@@ -48,11 +29,7 @@ export default class UserFeed extends Component {
   showStatus = () => {
     if (this.state.jobstatus)
       return (
-        <InternshipStatus
-          values={this.state.jobstatus}
-          closeJobModal={this.closeJobModal}
-
-        />
+        <InternshipStatus values={this.state.jobstatus} closeJobModal={this.closeJobModal} />
       );
   };
   render() {
@@ -65,10 +42,7 @@ export default class UserFeed extends Component {
             <StudentCV />
           </div>
           <div className=' appliedList text-center'>
-            <CompaniesAppliedForComponent
-              internshipsApplied={internshipsApplied}
-              getStatus={this.getStatus}
-            />
+            <CompaniesAppliedForComponent internshipsApplied={internshipsApplied} getStatus={this.getStatus} />
           </div>
 
         </div>
@@ -122,10 +96,7 @@ class CompaniesAppliedForComponent extends Component {
         <h5 className='h5'>Internships You've Applied For</h5>
         <div className='feedContent m-3'>
           <div className='row  '>
-            <CompaniesAppliedFor
-              internshipsApplied={appliedChunks[this.state.pages]}
-              getStatus={this.props.getStatus}
-            />
+            <CompaniesAppliedFor internshipsApplied={appliedChunks[this.state.pages]} getStatus={this.props.getStatus} />
           </div>
           {showButtons()}
         </div>
@@ -145,25 +116,29 @@ function CompaniesAppliedFor(props) {
   }
   const info = internshipsApplied.map(x => {
     const jobIcon = () => {
-      if (x.specialty === 'IOS Developer') return <IoLogoApple />;
-      else if (x.specialty === 'Node JS Developer') return <DiNodejsSmall />;
-      else if (x.specialty === 'Android Developer') return <FaAndroid />;
-      else if (x.specialty === 'Java Developer') return <FaJava />;
-      else if (x.specialty === 'Python Developer') return <FaPython />;
-      else if (x.specialty === 'Linux Developer') return <FaLinux />;
-      else if (x.specialty === 'Unity Developer') return <DiUnitySmall />;
-      else if (x.specialty === 'Angular Developer') return <DiAngularSimple />;
-      else if (x.specialty === 'PHP Developer') return <DiPhp />;
-      else if (x.specialty === 'React JS Developer') return <DiReact />;
-      else if (x.specialty === 'Wordpress Developer') return <DiWordpress />;
-      else if (x.specialty === 'Javascript Developer') return <DiJavascript1 />;
-      else if (x.specialty === 'HTML5 Developer') return <DiHtml5 />;
-      else if (x.specialty === 'Database Developer') return <FaDatabase />;
-      else if (x.specialty === '.NET Developer') return <DiDotnet />;
-      else if (x.specialty === 'Larvel Developer') return <DiLaravel />;
-      else if (x.specialty === 'Windows Applications Developer') return <DiWindows />;
-      else if (x.specialty === 'Swift Developer') return <DiSwift />;
-      else if (x.specialty === 'Web Developer') return <DiCodeBadge />;
+      switch (x.specialty) {
+        case 'IOS Developer': return <IoLogoApple />;
+        case 'Node JS Developer': return <DiNodejsSmall />;
+        case 'Android Developer': return <FaAndroid />;
+        case 'Java Developer': return <FaJava />;
+        case 'Python Developer': return <FaPython />;
+        case 'Linux Developer': return <FaLinux />;
+        case 'Unity Developer': return <DiUnitySmall />;
+        case 'Angular Developer': return <DiAngularSimple />;
+        case 'PHP Developer': return <DiPhp />;
+        case 'React JS Developer': return <DiReact />;
+        case 'Wordpress Developer': return <DiWordpress />;
+        case 'Javascript Developer': return <DiJavascript1 />;
+        case 'HTML5 Developer': return <DiHtml5 />;
+        case 'Database Developer': return <FaDatabase />;
+        case '.NET Developer': return <DiDotnet />;
+        case 'Larvel Developer': return <DiLaravel />;
+        case 'Windows Applications Developer': return <DiWindows />;
+        case 'Swift Developer': return <DiSwift />;
+        case 'Web Developer': return <DiCodeBadge />;
+        default: return <DiCodeBadge />;
+      }
+
     };
 
     const status = () => {

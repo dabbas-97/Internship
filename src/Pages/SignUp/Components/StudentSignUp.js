@@ -1,112 +1,81 @@
-import React, { Component } from 'react';
+import React, { useContext, useState } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
 import { StudentInfo } from './Student/StudentInfo';
 import { Confirm } from './Student/Confirm';
 import logoImg from '../../../images/logo.PNG';
-import { Success } from './Success';
+import Success from './Success';
+import { AuthContext } from '../../../Auth'
+const  StudentSignUp=()=>  {
+  const [userInfo,setUserInfo] =useState ({
+    step: 1, name: '',email: '', sex: 'female', day: '1',   month: 'January',  year: '2019',   password: '',  passmatch: '',   phone: '',  city: '', bio: ''
+  });
+  const { currentUser } = useContext(AuthContext);
+  if (currentUser) {
+    return <Redirect to='/'/>
+  }
+  
+ // Proceed to next step
+ const nextStep = () => {
+  setUserInfo({
+    ...userInfo,
+    step: userInfo.step + 1
+  });
+};
 
-export default class StudentSignUp extends Component {
-  state = {
-    step: 1,
-    name: '',
-    email: '',
-    sex: 'female',
-    day: '1',
-    month: 'January',
-    year: '2019',
-    password: '',
-    passmatch: '',
-    phone: '',
-    city: '',
-    bio: ''
-  };
-  // Proceed to next step
-  nextStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1
-    });
-  };
+// Go back to prev step
+const prevStep = () => {
+  setUserInfo({
+    ...userInfo,
+    step: userInfo.step - 1
+  });
+};
 
-  // Go back to prev step
-  prevStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step - 1
-    });
-  };
+// Handle fields change
+const handleChange = input => e => {
+  setUserInfo({ ...userInfo, [input]: e.target.value });
+};
 
-  // Handle fields change
-  handleChange = input => e => {
-    this.setState({ [input]: e.target.value });
-  };
-
-  formReturner() {
-    const { step } = this.state;
-    const {
-      name,
-      email,
-      password,
-      phone,
-      city,
-      bio,
-      passmatch,
-      year,
-      day,
-      month,
-      sex
-    } = this.state;
-    const values = {
-      name,
-      email,
-      password,
-      phone,
-      city,
-      bio,
-      passmatch,
-      year,
-      day,
-      month,
-      sex
-    };
+  const formReturner=()=> {
+    const { step } = userInfo;
+    const { name, email, password, phone, city, bio, passmatch, year, day, month, sex} = userInfo;
+    const values = { name, email, password, phone, city, bio, passmatch, year, day, month, sex};
     switch (step) {
       case 1:
         return (
           <UserInfo
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
+            nextStep={nextStep}
+            handleChange={handleChange}
             values={values}
-            prevStep={this.prevStep}
-            getPassmatch={this.getPassmatch}
+            prevStep={prevStep}
           />
         );
       case 2:
         return (
           <StudentInfo
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
+            nextStep={nextStep}
+            prevStep={prevStep}
+            handleChange={handleChange}
             values={values}
           />
         );
       case 3:
         return (
           <Confirm
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
+            nextStep={nextStep}
+            prevStep={prevStep}
+            handleChange={handleChange}
             values={values}
           />
         );
       case 4:
         return <Success />;
       default:
-        return <Redirect to='/signup' />;
+        return <Redirect to='/' />;
     }
   }
-  render() {
+
     return (
       <div className='container '>
         <form className=' formLog '>
@@ -114,7 +83,7 @@ export default class StudentSignUp extends Component {
           <h1 className='h-6 text-center '>Students Signup</h1>
           <br></br>
           <hr></hr>
-          {this.formReturner()}
+          {formReturner()}
           <hr></hr>
           <br></br>
           <div>
@@ -126,7 +95,8 @@ export default class StudentSignUp extends Component {
         </form>
       </div>
     );
-  }
+  
 }
 
 
+export default  StudentSignUp;

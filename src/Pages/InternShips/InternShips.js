@@ -4,31 +4,11 @@ import Buttons from '../Buttons'
 
 //---------------icons
 import { IoLogoApple } from 'react-icons/io';
-import {
-  FaAndroid,
-  FaJava,
-  FaPython,
-  FaLinux,
-  FaDatabase
-} from 'react-icons/fa';
-import {
-  DiUnitySmall,
-  DiAngularSimple,
-  DiPhp,
-  DiReact,
-  DiLaravel,
-  DiWordpress,
-  DiJavascript1,
-  DiDotnet,
-  DiHtml5,
-  DiWindows,
-  DiSwift,
-  DiCodeBadge, DiNodejsSmall
-} from 'react-icons/di';
+import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
+import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 
 //----------------------
 import firstCompany from '../../images/firstCompany.jpg';
-import secondCompany from '../../images/secondCompany.jpg';
 import thirdCompany from '../../images/thirdCompany.jpg';
 import { CompaniesPosts } from './Components/CompaniesPosts';
 

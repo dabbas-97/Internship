@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { IoMdMale, IoMdFemale } from 'react-icons/io';
 import {
   FaBirthdayCake,
@@ -10,210 +10,188 @@ import {
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
+import { AuthContext } from '../../../../Auth'
+import { db } from '../../../../Config/fbConfig'
+import profileImg from '../../../../images/education.png';
 
-export default class UserInfo extends Component {
-  state = {
-    info: 'view'
-  };
-  render() {
-    const { userInfo } = this.props;
-    //icons for gender
-    const genderIcon = () => {
-      if (userInfo.sex === 'male') return <IoMdMale />;
-      else if (userInfo.sex === 'female') return <IoMdFemale />;
-    };
-    const changeView = () => {
-      this.setState({ info: 'edit' });
-    };
-
-
-    const submitChanges = () => {
-      this.setState({ info: 'view' });
-      // send new values to the data
-    };
-    const imageUpload = file => {
-      if (file.length > 0) {
-        let src = URL.createObjectURL(file[0]);
-        this.props.handleChangeImg(src);
+const UserInfo = (props) => {
+  const [view, setView] = useState(true)
+  const { currentUser } = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    gender: '',
+    phone: '',
+    day: '',
+    month: '',
+    year: '',
+    date: '',
+    birthday: '',
+    bio: '',
+    location: '',
+    userImg: profileImg
+  })
+  useEffect(() => {
+    db.collection('users').doc(currentUser.uid).get()
+      .then(doc => {
+        setUserInfo(
+          {
+            ...userInfo,
+            name: doc.data().name,
+            gender: doc.data().gender,
+            phone: doc.data().phone,
+            location: doc.data().hometown,
+            bio: doc.data().bio,
+            birthday: doc.data().birthday,
+            day: doc.data().birthday.split('/')[0],
+            month: doc.data().birthday.split('/')[1],
+            year: doc.data().birthday.split('/')[2]
+          }
+        )
       }
-    };
-    const userInfoPage = () => {
-      if (this.state.info === 'view') return (
-        <React.Fragment>
-          <span className='editSpan' onClick={changeView}>
-            <FaPen />
-          </span>
+      ).catch(err => console.log(err.message))
+  }, [])
 
-          <div className='profileImg'>
-            <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
-              <img
-                src={this.props.userInfo.userImg}
-                className='proImg rounded-circle'
-                alt='profile '
-              />
-            </InputFiles>
-          </div>
 
-          <ul className='list-group list-group-flush text-center'>
-            {/* name of the user */}
-            <li className='list-group-item edit'>
-              <span>
-                <FaUserGraduate />
-              </span>
-              {userInfo.name}
-            </li>
-            {/* users gender */}
-            <li className='list-group-item edit'>
-              <span>{genderIcon()}</span>
-              {userInfo.sex}
-            </li>
-            {/* users birthday */}
-            <li className='list-group-item edit'>
-              <span>
-                <FaBirthdayCake />
-              </span>
-              {this.props.userInfo.day}/{this.props.userInfo.month}/{this.props.userInfo.year}
-            </li>
-            {/* users location */}
-            <li className='list-group-item edit'>
-              <span>
-                <MdLocationOn />
-              </span>
-              {userInfo.location}
-            </li>
-            {/* user phone number */}
-            <li className='list-group-item edit'>
-              <span>
-                <MdPhone />
-              </span>
-              {userInfo.phone}
-            </li>
-            {/* users bio */}
-            <li className='list-group-item edit'>
-              <span>
-                <FaQuoteLeft />
-              </span>
-              {userInfo.bio}
-              <span>
-                <FaQuoteRight />
-              </span>
-            </li>
-            {/* date added */}
-            <li className='list-group-item'>
-              <span>
-                <MdAssignmentInd />
-              </span>
-              {userInfo.date}
-            </li>
-          </ul>
-        </React.Fragment>
-      ); else return (<form onSubmit={submitChanges}>
-        <span className='editSpan' onClick={changeView}>
-          <FaPen />
-        </span>
+
+  const genderIcon = () => {
+    if (userInfo.gender === 'male') return <IoMdMale />;
+    else if (userInfo.gender === 'female') return <IoMdFemale />;
+  };
+
+  const changeView = () => {
+    setView(!view);
+  };
+
+
+  const submitChanges = () => {
+    db.collection('users').doc(currentUser.uid).update({
+      name: userInfo.name,
+      gender: userInfo.gender,
+      phone: userInfo.phone,
+      hometown: userInfo.location,
+      bio: userInfo.bio,
+      birthday: `${userInfo.day}/${userInfo.month}/${userInfo.year}`
+    })
+    setView(true);
+
+  };
+  const imageUpload = file => {
+    if (file.length > 0) {
+      let src = URL.createObjectURL(file[0]);
+      setUserInfo({ ...userInfo, userImg: src })
+    }
+  };
+  const handleChange = input => e => {
+    setUserInfo({ ...userInfo, [input]: e.target.value })
+  }
+  const userInfoPage = () => {
+    if (view) return (
+      <React.Fragment>
+        <span className='editSpan' onClick={changeView}> <FaPen /> </span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
-            <img
-              src={this.props.userInfo.userImg}
-              className='proImg rounded-circle'
-              alt='profile '
-            />
+            <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
           </InputFiles>
         </div>
 
         <ul className='list-group list-group-flush text-center'>
-          {/* name of the user */}
+
           <li className='list-group-item '>
-            <span>
-              <FaUserGraduate />
-            </span>
-            <input
-              type='text'
-              className=''
-              placeholder='Your Name'
-              onChange={this.props.handleChange('name')}
-              defaultValue={userInfo.name} required
-            />
+            <span> <FaUserGraduate /> </span>
+            {userInfo.name}
           </li>
-          {/* users gender */}
+
           <li className='list-group-item '>
             <span>{genderIcon()}</span>
-            <select
-              name='sex'
-              className=''
-              onChange={this.props.handleChange('sex')}
-              value={userInfo.sex}
-            >
+            {userInfo.gender}
+          </li>
+
+          <li className='list-group-item '>
+            <span><FaBirthdayCake /></span>
+            {userInfo.day}/{userInfo.month}/{userInfo.year}
+          </li>
+
+          <li className='list-group-item '>
+            <span> <MdLocationOn /> </span>
+            {userInfo.location}
+          </li>
+
+          <li className='list-group-item '>
+            <span> <MdPhone /> </span>
+            {userInfo.phone}
+          </li>
+
+          <li className='list-group-item '>
+            <span> <FaQuoteLeft /></span>
+            {userInfo.bio}
+            <span> <FaQuoteRight /></span>
+          </li>
+
+          <li className='list-group-item'>
+            <span> <MdAssignmentInd /> </span>
+            {userInfo.date}
+          </li>
+
+        </ul>
+      </React.Fragment>
+    ); else return (
+      <form onSubmit={submitChanges}>
+        <span className='editSpan' onClick={changeView}> <FaPen /> </span>
+
+        <div className='profileImg'>
+          <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
+            <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
+          </InputFiles>
+        </div>
+
+        <ul className='list-group list-group-flush text-center'>
+
+          <li className='list-group-item '>
+            <span> <FaUserGraduate /> </span>
+            <input type='text' className='' placeholder='Your Name' onChange={handleChange('name')} defaultValue={userInfo.name} required />
+          </li>
+
+          <li className='list-group-item '>
+            <span>{genderIcon()}</span>
+            <select name='gender' className='' onChange={handleChange('gender')} value={userInfo.gender}  >
               <option value='female'>Female</option>
               <option value='male'>Male</option>
             </select>
           </li>
-          {/* users birthday */}
+
           <li className='list-group-item '>
-            <span>
-              <FaBirthdayCake />
-            </span>
-            <Birthday
-              handleChange={this.props.handleChange}
-              values={this.props.userInfo}
-            />
+            <span> <FaBirthdayCake /> </span>
+            <Birthday handleChange={handleChange} values={userInfo} />
           </li>
-          {/* users location */}
+
           <li className='list-group-item '>
-            <span>
-              <MdLocationOn />
-            </span>
-            <input
-              type='text'
-              className=''
-              placeholder='Location'
-              onChange={this.props.handleChange('location')}
-              defaultValue={userInfo.location} required
-            />
+            <span> <MdLocationOn /></span>
+            <input type='text' className='' placeholder='Location' onChange={handleChange('location')} defaultValue={userInfo.location} required />
           </li>
-          {/* user phone number */}
+
           <li className='list-group-item '>
-            <span>
-              <MdPhone />
-            </span>
-            <input
-              type='text'
-              className=''
-              placeholder='Phone Number'
-              onChange={this.props.handleChange('phone')}
-              defaultValue={userInfo.phone} required
-            />
+            <span> <MdPhone /></span>
+            <input type='text' className='' placeholder='Phone Number' onChange={handleChange('phone')} defaultValue={userInfo.phone} required />
           </li>
-          {/* users bio */}
+
           <li className='list-group-item '>
-            <span>
-              <FaQuoteLeft />
-            </span>
-            <textarea
-              className=' form-control'
-              onChange={this.props.handleChange('bio')}
-              defaultValue={userInfo.bio}
-              placeholder='Bio'
-            />
-            <span>
-              <FaQuoteRight />
-            </span>
+            <span><FaQuoteLeft /></span>
+            <textarea className=' form-control' onChange={handleChange('bio')} defaultValue={userInfo.bio} placeholder='Bio' />
+            <span> <FaQuoteRight /> </span>
           </li>
         </ul>
-        <button
-          type='submit'
-          className='btn editInfoBtn'
-        >
-          <span className=''>
-            <FaPen />
-          </span>
+        <button type='submit' className='btn editInfoBtn' >
+          <span> <FaPen /> </span>
           Submit Changes
           </button>
-      </form>)
-    }
-
-
-    return <div className='profileInfo'>{userInfoPage()}</div>
+      </form>
+    )
   }
+
+
+  return <div className='profileInfo'>{userInfoPage()}</div>
+
 }
+
+export default UserInfo
