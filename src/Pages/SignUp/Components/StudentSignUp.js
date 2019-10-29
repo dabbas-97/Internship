@@ -1,46 +1,50 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState, useEffect } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
 import { StudentInfo } from './Student/StudentInfo';
-import { Confirm } from './Student/Confirm';
+import Confirm from './Student/Confirm';
 import logoImg from '../../../images/logo.PNG';
 import Success from './Success';
-import { AuthContext } from '../../../Auth'
-const  StudentSignUp=()=>  {
-  const [userInfo,setUserInfo] =useState ({
-    step: 1, name: '',email: '', sex: 'female', day: '1',   month: 'January',  year: '2019',   password: '',  passmatch: '',   phone: '',  city: '', bio: ''
+import { useAuth } from '../../../Auth'
+const StudentSignUp = () => {
+  const [userInfo, setUserInfo] = useState({
+    step: 1, name: '', email: '', sex: 'Female', day: '1', month: 'January', year: '2019', password: '', passmatch: '', phone: '', city: '', bio: ''
   });
-  const { currentUser } = useContext(AuthContext);
-  if (currentUser) {
-    return <Redirect to='/'/>
-  }
-  
- // Proceed to next step
- const nextStep = () => {
-  setUserInfo({
-    ...userInfo,
-    step: userInfo.step + 1
-  });
-};
+  const { auth } = useAuth();
+  useEffect(() => {
+    if (auth.user) {
+      return <Redirect to='/' />
+    }
 
-// Go back to prev step
-const prevStep = () => {
-  setUserInfo({
-    ...userInfo,
-    step: userInfo.step - 1
-  });
-};
+  }, [])
 
-// Handle fields change
-const handleChange = input => e => {
-  setUserInfo({ ...userInfo, [input]: e.target.value });
-};
 
-  const formReturner=()=> {
+  // Proceed to next step
+  const nextStep = () => {
+    setUserInfo({
+      ...userInfo,
+      step: userInfo.step + 1
+    });
+  };
+
+  // Go back to prev step
+  const prevStep = () => {
+    setUserInfo({
+      ...userInfo,
+      step: userInfo.step - 1
+    });
+  };
+
+  // Handle fields change
+  const handleChange = input => e => {
+    setUserInfo({ ...userInfo, [input]: e.target.value });
+  };
+
+  const formReturner = () => {
     const { step } = userInfo;
-    const { name, email, password, phone, city, bio, passmatch, year, day, month, sex} = userInfo;
-    const values = { name, email, password, phone, city, bio, passmatch, year, day, month, sex};
+    const { name, email, password, phone, city, bio, passmatch, year, day, month, sex } = userInfo;
+    const values = { name, email, password, phone, city, bio, passmatch, year, day, month, sex };
     switch (step) {
       case 1:
         return (
@@ -76,27 +80,27 @@ const handleChange = input => e => {
     }
   }
 
-    return (
-      <div className='container '>
-        <form className=' formLog '>
-          <img src={logoImg} className='logo' alt='' />
-          <h1 className='h-6 text-center '>Students Signup</h1>
-          <br></br>
-          <hr></hr>
-          {formReturner()}
-          <hr></hr>
-          <br></br>
-          <div>
-            <h3 className='h3'>Signup as a company</h3>
-            <p className='p-1'>
-              From <Link to='/SignUp/Company'>here</Link>
-            </p>
-          </div>
-        </form>
-      </div>
-    );
-  
+  return (
+    <div className='container '>
+      <form className=' formLog '>
+        <img src={logoImg} className='logo' alt='' />
+        <h1 className='h-6 text-center '>Students Signup</h1>
+        <br></br>
+        <hr></hr>
+        {formReturner()}
+        <hr></hr>
+        <br></br>
+        <div>
+          <h3 className='h3'>Signup as a company</h3>
+          <p className='p-1'>
+            From <Link to='/SignUp/Company'>here</Link>
+          </p>
+        </div>
+      </form>
+    </div>
+  );
+
 }
 
 
-export default  StudentSignUp;
+export default StudentSignUp;

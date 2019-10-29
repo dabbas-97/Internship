@@ -1,27 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link,  withRouter } from 'react-router-dom';
 import logoImg from '../../images/logo.PNG';
-import firebase from '../../Config/fbConfig'
-import { AuthContext } from '../../Auth'
+
+import { useAuth} from '../../Auth'
 
 const Login = ({ history }) => {
   const [user, setUser] = useState({ email: '', password: '' })
-
+  const { auth } = useAuth()
   const loginSubmit = e => {
     e.preventDefault();
     const { email, password } = user
-    firebase.auth().signInWithEmailAndPassword(email, password).then(()=>history.push('/')).catch((err) => console.log(err))
-    
+    auth.signin(email, password).then(() => { history.push('/') }).catch((err) => console.log(err))
+
   };
 
 
-
-  const { currentUser } = useContext(AuthContext);
-
-  if (currentUser) {
-    history.push('/')
-  }
 
   return (
     <div className='container '>

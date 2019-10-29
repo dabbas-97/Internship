@@ -113,3 +113,8 @@ form .profileImg {
   padding: 2px;
   text-decoration-line: none;
 }
+.spinner-border {
+  display: block !important;
+  color: #88dbff !important;
+  margin: 15% auto !important;
+}

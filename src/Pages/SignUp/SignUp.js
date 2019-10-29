@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './SignUp.css';
 import { Link, withRouter, Redirect } from 'react-router-dom';
 import logoImg from '../../images/logo.PNG';
-import { AuthContext } from '../../Auth'
+import { useAuth } from '../../Auth'
 
 const SignUp = ({ history }) => {
-  const { currentUser } = useContext(AuthContext);
-  if (currentUser) {
+  const { auth } = useAuth();
+  if (auth.user) {
     return <Redirect to="/profile" />;
   }
   return (

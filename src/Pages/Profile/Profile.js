@@ -1,19 +1,35 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
 import './Profile.css';
-import CompanyProfile from './CompanyProfile';
-import StudentProfile from './StudentProfile';
-import { AuthContext } from '../../Auth'
-import { db } from '../../Config/fbConfig'
+import { Spinner } from 'react-bootstrap'
+
+import { useAuth, db } from '../../Auth'
+import { Redirect } from 'react-router-dom'
 const Profile = () => {
-  const [type, setType] = useState('')
-  const { currentUser } = useContext(AuthContext);
-  const id = currentUser.uid
+  const [type, setType] = useState()
+  const [loaded, setLoaded] = useState(false)
+  const { auth } = useAuth();
+  const id = auth.user.uid
+
+
   useEffect(() => {
-    db.collection('users').doc(id).get().then(doc => setType(doc.data().type)).catch(err => console.log(err.message))
+    if (!loaded) {
+      const doc = db.collection('users').doc(id)
+      doc.get().then(doc => { setType(doc.data().type); setLoaded(true) }).catch(err => console.log(err))
+    }
+    return () => {
+
+    }
   }, [])
- 
-  
-  return <React.Fragment>{type==='student'? <StudentProfile /> :<CompanyProfile />}</React.Fragment>
+
+  if (loaded) {
+    if (type === 'student') return <Redirect to='/profile/studentprofile' />
+    else return <Redirect to='/profile/companyprofile' />
+
+
+  } else return <Spinner animation="border" role="status" variant="info" >
+    <span ></span>
+  </Spinner>
+
 
 }
 export default Profile

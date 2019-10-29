@@ -5,6 +5,8 @@ import Login from './Pages/Login/Login';
 import About from './Pages/About/About';
 import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile/Profile';
+import StudentProfile from './Pages/Profile/StudentProfile';
+import CompanyProfile from './Pages/Profile/CompanyProfile';
 import Chat from './Pages/Chat/Chat';
 import InternShips from './Pages/InternShips/InternShips';
 import NotFound from './Pages/NotFound';
@@ -24,6 +26,8 @@ class App extends React.Component {
               <Route exact path='/' component={Home} />
               <Route exact path='/about' component={About} />
               <PrivateRoute exact path='/Profile' component={Profile} />
+              <PrivateRoute exact path='/Profile/studentprofile' component={StudentProfile} />
+              <PrivateRoute exact path='/Profile/companyprofile' component={CompanyProfile} />
               <PrivateRoute exact path='/Chat' component={Chat} />
               <Route exact path='/Login' component={Login} />
               <Route exact path='/SignUp' component={SignUp} />

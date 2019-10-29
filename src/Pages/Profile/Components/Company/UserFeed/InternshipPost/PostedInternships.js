@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Buttons from '../../../../Buttons';
+import Buttons from '../../../../../Buttons';
 import { Posts } from './Posts';
 export class PostedInternships extends Component {
     state = {

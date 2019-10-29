@@ -5,6 +5,16 @@ import { CVCreateForm } from "./CVCreateForm";
 export class EditCV extends Component {
     state = { type: 'edit' };
     render() {
+        const renderGpa = () => {
+            switch (this.props.values.gpa) {
+                case '3.5': return 'Exccelent'
+                case '3.0': return 'Very Good'
+                case '2.5': return 'Good'
+                case '2.0': return 'Pass'
+                case '1.5': return 'Weak'
+                default: return
+            }
+        }
         const formRenderer = () => {
             switch (this.props.step) {
                 case 1:
@@ -37,13 +47,13 @@ export class EditCV extends Component {
                                 <div className='row'>
                                     <div className='col-4'> GPA :</div>
                                     <div className='col-8'>
-                                        <span>{this.props.values.gpa}</span>
+                                        <span>{renderGpa()}</span>
                                     </div>
                                 </div>
                             </li>
                             <li className='list-group-item py-2'>
                                 <div className='row'>
-                                    <div className='col-4'>Specialties:</div>
+                                    <div className='col-4'>Specialities:</div>
                                     <div className='col-8'>
                                         {this.props.values.tags.map(x => (<span key={x.id}>{x.text} , </span>))}
                                     </div>

@@ -10,13 +10,15 @@ import {
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
-import { AuthContext } from '../../../../Auth'
-import { db } from '../../../../Config/fbConfig'
+import { useAuth, db } from '../../../../Auth'
 import profileImg from '../../../../images/education.png';
 
-const UserInfo = (props) => {
+const UserInfo = () => {
   const [view, setView] = useState(true)
-  const { currentUser } = useContext(AuthContext);
+  const changeView = () => {
+    setView(!view);
+  };
+  const { auth } = useAuth();
   const [userInfo, setUserInfo] = useState({
     name: '',
     gender: '',
@@ -31,7 +33,7 @@ const UserInfo = (props) => {
     userImg: profileImg
   })
   useEffect(() => {
-    db.collection('users').doc(currentUser.uid).get()
+    db.collection('users').doc(auth.user.uid).get()
       .then(doc => {
         setUserInfo(
           {
@@ -54,17 +56,15 @@ const UserInfo = (props) => {
 
 
   const genderIcon = () => {
-    if (userInfo.gender === 'male') return <IoMdMale />;
-    else if (userInfo.gender === 'female') return <IoMdFemale />;
+    if (userInfo.gender === 'Male') return <IoMdMale />;
+    else if (userInfo.gender === 'Female') return <IoMdFemale />;
   };
 
-  const changeView = () => {
-    setView(!view);
-  };
+
 
 
   const submitChanges = () => {
-    db.collection('users').doc(currentUser.uid).update({
+    db.collection('users').doc(auth.user.uid).update({
       name: userInfo.name,
       gender: userInfo.gender,
       phone: userInfo.phone,
@@ -84,6 +84,7 @@ const UserInfo = (props) => {
   const handleChange = input => e => {
     setUserInfo({ ...userInfo, [input]: e.target.value })
   }
+
   const userInfoPage = () => {
     if (view) return (
       <React.Fragment>
@@ -155,8 +156,8 @@ const UserInfo = (props) => {
           <li className='list-group-item '>
             <span>{genderIcon()}</span>
             <select name='gender' className='' onChange={handleChange('gender')} value={userInfo.gender}  >
-              <option value='female'>Female</option>
-              <option value='male'>Male</option>
+              <option value='Female'>Female</option>
+              <option value='Male'>Male</option>
             </select>
           </li>
 

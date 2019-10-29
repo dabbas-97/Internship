@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './InternShips.css';
 import Buttons from '../Buttons'
 
@@ -9,89 +9,74 @@ import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, 
 
 //----------------------
 import firstCompany from '../../images/firstCompany.jpg';
-import thirdCompany from '../../images/thirdCompany.jpg';
 import { CompaniesPosts } from './Components/CompaniesPosts';
+import { db, useAuth } from '../../Auth'
+import { Spinner } from 'react-bootstrap';
 
-export default class InternShips extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      specialties: [
-        'IOS Developer',
-        'Node JS Developer',
-        'Android Developer'
-      ],
-      posts: [{
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
 
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
+const InternShips = () => {
+  const { auth } = useAuth()
+  const [userInfo, setUserInfo] = useState({ gender: '', gpa: '' })
+  const [loaded, setLoaded] = useState(false)
+  const [postsReturned, setPostsReturnd] = useState(false)
+  const [CV, setCV] = useState(null)
+  const [specialities, setSpecialities] = useState(['IOS Developer',
+    'Node JS Developer',
+    'Android Developer'])
+  const [posts, setPosts] = useState([{
+    imgsrc: firstCompany,
+    companyname: 'Eskadinia',
+    jobtitle: 'Web Dev',
+    jobdesc: 'We are looking for a ',
+    specialty: 'Android Developer'
 
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
+  }, {
+    imgsrc: firstCompany,
+    companyname: 'Eskadinia',
+    jobtitle: 'Web Dev',
+    jobdesc: 'We are looking for a ',
+    specialty: 'Android Developer'
 
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
+  }])
+  const [specialtyPages, setSpecialtyPages] = useState([[0], [0]])
 
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
+  useEffect(() => {
+    let pages = specialities.map(() => [0])
+    setSpecialtyPages(pages)
+  }, [])
 
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
-
-      }, {
-        imgsrc: firstCompany,
-        companyname: 'Eskadinia',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Android Developer'
-
-      }, {
-        imgsrc: thirdCompany,
-        companyname: 'Estarta ',
-        jobtitle: 'Web Dev',
-        jobdesc: 'We are looking for a ',
-        specialty: 'Node JS Developer',
-
-      }],
-      specialtypages: [[]]
+  useEffect(() => {
+    if (!loaded) {
+      db.collection('cv').doc(auth.user.uid).get().then(doc => {
+        if (doc.exists) {
+          setSpecialities(doc.data().specialities)
+          setLoaded(true)
+        } else setCV(false)
+      })
     }
+  }, [])
+  useEffect(() => {
+    if (!postsReturned) {
+      db.collectionGroup('companyPosts').get().then(snapshots => {
+        if (!snapshots.empty) {
+          snapshots.forEach(snapshot => {
+            setPosts([...posts, snapshot.data()])
+            console.log(snapshot.data())
+          })
+        } else console.log('no posts')
+        setPostsReturnd(true)
+      })
+    }
+  }, [])
 
-  }
-  UNSAFE_componentWillMount() {
-    var specialtypages = this.state.specialties.map(x => [0])
-    this.setState({ specialtypages: specialtypages })
-  }
 
-  render() {
 
-    const opporunities = this.state.specialties.map(specialty => {
-      const count = this.state.specialties.indexOf(specialty);
-      const { posts } = this.state
+
+
+  if (loaded) {
+
+    const opporunities = specialities.map(specialty => {
+      const count = specialities.indexOf(specialty);
       const specialtyPosts = posts.filter(post => post.specialty === specialty)
       const pageRenderer = () => {
         let i,
@@ -108,31 +93,32 @@ export default class InternShips extends Component {
 
 
       const nextPage = () => {
-        var { specialtypages } = this.state
-        let pages = specialtypages[count][0];
+        var tempSpecialtyPages = specialtyPages
+        let pages = specialtyPages[count][0];
 
         if (pages < appliedChunks.length - 1) {
           pages++;
-          specialtypages[count][0] = pages
-          this.setState({ specialtypages: specialtypages });
+          tempSpecialtyPages[count][0] = pages
+          setSpecialtyPages(tempSpecialtyPages)
         }
       };
       const prevPage = () => {
-        var { specialtypages } = this.state
-        let pages = specialtypages[count][0];
+        var tempSpecialtyPages = specialtyPages
+        let pages = specialtyPages[count][0];
         if (pages > 0) {
           pages--;
-          specialtypages[count][0] = pages
-          this.setState({ specialtypages: specialtypages });
+          tempSpecialtyPages[count][0] = pages
+          setSpecialtyPages(tempSpecialtyPages)
         }
       };
+
       const showButtons = () => {
         if (appliedChunks.length > 1)
           return (
             <Buttons
               prevPage={prevPage}
               nextPage={nextPage}
-              pages={this.state.specialtypages[count][0]}
+              pages={specialtyPages[count][0]}
               maxPages={appliedChunks.length - 1}
             />
           );
@@ -177,7 +163,7 @@ export default class InternShips extends Component {
           </div>
           <div className='m-4'>
             <div className='row'>
-              <CompaniesPosts posts={appliedChunks[this.state.specialtypages[count]]} />
+              <CompaniesPosts posts={appliedChunks[specialtyPages[count]]} />
             </div></div>
           {showButtons()}
         </div>
@@ -190,6 +176,9 @@ export default class InternShips extends Component {
         {opporunities}
       </div>
     </React.Fragment>
-  }
+  } else return <Spinner animation="border" role="status" variant="info" >
+    <span ></span>
+  </Spinner>
 }
 
+export default InternShips

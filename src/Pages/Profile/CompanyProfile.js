@@ -3,16 +3,9 @@ import UserInfo from './Components/Company/UserInfo';
 import UserFeed from './Components/Company/UserFeed/UserFeed';
 import profileImg from '../../images/education.png';
 
+
 export default class CompanyProfile extends Component {
   state = {
-    userInfo: {
-      name: 'Microsoft',
-      date: '2 Months ago',
-      bio: 'bio...bio...bio...bio...',
-      phone: '0798523697',
-      location: 'Jarash',
-      userImg: profileImg
-    },
     userFeed: {
       studentsApplied: [
         {
@@ -136,6 +129,7 @@ export default class CompanyProfile extends Component {
       ]
     }
   };
+
   handleChange = input => e => {
     var userInfo = { ...this.state.userInfo };
     userInfo[input] = e.target.value;
@@ -146,9 +140,7 @@ export default class CompanyProfile extends Component {
     userInfo.userImg = src;
     this.setState({ userInfo });
   };
-  getStudentsWhoApplied = postId => {
-    //using ajax get from the server to get the students who applied to the postId
-  };
+
   render() {
     return (
       <div className='container'>
@@ -156,15 +148,10 @@ export default class CompanyProfile extends Component {
           <div className='col-md-8 '>
             <UserFeed
               studentsApplied={this.state.userFeed.studentsApplied}
-              getStudentsWhoApplied={this.getStudentsWhoApplied}
             />
           </div>
           <div className='col-md-4'>
-            <UserInfo
-              userInfo={this.state.userInfo}
-              handleChange={this.handleChange}
-              handleChangeImg={this.handleChangeImg}
-            />
+            <UserInfo />
           </div>
         </div>
       </div>

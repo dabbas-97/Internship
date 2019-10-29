@@ -1,18 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState, useEffect } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
 import { CompanyInfo } from './Company/CompanyInfo';
-import { Confirm } from './Company/Confirm';
+import Confirm from './Company/Confirm';
 import logoImg from '../../../images/logo.PNG';
 import Success from './Success';
-import { AuthContext } from '../../../Auth'
+import { useAuth } from '../../../Auth'
 
 const CompanySignUp = () => {
-  const { currentUser } = useContext(AuthContext);
-  
+  const { auth } = useAuth();
+
   const [userInfo, setUserInfo] = useState({ step: 1, name: '', email: '', password: '', passmatch: '', phone: '', city: '', bio: '' });
- 
+  useEffect(() => {
+    if (auth.user) {
+      return <Redirect to="/" />;
+    }
+
+  }, [])
   // Proceed to next step
   const nextStep = () => {
     setUserInfo({
@@ -33,9 +38,7 @@ const CompanySignUp = () => {
   const handleChange = input => e => {
     setUserInfo({ ...userInfo, [input]: e.target.value });
   };
-  if (currentUser) {
-    return <Redirect to="/" />;
-  }
+
   const formReturner = () => {
     const { step } = userInfo;
     const { name, email, password, phone, city, bio, passmatch } = userInfo;

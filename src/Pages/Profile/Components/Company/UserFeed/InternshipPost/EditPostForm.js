@@ -8,7 +8,7 @@ export class EditPostForm extends Component {
     state = {
         jobdesc: '',
         jobtitle: '',
-        gpa: 'Good Or Higher',
+        gpa: '2.5',
         gender: 'Male',
         specialty: '',
     };
@@ -85,7 +85,7 @@ export class EditPostForm extends Component {
                                     <select name='socialStatus' className='mx-1 custom-select w-50 ' onChange={this.handleChange('gender')} value={this.state.gender}>
                                         <option value='Male'>Male</option>
                                         <option value='Female'>Female</option>
-                                        <option value='Any Gender'>Any Gender</option>
+                                        <option value='Both'>Both</option>
                                     </select>
                                 </div>
                             </div>
@@ -140,9 +140,9 @@ export class EditPostForm extends Component {
                                         <option value='Database Developer'>Database Developer</option>
                                         <option value='.NET Developer'>.NET Developer</option>
                                         <option value='Larvel Developer'>Larvel Developer</option>
-                                        <option value='Larvel Developer'>Windows Applications Developer</option>
-                                        <option value='Larvel Developer'>Swift Developer</option>
-                                        <option value='Larvel Developer'>Web Developer</option>
+                                        <option value='Windows Applications Developer'>Windows Applications Developer</option>
+                                        <option value='Swift Developer'>Swift Developer</option>
+                                        <option value='Web Developer'>Web Developer</option>
                                     </select>
                                 </div>
                             </div>
