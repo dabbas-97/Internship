@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import jsonData from '../../../suggestions.json';
 import { EditCV } from './EditCV';
 import { CreateCV } from './CreateCV';
-import { db, toto } from '../../../../../Auth'
+import { db, useAuth } from '../../../../../Auth'
 
 const KeyCodes = {
   comma: 188,
@@ -12,148 +12,135 @@ const KeyCodes = {
 export const delimiters = [KeyCodes.comma, KeyCodes.enter];
 const loadData = () => JSON.parse(JSON.stringify(jsonData));
 
-export default class StudentCV extends Component {
-  constructor(props){
-    super(props)
-    this._isMountned=false;
-  }
-  state = {
-    isloaded: false,
-    step: 1,
-    isCV: false,
+const StudentCV = () => {
+  const { auth } = useAuth()
+  const [loaded, setLoaded] = useState(false)
+  const [step, setStep] = useState(1)
+  const [isCV, setIsCV] = useState(false)
+  const [cvInfo, setCVInfo] = useState({
     socialStatus: 'Single',
     education: {
       school: 'Hashemite University',
       field: 'Computer Science'
     },
-    gpa: '2.5',
-    tags: [],
-    suggestions: []
-  };
-  
-  UNSAFE_componentWillMount() {
-    let suggestions = loadData();
-    this.setState({ suggestions: suggestions }); // Filling data from the json file (suggestions.json)
-  }
-  componentDidMount() {
-    this._isMountned=true
-    if (this._isMountned) {
-      toto.onAuthStateChanged(cred => {
-        db.collection('cv').doc(cred.uid).get().then(doc => {
-          if (doc.exists) this.setState({
-           
-            isCV: true,
+    gpa: '2.5'
+  })
+  const [tags, setTags] = useState([])
+  const [suggestions] = useState(loadData())
+
+
+  useEffect(() => {
+    if (!loaded) {
+      db.collection('cv').doc(auth.user.uid).get().then(doc => {
+        if (doc.exists) {
+          setIsCV(true)
+          setCVInfo({
             socialStatus: doc.data().socialStatus,
             education: { school: doc.data().school, field: doc.data().field },
             gpa: doc.data().gpa,
-            tags: doc.data().specialities.map(x => { return { id: x, text: x } }),
           })
-          this._isMountned=false;
-        }).catch(err => console.log(err.message))
-      });
+          setTags(doc.data().specialities.map(x => { return { id: x, text: x } }))
+        }
+        setLoaded(true)
+      }).catch(err => console.log(err.message))
     }
 
-  }
-  componentWillUnmount() {
-    this._isMountned=false;
-  }
-  nextStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1
-    });
+  }, [])
+
+
+
+  const nextStep = () => {
+    setStep(step + 1)
   };
 
-  handleChange = (input, inside) => e => {
+  const handleChange = (input, inside) => e => {
     if (input === 'education') {
-      var education = { ...this.state.education };
+      var education = { ...cvInfo.education };
       education[inside] = e.target.value;
-      this.setState({ education });
-    } else this.setState({ [input]: e.target.value });
+      setCVInfo({ ...cvInfo, education });
+    } else setCVInfo({ ...cvInfo, [input]: e.target.value });
   };
 
   //------------------------------------------------Input module stuff-------------------------------------
 
-  handleDelete = i => {
-    const { tags } = this.state;
-    this.setState({
-      tags: tags.filter((tag, index) => index !== i)
-    });
+  const handleDelete = i => {
+    setTags(
+      tags.filter((tag, index) => index !== i)
+    );
   };
 
-  handleAddition = tag => {
-    if (this.state.suggestions.find(x => x === tag)) {
-      this.setState(state => ({ tags: [...state.tags, tag] }));
+  const handleAddition = tag => {
+    if (suggestions.find(x => x === tag)) {
+      setTags([...tags, tag]);
     }
   };
 
-  handleDrag = (tag, currPos, newPos) => {
-    const tags = [...this.state.tags];
+  const handleDrag = (tag, currPos, newPos) => {
     const newTags = tags.slice();
 
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
 
-    // re-render
-    this.setState({ tags: newTags });
+    setTags(newTags);
   };
 
   //------------------------------------------------------------------------------------
-  submitCV = e => {
+  const submitCV = e => {
     e.preventDefault();
-    toto.onAuthStateChanged(cred => {
-      db.collection('cv').doc(cred.uid).set({
 
-        socialStatus: this.state.socialStatus,
-        school: this.state.education.school,
-        field: this.state.education.field,
-        gpa: this.state.gpa,
-        specialities: this.state.tags.map(tag => tag.text)
-      })
+    db.collection('cv').doc(auth.user.uid).set({
+      socialStatus: cvInfo.socialStatus,
+      school: cvInfo.education.school,
+      field: cvInfo.education.field,
+      gpa: cvInfo.gpa,
+      specialities: tags.map(tag => tag.text)
     })
-    this.setState({ step: this.state.step - 1, isCV: true });
+
+    setStep(step - 1)
+    setIsCV(true)
   };
-  render() {
-    const { socialStatus, education, tags, gpa } = this.state;
-    const values = {
-      socialStatus,
-      tags,
-      education,
-      gpa
-    };
-    const showCV = () => {
-      if (!this.state.isCV)
-        return (
-          <CreateCV
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            values={values}
-            step={this.state.step}
-            tags={this.state.tags}
-            suggestions={this.state.suggestions}
-            handleDelete={this.handleDelete}
-            handleAddition={this.handleAddition}
-            handleDrag={this.handleDrag}
-            onSubmit={this.submitCV}
-          />
-        );
-      else
-        return (
-          <EditCV
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            step={this.state.step}
-            tags={this.state.tags}
-            suggestions={this.state.suggestions}
-            handleDelete={this.handleDelete}
-            handleAddition={this.handleAddition}
-            handleDrag={this.handleDrag}
-            onSubmit={this.submitCV}
-            values={values}
-          />
-        );
-    };
-    return <React.Fragment>{showCV()}</React.Fragment>;
-  }
+
+  const { socialStatus, education, gpa } = cvInfo;
+  const values = {
+    socialStatus,
+    tags,
+    education,
+    gpa
+  };
+  const showCV = () => {
+    if (!isCV)
+      return (
+        <CreateCV
+          nextStep={nextStep}
+          handleChange={handleChange}
+          values={values}
+          step={step}
+          tags={tags}
+          suggestions={suggestions}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          handleDrag={handleDrag}
+          onSubmit={submitCV}
+        />
+      );
+    else
+      return (
+        <EditCV
+          nextStep={nextStep}
+          handleChange={handleChange}
+          step={step}
+          tags={tags}
+          suggestions={suggestions}
+          handleDelete={handleDelete}
+          handleAddition={handleAddition}
+          handleDrag={handleDrag}
+          onSubmit={submitCV}
+          values={values}
+        />
+      );
+  };
+  return <React.Fragment>{showCV()}</React.Fragment>;
 }
 
+
+export default StudentCV

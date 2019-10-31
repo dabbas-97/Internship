@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../SignUp.css';
 import { Link, Redirect } from 'react-router-dom';
 import { UserInfo } from './UserInfo';
@@ -12,13 +12,10 @@ const StudentSignUp = () => {
     step: 1, name: '', email: '', sex: 'Female', day: '1', month: 'January', year: '2019', password: '', passmatch: '', phone: '', city: '', bio: ''
   });
   const { auth } = useAuth();
-  useEffect(() => {
-    if (auth.user) {
-      return <Redirect to='/' />
-    }
 
-  }, [])
-
+  if (auth.user) {
+    return <Redirect to='/' />
+  }
 
   // Proceed to next step
   const nextStep = () => {

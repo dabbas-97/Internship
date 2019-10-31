@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link,  withRouter } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import logoImg from '../../images/logo.PNG';
 
-import { useAuth} from '../../Auth'
+import { useAuth } from '../../Auth'
 
 const Login = ({ history }) => {
   const [user, setUser] = useState({ email: '', password: '' })
@@ -11,9 +11,13 @@ const Login = ({ history }) => {
   const loginSubmit = e => {
     e.preventDefault();
     const { email, password } = user
-    auth.signin(email, password).then(() => { history.push('/') }).catch((err) => console.log(err))
+    auth.signin(email, password).then(() => { history.push('/') }).catch((err) => console.log(err.message))
 
   };
+
+  if (auth.user) {
+    return <Redirect to='/' />
+  }
 
 
 

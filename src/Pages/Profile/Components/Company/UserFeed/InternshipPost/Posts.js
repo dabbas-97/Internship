@@ -1,6 +1,23 @@
 import React from 'react';
 export function Posts(props) {
     const { myPosts } = props;
+    const returnGender = (gender) => {
+        if (Array.isArray(gender)) {
+            if (gender.length === 2) return 'Both'
+            return gender[0]
+        } else return gender
+    }
+    const gpaRenderer = (gpa) => {
+        switch (gpa) {
+            case '1.5': return 'Weak Or Higher'
+            case '2.0': return 'Pass Or Higher'
+            case '2.5': return 'Good Or Higher'
+            case '3.0': return 'Very Good Or Higher'
+            case '3.5': return 'Exccelent'
+            default:
+                break;
+        }
+    }
     if (!myPosts) {
         return (<div className='appliedFor m-4  col  '>
             <h6 className='text-muted'>
@@ -41,7 +58,7 @@ export function Posts(props) {
                                 <span className='float-left'>GPA:
               </span></div>
                             <div className='col-8'>
-                                {data.gpa}
+                                {gpaRenderer(data.gpa)}
                             </div>
                         </div>
                     </li>
@@ -50,7 +67,7 @@ export function Posts(props) {
                             <div className='col-4'>
                                 <span className='float-left'>Gender:</span></div>
                             <div className='col-8'>
-                                {data.gender}
+                                {returnGender(data.gender)}
                             </div>
                         </div>
                     </li>

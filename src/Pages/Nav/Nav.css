@@ -52,3 +52,6 @@ li .active {
 .profilelogin {
   margin-left: 200px;
 }
+.navbar .spinner-border {
+  color: #88dbff !important;
+}

@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import { Spinner } from 'react-bootstrap'
 
@@ -19,16 +19,16 @@ const Profile = () => {
     return () => {
 
     }
-  }, [])
+  }, [loaded])
 
   if (loaded) {
     if (type === 'student') return <Redirect to='/profile/studentprofile' />
     else return <Redirect to='/profile/companyprofile' />
 
 
-  } else return <Spinner animation="border" role="status" variant="info" >
+  } else return (<div className='profileSpinner'><Spinner animation="border" role="status" variant="info" >
     <span ></span>
-  </Spinner>
+  </Spinner></div>)
 
 
 }

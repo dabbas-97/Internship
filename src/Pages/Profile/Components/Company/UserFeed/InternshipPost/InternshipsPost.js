@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EditPostForm } from './EditPostForm';
 import { PostedInternships } from './PostedInternships';
 import { InternshipsPoster } from './InternshipsPoster';
@@ -16,7 +16,8 @@ const InternshipsPost = () => {
 
   useEffect(() => {
     if (!loaded) {
-      db.collection('internships').doc(auth.user.uid).collection('companyPosts').get()
+      setPosts([])
+      db.collection('internships').doc(auth.user.uid).collection('companyPosts').orderBy('createdAt').get()
         .then(snapshot => {
           if (snapshot.empty) {
 
@@ -38,7 +39,7 @@ const InternshipsPost = () => {
     }
     return () => { setLoaded(true) }
 
-  }, [])
+  }, [loaded])
 
 
 
@@ -67,7 +68,8 @@ const InternshipsPost = () => {
       gpa: gpa,
       gender: newGender,
       specialty: specialty,
-      companyId: auth.user.uid
+      companyId: auth.user.uid,
+      createdAt: new Date()
     })
 
 
@@ -90,6 +92,7 @@ const InternshipsPost = () => {
       gender: 'Male'
     })
     setStep(1)
+    setLoaded(false)
 
   };
 
@@ -122,7 +125,7 @@ const InternshipsPost = () => {
       gpa: newData.gpa,
       gender: gender,
       specialty: newData.specialty
-    })
+    }).catch(err => console.log(err))
 
 
 

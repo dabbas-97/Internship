@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoMdMale, IoMdFemale } from 'react-icons/io';
 import {
   FaBirthdayCake,
@@ -12,6 +12,8 @@ import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
 import { useAuth, db } from '../../../../Auth'
 import profileImg from '../../../../images/education.png';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 const UserInfo = () => {
   const [view, setView] = useState(true)
@@ -26,7 +28,7 @@ const UserInfo = () => {
     day: '',
     month: '',
     year: '',
-    date: '',
+    joined: '',
     birthday: '',
     bio: '',
     location: '',
@@ -46,7 +48,8 @@ const UserInfo = () => {
             birthday: doc.data().birthday,
             day: doc.data().birthday.split('/')[0],
             month: doc.data().birthday.split('/')[1],
-            year: doc.data().birthday.split('/')[2]
+            year: doc.data().birthday.split('/')[2],
+            joined: doc.data().joined.toDate()
           }
         )
       }
@@ -84,7 +87,14 @@ const UserInfo = () => {
   const handleChange = input => e => {
     setUserInfo({ ...userInfo, [input]: e.target.value })
   }
-
+  const calendarStrings = {
+    lastDay: '[Yesterday at] LT',
+    sameDay: '[Today at] LT',
+    nextDay: '[Tomorrow at] LT',
+    lastWeek: '[last] dddd [at] LT',
+    nextWeek: 'dddd [at] LT',
+    sameElse: 'L'
+  };
   const userInfoPage = () => {
     if (view) return (
       <React.Fragment>
@@ -131,7 +141,7 @@ const UserInfo = () => {
 
           <li className='list-group-item'>
             <span> <MdAssignmentInd /> </span>
-            {userInfo.date}
+            <Moment calendar={calendarStrings}>{userInfo.joined}</Moment>
           </li>
 
         </ul>

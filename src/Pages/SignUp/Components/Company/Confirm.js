@@ -14,10 +14,12 @@ const Confirm = (props) => {
     auth.signup(email, password)
       .then(user => {
         return db.collection('users').doc(user.uid).set({
+          companyId: user.uid,
           name: values.name,
           phone: values.phone,
           location: values.city,
           bio: values.bio,
+          joined: new Date(),
           type: 'company'
         })
 

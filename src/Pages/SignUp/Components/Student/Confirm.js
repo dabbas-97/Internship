@@ -20,7 +20,8 @@ const Confirm = (props) => {
           phone: values.phone,
           hometown: values.city,
           bio: values.bio,
-          type: 'student'
+          type: 'student',
+          joined: new Date(),
         })
       }).then(() => props.nextStep()).catch(err => console.log(err.message))
   };

@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
@@ -6,6 +6,8 @@ import { useAuth, db } from '../../../../Auth'
 import InputFiles from 'react-input-files';
 import profileImg from '../../../../images/education.png';
 import { Spinner } from 'react-bootstrap'
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 const UserInfo = () => {
   const [view, setView] = useState(true)
@@ -16,7 +18,7 @@ const UserInfo = () => {
   const { auth } = useAuth();
   const [userInfo, setUserInfo] = useState({
     name: '',
-    date: '',
+    joined: '',
     bio: '',
     phone: '',
     location: '',
@@ -33,6 +35,7 @@ const UserInfo = () => {
               phone: doc.data().phone,
               location: doc.data().location,
               bio: doc.data().bio,
+              joined: doc.data().joined.toDate()
             }
           )
           setLoaded(true)
@@ -67,7 +70,14 @@ const UserInfo = () => {
       setUserInfo({ ...userInfo, userImg: src })
     }
   };
-
+  const calendarStrings = {
+    lastDay: '[Yesterday at] LT',
+    sameDay: '[Today at] LT',
+    nextDay: '[Tomorrow at] LT',
+    lastWeek: '[last] dddd [at] LT',
+    nextWeek: 'dddd [at] LT',
+    sameElse: 'L'
+  };
   const userInfoPage = () => {
     if (view) return (
       <React.Fragment>
@@ -104,7 +114,7 @@ const UserInfo = () => {
 
           <li className='list-group-item'>
             <span> <MdAssignmentInd /> </span>
-            {userInfo.date}
+            <Moment calendar={calendarStrings}>{userInfo.joined}</Moment>
           </li>
 
         </ul>

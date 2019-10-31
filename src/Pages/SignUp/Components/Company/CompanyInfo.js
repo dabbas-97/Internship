@@ -67,7 +67,7 @@ export class CompanyInfo extends Component {
     };
     const validateName = e => {
       this.props.handleChange('name')(e);
-      let re = /^[A-Za-z ]+$/;
+      let re = /^(?![\s.]+$)[a-zA-Z\s.]*$/;
       if (e.target.value !== '' && re.test(String(e.target.value))) {
         isValidName(true);
       } else {
