@@ -6,6 +6,9 @@ export function CompaniesPosts(props) {
             <h6 className='text-muted'>There are no posts for this specialty</h6>
         </div>);
     }
+    const apply = (post) => {
+        console.log(post)
+    }
     const specialtyPosts = posts.map(post => {
         return (
             <div className='col-md-3 col-sm-6 ' key={post.postId}>
@@ -24,7 +27,7 @@ export function CompaniesPosts(props) {
                             {post.jobdesc}
                         </li>
                         <li className='list-group-item applied '>
-                            <button type='button' className='btn'>Apply Now</button>
+                            <button type='button' className='btn' onClick={() => apply(post)}>Apply Now</button>
                         </li>
                     </ul>
                 </div>

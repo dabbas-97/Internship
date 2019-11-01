@@ -27,6 +27,11 @@ export class EditPostForm extends Component {
         this.setState({ [input]: e.target.value });
     };
     render() {
+        const genderValue = () => {
+            if (this.state.gender.length === 2) return 'Both'
+            else if (this.state.gender[0] === 'Female') return 'Female'
+            else return 'Male'
+        }
         console.log(this.state)
         const handleClose = () => {
             this.props.clearPostInfo();

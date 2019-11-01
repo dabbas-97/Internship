@@ -96,7 +96,7 @@ export function Posts(props) {
                                     jobdesc: data.jobdesc,
                                     jobtitle: data.jobtitle,
                                     gpa: data.gpa,
-                                    gender: data.gender,
+                                    gender: returnGender(data.gender),
                                     specialty: data.specialty
                                 })}>
                                     Edit
