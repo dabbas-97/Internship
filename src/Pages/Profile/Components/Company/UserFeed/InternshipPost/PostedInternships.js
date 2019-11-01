@@ -31,18 +31,22 @@ export class PostedInternships extends Component {
         };
         const internshipsPostsReturner = () => {
             //to put all my posts into chunks of x numbers 
-            return (<div className=' m-5'>
-                <div className='row'>
-                    <Posts myPosts={myPosts[this.state.pages]} handleDeletePosts={this.props.handleDeletePosts} handleEditPosts={this.props.handleEditPosts} />
+            return (
+                <div className=' m-5'>
+                    <div className='row'>
+                        <Posts myPosts={myPosts[this.state.pages]} handleDeletePosts={this.props.handleDeletePosts} handleEditPosts={this.props.handleEditPosts} getStudentsApplied={this.props.getStudentsApplied} />
+                    </div>
+                    {showButtons()}
                 </div>
-                {showButtons()}
-            </div>);
+            );
         };
-        return (<div className='my-2 internshipsPosting'>
-            <div className='m-3 '>
-                <h5 className='h5'>Your internships posts</h5>
-                {internshipsPostsReturner()}
+        return (
+            <div className='my-2 internshipsPosting'>
+                <div className='m-3 '>
+                    <h5 className='h5'>Your internships posts</h5>
+                    {internshipsPostsReturner()}
+                </div>
             </div>
-        </div>);
+        );
     }
 }

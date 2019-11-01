@@ -6,15 +6,14 @@ import StudentsAppliesComponent from './StudentApplies/StudentAppliesComponent'
 
 export default class UserFeed extends Component {
   render() {
-    const { studentsApplied } = this.props;
 
     return (
       <div className='profileFeed'>
         <div className=' text-center mb-5 internshipPost'>
-          <InternshipsPost />
+          <InternshipsPost getStudentsApplied={this.props.getStudentsApplied} />
         </div>
         <div className=' appliedList text-center'>
-          <StudentsAppliesComponent studentsApplied={studentsApplied} />
+          <StudentsAppliesComponent studentsApplied={this.props.studentsApplied} />
         </div>
       </div>
     );

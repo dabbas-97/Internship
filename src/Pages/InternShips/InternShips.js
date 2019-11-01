@@ -288,9 +288,11 @@ const InternShips = () => {
         </div>
       </React.Fragment>
     } else return <div className='text-center'><h1>Please create your cv first.</h1></div>
-  } else return <Spinner animation="border" role="status" variant="info" >
-    <span ></span>
-  </Spinner>
+  } else return <div className='profileSpinner'>
+    <Spinner animation="border" role="status" variant="info" >
+      <span ></span>
+    </Spinner>
+  </div>
 }
 
 export default InternShips

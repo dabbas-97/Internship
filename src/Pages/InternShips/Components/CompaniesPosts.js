@@ -26,6 +26,9 @@ export function CompaniesPosts(props) {
                 jobtitle: post.jobtitle,
                 companyPhone: post.companyPhone,
                 companyLocation: post.companyLocation,
+                postId: post.postId,
+                specialty: post.specialty,
+                jobdesc: post.jobdesc,
                 //the following fields are going to change once the company has responsed to the student application
                 message: '',
                 contact: '',
@@ -33,6 +36,7 @@ export function CompaniesPosts(props) {
                 response: false
             }).then(() => {
                 return db.collection('internships').doc(post.companyId).collection('companyPosts').doc(post.postId).collection('studentsApplied').doc(auth.user.uid).set({
+                    studentId: auth.user.uid,
                     studentName: userInfo.name,
                     studentGender: userInfo.gender,
                     studentPhoto: auth.user.photoURL,

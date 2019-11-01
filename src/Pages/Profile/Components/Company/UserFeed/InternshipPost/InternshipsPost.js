@@ -5,7 +5,7 @@ import { InternshipsPoster } from './InternshipsPoster';
 import { useAuth, db } from '../../../../../../Auth'
 //------------
 
-const InternshipsPost = () => {
+const InternshipsPost = ({ getStudentsApplied }) => {
   const [jobInfo, setJobInfo] = useState({ id: '', jobdesc: '', jobtitle: '', gpa: '2.5', gender: 'Male', specialty: 'IOS Developer', })
   const [step, setStep] = useState(1)
   const [posts, setPosts] = useState([])
@@ -171,6 +171,7 @@ const InternshipsPost = () => {
         step={step}
       />
       <PostedInternships
+        getStudentsApplied={getStudentsApplied}
         posts={posts}
         handleDeletePosts={handleDeletePosts}
         handleEditPosts={handleEditPosts}

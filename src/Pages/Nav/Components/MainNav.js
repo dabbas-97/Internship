@@ -66,9 +66,11 @@ const MainNav = ({ history }) => {
             </li>
           </React.Fragment>
         )
-      } else return (<Spinner animation="border" role="status" variant="info" >
-        <span ></span>
-      </Spinner>)
+      } else return (
+        <Spinner animation="border" role="status" variant="info" >
+          <span ></span>
+        </Spinner>
+      )
     }
 
   }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,useState,useEffect } from 'react';
 import '../../UserFeed.css';
 import StudentCV from './StudentCv/StudentCV';
 import { MdBusiness, MdHelp } from 'react-icons/md';
@@ -7,33 +7,47 @@ import { Modal } from 'react-bootstrap'
 import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
 import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
+import {db,useAuth} from '../../../../Auth'
+import { async } from 'q';
 
-export default class UserFeed extends Component {
-  state = { jobstatus: '' }
-  closeJobModal = () => {
-    this.setState({ jobstatus: '' });
+ const UserFeed =(props)=> {
+  const { internshipsApplied } =props;
+  const [jobStatus,setJobStatus]=useState('')
+  const {auth}= useAuth();
+  const closeJobModal = () => {
+    setJobStatus('')
   };
-  getStatus = () => {
-    //axios get...
-    const jobstatus = {
+
+  /*
+  {
       status: 'Accepted',
       companyname: 'Microsoft',
       jobtitle: 'Software Engineer',
       message: 'We are so happy to accept you nigga!',
       accepted: { location: 'amman', contact: 'coco@yah.com', phone: '079555' }
     }
-    this.setState({
-      jobstatus: jobstatus
-    });
+  */
+  const getStatus = async (id) => {
+    //axios get...
+    const responseInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc=>{
+      return {
+        status:doc.data().status,
+        companyname: doc.data().companyName,
+        jobtitle: doc.data().jobtitle,
+        message: doc.data().message,
+        accepted: { location: doc.data().companyLocation, contact: doc.data().contact, phone: doc.data().companyPhone }
+      }
+    })
+    setJobStatus(responseInfo)
   }
-  showStatus = () => {
-    if (this.state.jobstatus)
+  const showStatus = () => {
+    if (jobStatus)
       return (
-        <InternshipStatus values={this.state.jobstatus} closeJobModal={this.closeJobModal} />
+        <InternshipStatus values={jobStatus} closeJobModal={closeJobModal} />
       );
   };
-  render() {
-    const { internshipsApplied } = this.props;
+  
+    
 
     return (
       <React.Fragment>
@@ -42,15 +56,16 @@ export default class UserFeed extends Component {
             <StudentCV />
           </div>
           <div className=' appliedList text-center'>
-            <CompaniesAppliedForComponent internshipsApplied={internshipsApplied} getStatus={this.getStatus} />
+            <CompaniesAppliedForComponent internshipsApplied={internshipsApplied} getStatus={getStatus} />
           </div>
 
         </div>
-        {this.showStatus()}
+        {showStatus()}
       </React.Fragment>
     );
-  }
+  
 }
+export default UserFeed
 
 class CompaniesAppliedForComponent extends Component {
   state = {
@@ -71,6 +86,7 @@ class CompaniesAppliedForComponent extends Component {
 
   render() {
     const appliedChunks = this.pageRenderer();
+    console.log(appliedChunks)
     const nextPage = () => {
       let { pages } = this.state;
       if (pages < appliedChunks.length - 1) this.setState({ pages: pages + 1 });
@@ -142,47 +158,49 @@ function CompaniesAppliedFor(props) {
     };
 
     const status = () => {
-      if (x.status === 'accepted') {
-        return <li className='accepted list-group-item text-uppercase' onClick={props.getStatus}>{x.status}</li>
-      } else if (x.status === 'rejected') {
-        return <li className='rejected list-group-item text-uppercase' onClick={props.getStatus}>{x.status}</li>
-      } else return <li className='pending list-group-item text-uppercase'>{x.status}</li>
+      if (x.response) {
+        if (x.status === 'Accepted') {
+          return <li className='accepted list-group-item text-uppercase' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+        } else {
+          return <li className='rejected list-group-item text-uppercase' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+        }
+      } else return <li className='pending list-group-item text-uppercase'>Pending</li>
+
     }
     return (
-      <div className='col-md-6' key={x.id}>
+      <div className='col-md-6' key={x.postId}>
         <div className='card '>
-          <img src={x.imgsrc} className='card-img-top' alt={x.name} />
 
           <ul className='list-group list-group-flush text-center'>
+
             <li className='list-group-item applied '>
-              <span className='job'>
-                <MdBusiness />
-              </span>
-              {x.name}
+              <span className='job'> <MdBusiness /> </span>
+              {x.companyName}
             </li>
+
             <li className='list-group-item applied '>
               <span className='job'><IoMdBriefcase /></span>
               {x.jobtitle}
             </li>
-            <li className='list-group-item togglerLi ' data-toggle='collapse'
-              href={'#jobdesc' + x.id}
-              role='button'>
+
+            <li className='list-group-item togglerLi ' data-toggle='collapse' href={'#jobdesc' + x.postId} role='button'>
               <span className='job'><MdHelp /></span>
               Job Description
             </li>
-            <li className='list-group-item applied collapse ' id={'jobdesc' + x.id}>
+            <li className='list-group-item applied collapse ' id={'jobdesc' + x.postId}>
               {x.jobdesc}
             </li>
-            <li className='list-group-item togglerLi ' data-toggle='collapse'
-              href={'#specialty' + x.id}
-              role='button'>
+
+            <li className='list-group-item togglerLi ' data-toggle='collapse' href={'#specialty' + x.postId} role='button'>
               <span className='job'><DiCodeBadge /></span>
               Specialty
             </li>
-            <li className='list-group-item applied collapse' id={'specialty' + x.id}>
+
+            <li className='list-group-item applied collapse' id={'specialty' + x.postId}>
               <span className='job'>{jobIcon()}</span>
               {x.specialty}
             </li>
+
             {status()}
 
           </ul>

@@ -26,87 +26,104 @@ export function Posts(props) {
         </div>);
     }
     const info = myPosts.map(data => {
-        //onclick={this.props.getStudentsWhoApplied(data.id)}
-        return (<div className='col-md-6 companyPosts ' key={data.id}>
-            <div className='card '>
-                <ul className='list-group list-group-flush text-center'>
-                    <li className='list-group-item applied '>
-                        <div className='row'>
-                            <div className='col-4'>
-                                <span className=' float-left text-center'>
-                                    Job Title:
-              </span></div>
-                            <div className='col-8'>
-                                {data.jobtitle}
-                            </div></div>
-                    </li>
-                    <li className='list-group-item applied '>
-                        <div className='row '>
-                            <div className='col-4'>
-                                <span className='float-left text-center'>
-                                    Description:
-                  </span></div>
-                            <div className='col-8'>
-                                {data.jobdesc}
-                            </div>
-                        </div>
-                    </li>
 
-                    <li className='list-group-item applied '>
-                        <div className='row '>
-                            <div className='col-4'>
-                                <span className='float-left'>GPA:
-              </span></div>
-                            <div className='col-8'>
-                                {gpaRenderer(data.gpa)}
+        return (
+            <div className='col-md-6 companyPosts ' key={data.id}>
+                <div className='card '>
+
+                    <ul className='list-group list-group-flush text-center'>
+
+                        <li className='list-group-item applied '>
+                            <div className='row'>
+                                <div className='col-4'>
+                                    <span className=' float-left text-center'> Job Title: </span>
+                                </div>
+                                <div className='col-8'>
+                                    {data.jobtitle}
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li className='list-group-item applied '>
-                        <div className='row '>
-                            <div className='col-4'>
-                                <span className='float-left'>Gender:</span></div>
-                            <div className='col-8'>
-                                {returnGender(data.gender)}
+                        </li>
+
+                        <li className='list-group-item applied '>
+                            <div className='row '>
+                                <div className='col-4'>
+                                    <span className='float-left text-center'> Description: </span>
+                                </div>
+                                <div className='col-8'>
+                                    {data.jobdesc}
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li className='list-group-item applied'>
-                        <div className='row '>
-                            <div className='col-4'>
-                                <span className='float-left'>
-                                    Specialty:
-                  </span>
+                        </li>
+
+                        <li className='list-group-item applied '>
+                            <div className='row '>
+                                <div className='col-4'>
+                                    <span className='float-left'>GPA: </span>
+                                </div>
+                                <div className='col-8'>
+                                    {gpaRenderer(data.gpa)}
+                                </div>
                             </div>
-                            <div className='col-8'>
-                                {data.specialty}
+                        </li>
+
+                        <li className='list-group-item applied '>
+                            <div className='row '>
+                                <div className='col-4'>
+                                    <span className='float-left'>Gender:</span>
+                                </div>
+                                <div className='col-8'>
+                                    {returnGender(data.gender)}
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li className='list-group-item applied'>
-                        <div className='row'>
-                            <div className='col-6'>
-                                <button className=' w-100 btn' onClick={() => props.handleDeletePosts(data.id)}>
-                                    Delete
-                  </button>
+                        </li>
+
+                        <li className='list-group-item applied'>
+                            <div className='row '>
+                                <div className='col-4'>
+                                    <span className='float-left'> Specialty: </span>
+                                </div>
+                                <div className='col-8'>
+                                    {data.specialty}
+                                </div>
                             </div>
-                            <div className='col-6'>
-                                <button className='w-100 btn' onClick={() => props.handleEditPosts({
-                                    id: data.id,
-                                    jobdesc: data.jobdesc,
-                                    jobtitle: data.jobtitle,
-                                    gpa: data.gpa,
-                                    gender: returnGender(data.gender),
-                                    specialty: data.specialty
-                                })}>
-                                    Edit
-                  </button>
+                        </li>
+
+                        <li className='list-group-item applied'>
+                            <div className='row'>
+
+                                <div className='col-6'>
+                                    <button className=' w-100 btn' onClick={() => props.handleDeletePosts(data.id)}> Delete</button>
+                                </div>
+
+                                <div className='col-6'>
+                                    <button className='w-100 btn' onClick={() =>
+                                        props.handleEditPosts({
+                                            id: data.id,
+                                            jobdesc: data.jobdesc,
+                                            jobtitle: data.jobtitle,
+                                            gpa: data.gpa,
+                                            gender: returnGender(data.gender),
+                                            specialty: data.specialty
+                                        })}>
+                                        Edit
+                                     </button>
+                                </div>
+
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+
+                        <li className='list-group-item applied'>
+                            <div className='row'>
+                                <div className='col'>
+                                    <button className=' w-100 btn coolbtn' onClick={() => props.getStudentsApplied(data.id)}>Show Students</button>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
-        </div>);
+        );
     });
     return <React.Fragment>{info}</React.Fragment>;
 }

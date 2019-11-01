@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MdLocationOn, MdSchool, MdClose, MdCheck } from 'react-icons/md';
 import { IoLogoApple, IoMdMale, IoMdFemale } from 'react-icons/io';
-import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase, FaUserGraduate, FaSchool, FaCode, FaUniversity } from 'react-icons/fa';
+import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase, FaUserGraduate, FaSchool, FaCode, FaUniversity, FaBirthdayCake, FaHeart, FaPhone } from 'react-icons/fa';
 import { FiPercent } from 'react-icons/fi';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import { RejectModal } from '../RejectModal';
@@ -14,30 +14,32 @@ export class StudentsApplies extends Component {
     closeJobModal = () => {
         this.setState({ accept: '', reject: '' });
     };
-    handleModal = (type, jobId) => {
+    handleModal = (type, studentId) => {
         if (type === 'accept')
-            this.setState({ accept: jobId });
+            this.setState({ accept: studentId });
         else
-            this.setState({ reject: jobId });
+            this.setState({ reject: studentId });
     };
     render() {
         const showModal = () => {
             if (this.state.accept) {
-                return <AccepetModal closeJobModal={this.closeJobModal} internshipsId={this.state.accept.jobId} />;
+                return <AccepetModal closeJobModal={this.closeJobModal} studentId={this.state.accept} />;
             }
             else if (this.state.reject)
-                return (<RejectModal closeJobModal={this.closeJobModal} internshipsId={this.state.reject.jobId} />);
+                return (<RejectModal closeJobModal={this.closeJobModal} studentId={this.state.reject} />);
         };
         const { studentsApplied } = this.props;
         if (!studentsApplied) {
-            return (<div className='appliedFor m-4  col  '>
-                <h6 className='text-muted'>
-                    No Students have applied to any of your Internship posts.
-        </h6>
-            </div>);
+            return (
+                <div className='appliedFor m-4  col  '>
+                    <h6 className='text-muted'>
+                        No Students have applied to any of your Internship posts.
+                     </h6>
+                </div>
+            );
         }
         const info = studentsApplied.map(data => {
-            const renderSpecialties = data.specialties.map(specialty => {
+            const renderSpecialties = data.studentSpecialities.map(specialty => {
                 const jobIcon = () => {
                     if (specialty === 'IOS Developer')
                         return <IoLogoApple />;
@@ -78,107 +80,129 @@ export class StudentsApplies extends Component {
                     else if (specialty === 'Web Developer')
                         return <DiCodeBadge />;
                 };
-                return (<div className='row' key={Math.random()}>
-                    <div className='col my-1'>
-                        <span className='job'>{jobIcon()}</span>
-                        {specialty}
+                return (
+                    <div className='row' key={Math.random()}>
+                        <div className='col my-1'>
+                            <span className='job'>{jobIcon()}</span>
+                            {specialty}
+                        </div>
                     </div>
-                </div>);
+                );
             });
             const genderIcon = () => {
-                if (data.gender === 'Female')
+                if (data.studentGender === 'Female')
                     return <IoMdFemale />;
                 else
                     return <IoMdMale />;
             };
-            return (<div className='col-md-6' key={data.id}>
-                <div className='card '>
-                    <img src={data.imgsrc} className='card-img-top' alt={data.name} />
+            const renderGpa = () => {
+                switch (data.studentGpa) {
+                    case '3.5': return 'Exccelent'
+                    case '3.0': return 'Very Good'
+                    case '2.5': return 'Good'
+                    case '2.0': return 'Pass'
+                    case '1.5': return 'Weak'
+                    default: break;
+                }
+            }
+            return (
+                <div className='col-md-6' key={data.studentId}>
+                    <div className='card '>
+                        <img src={data.studentPhoto} className='card-img-top' alt={data.studentName} />
 
-                    <ul className='list-group list-group-flush text-center'>
-                        <li className='list-group-item applied '>
-                            <span className='job'>
-                                <FaUserGraduate />
-                            </span>
-                            {data.name}
-                        </li>
-                        <li className='list-group-item applied '>
-                            <span className='job'>{genderIcon()}</span>
-                            {data.gender}
-                        </li>
-                        <li className='list-group-item applied '>
-                            <span className='job'>
-                                <MdLocationOn />
-                            </span>
-                            {data.location}
-                        </li>
-                        <li className='list-group-item applied togglerLi ' data-toggle='collapse' href={'#education' + data.id} role='button' aria-expanded='false'>
-                            <div className='row '>
-                                <div className='col'>
-                                    <span className='job'>
-                                        <FaSchool />
-                                    </span>
-                                    Education
-                </div>
-                            </div>
-                        </li>
-                        <li className='list-group-item applied collapse' id={'education' + data.id}>
-                            <div className='row my-1'>
-                                <div className='col'>
-                                    <span className='job'>
-                                        <FaUniversity />
-                                    </span>
-                                    {data.education.school}
+                        <ul className='list-group list-group-flush text-center'>
+                            <li className='list-group-item applied '>
+                                <span className='job'><FaUserGraduate /> </span>
+                                {data.studentName}
+                            </li>
+
+                            <li className='list-group-item applied '>
+                                <span className='job'>{genderIcon()}</span>
+                                {data.studentGender}
+                            </li>
+
+                            <li className='list-group-item applied '>
+                                <span className='job'><MdLocationOn /> </span>
+                                {data.studentHometown}
+                            </li>
+
+                            <li className='list-group-item applied '>
+                                <span className='job'><FaBirthdayCake /> </span>
+                                {data.studentBirthday}
+                            </li>
+                            <li className='list-group-item applied '>
+                                <span className='job'><FaHeart /> </span>
+                                {data.studentSocial}
+                            </li>
+                            <li className='list-group-item applied '>
+                                <span className='job'><FaPhone /> </span>
+                                {data.studentPhone}
+                            </li>
+
+                            <li className='list-group-item applied togglerLi ' data-toggle='collapse' href={'#education' + data.studentId} role='button' aria-expanded='false'>
+                                <div className='row '>
+                                    <div className='col'>
+                                        <span className='job'><FaSchool /> </span>
+                                        Education
+                               </div>
                                 </div>
-                            </div>
-                            <div className='row my-1'>
-                                <div className='col'>
-                                    <span className='job'>
-                                        <MdSchool />
-                                    </span>
-                                    {data.education.field}
+                            </li>
+
+                            <li className='list-group-item applied collapse' id={'education' + data.studentId}>
+                                <div className='row my-1'>
+                                    <div className='col'>
+                                        <span className='job'> <FaUniversity /> </span>
+                                        {data.studentSchool}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='row my-1'>
-                                <div className='col'>
-                                    <span className='job'>
-                                        <FiPercent />
-                                    </span>
-                                    {data.education.gpa}
+
+                                <div className='row my-1'>
+                                    <div className='col'>
+                                        <span className='job'> <MdSchool /> </span>
+                                        {data.studentField}
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li className='list-group-item applied togglerLi ' data-toggle='collapse' href={'#specialties' + data.id} role='button' aria-expanded='false'>
-                            <div className='row '>
-                                <div className='col'>
-                                    <span className='job'>
-                                        <FaCode />
-                                    </span>
-                                    Specialties
-                </div>
-                            </div>
-                        </li>
-                        <li className='list-group-item applied collapse' id={'specialties' + data.id}>
-                            {renderSpecialties}
-                        </li>
-                        <li className='list-group-item applied '>
-                            <div className='form-inline justify-content-center my-1'>
-                                <div className='text-center mx-1 '>
-                                    <button type='button' className='btn rejectedbtn' onClick={() => this.handleModal('reject', data.id)}>
-                                        Reject <MdClose />
-                                    </button>
+
+                                <div className='row my-1'>
+                                    <div className='col'>
+                                        <span className='job'> <FiPercent /> </span>
+                                        {renderGpa()}
+                                    </div>
                                 </div>
-                                <div className='text-center mx-1 '>
-                                    <button type='button' className='btn acceptedbtn' onClick={() => this.handleModal('accept', data.id)}>
-                                        Accept <MdCheck />
-                                    </button>
+
+                            </li>
+
+                            <li className='list-group-item applied togglerLi ' data-toggle='collapse' href={'#specialties' + data.studentId} role='button' aria-expanded='false'>
+                                <div className='row '>
+                                    <div className='col'>
+                                        <span className='job'> <FaCode />  </span>
+                                        Specialties
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                {showModal()}
-            </div>);
+                                </div>
+                            </li>
+
+                            <li className='list-group-item applied collapse' id={'specialties' + data.studentId}>
+                                {renderSpecialties}
+                            </li>
+
+                            <li className='list-group-item applied '>
+                                <div className='form-inline justify-content-center my-1'>
+                                    <div className='text-center mx-1 '>
+                                        <button type='button' className='btn rejectedbtn' onClick={() => this.handleModal('reject', data.studentId)}>
+                                            Reject <MdClose />
+                                        </button>
+                                    </div>
+                                    <div className='text-center mx-1 '>
+                                        <button type='button' className='btn acceptedbtn' onClick={() => this.handleModal('accept', data.studentId)}>
+                                            Accept <MdCheck />
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {showModal()}
+                </div>);
         });
         return <React.Fragment>{info}</React.Fragment>;
     }
