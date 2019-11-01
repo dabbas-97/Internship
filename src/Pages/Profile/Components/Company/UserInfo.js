@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
-import { useAuth, db } from '../../../../Auth'
+import { useAuth, db, toto } from '../../../../Auth'
 import InputFiles from 'react-input-files';
 import profileImg from '../../../../images/education.png';
 import { Spinner } from 'react-bootstrap'
@@ -30,7 +30,7 @@ const UserInfo = () => {
         .then(doc => {
           setUserInfo(
             {
-              ...userInfo,
+              userImg: auth.user.photoURL,
               name: doc.data().name,
               phone: doc.data().phone,
               location: doc.data().location,

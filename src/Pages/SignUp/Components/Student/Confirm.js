@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useAuth, db } from '../../../../Auth'
+import { useAuth, db, toto } from '../../../../Auth'
 
 const Confirm = (props) => {
 
@@ -13,6 +13,7 @@ const Confirm = (props) => {
 
     auth.signup(email, password)
       .then(user => {
+        toto.currentUser.updateProfile({ photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564' })
         return db.collection('users').doc(user.uid).set({
           name: values.name,
           gender: values.sex,
@@ -24,6 +25,7 @@ const Confirm = (props) => {
           joined: new Date(),
         })
       }).then(() => props.nextStep()).catch(err => console.log(err.message))
+
   };
   const isBio = () => {
     if (values.bio === '') return 'd-none';

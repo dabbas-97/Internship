@@ -21,8 +21,8 @@ const InternShips = () => {
   const [gotCV, setGotCV] = useState(false)
   const [postsReturned, setPostsReturnd] = useState(false)
   const [postsInfoReturned, setPostsInfoReturned] = useState(false)
-  const [gotFullInfo, setGotFullInfo] = useState(false)
-  const [toto, setToto] = useState(false)
+  const [postsFetched, setPostsFetched] = useState(false)
+  const [gotSpecialities, setGotSpecialities] = useState(false)
 
   const [gpa, setGpa] = useState(null)
   const [gender, setGender] = useState(null)
@@ -31,23 +31,24 @@ const InternShips = () => {
 
   const [posts, setPosts] = useState([])
 
-  /* {imgsrc: firstCompany,
-  companyname: 'Eskadinia',
-  jobtitle: 'Web Dev',
-  jobdesc: 'We are looking for a ',
-  specialty: 'Android Developer'} */
+
 
   const [postsInfo, setPostsInfo] = useState(null)
   const [companyInfo, setCompanyInfo] = useState([])
-  const [specialtyPages, setSpecialtyPages] = useState([[0], [0]])
+  const [specialtyPages, setSpecialtyPages] = useState(null)
+  const [specialtyPagesAreDone, setSpecialtyPagesAreDone] = useState(false)
 
   useEffect(() => {
     if (specialities) {
-      let pages = specialities.map(() => [0])
-      setSpecialtyPages(pages)
+      if (!specialtyPagesAreDone) {
+        let pages = specialities.map(() => [0])
+        setSpecialtyPages(pages)
+        setSpecialtyPagesAreDone(true)
+      }
+
     }
 
-  }, [])
+  }, [specialities])
 
   useEffect(() => {
     if (!gotCV) {
@@ -55,13 +56,23 @@ const InternShips = () => {
         if (doc.exists) {
           setSpecialities(doc.data().specialities)
           setGpa(doc.data().gpa)
+          setGotCV(true)
         } else {
           console.log(`No 'CV' record for this user`)
+          setGotCV(true)
         }
-        setGotCV(true)
+
+
       })
+
     }
   }, [])
+  useEffect(() => {
+    if (specialities) {
+      setGotSpecialities(true)
+    }
+
+  }, [specialities])
 
   useEffect(() => {
     if (!gender) {
@@ -80,9 +91,9 @@ const InternShips = () => {
         db.collectionGroup('companyPosts').where('gender', 'array-contains', gender).where('gpa', '<=', gpa).get().then(snapshots => {
           if (!snapshots.empty) {
             addPostInfo(snapshots.docs)
-
+            setPostsReturnd(true)
           } else console.log('no posts')
-          setPostsReturnd(true)
+
         })
       }
     }
@@ -145,12 +156,14 @@ const InternShips = () => {
             jobtitle: post.jobtitle,
             jobdesc: post.jobdesc,
             gpa: post.gpa,
+            specialty: post.specialty,
             companyBio: company[0].bio,
             companyLocation: company[0].location,
             companyName: company[0].name,
             companyPhone: company[0].phone,
           }
         })
+        setPostsFetched(true)
         setPosts(finalPosts)
       }
 
@@ -172,8 +185,10 @@ const InternShips = () => {
     if (specialities) {
 
 
+
       const opporunities = specialities.map(specialty => {
         const count = specialities.indexOf(specialty);
+
         const specialtyPosts = posts.filter(post => post.specialty === specialty)
         const pageRenderer = () => {
           let i,
@@ -186,7 +201,6 @@ const InternShips = () => {
           return pages;
         }
         const appliedChunks = pageRenderer();
-
 
 
         const nextPage = () => {
@@ -247,7 +261,6 @@ const InternShips = () => {
             default: break;
           }
         }
-
 
         return (
           <div className='specialty' key={specialty}>

@@ -32,14 +32,14 @@ const UserInfo = () => {
     birthday: '',
     bio: '',
     location: '',
-    userImg: profileImg
+    userImg: ''
   })
   useEffect(() => {
     db.collection('users').doc(auth.user.uid).get()
       .then(doc => {
         setUserInfo(
           {
-            ...userInfo,
+            userImg: auth.user.photoURL,
             name: doc.data().name,
             gender: doc.data().gender,
             phone: doc.data().phone,

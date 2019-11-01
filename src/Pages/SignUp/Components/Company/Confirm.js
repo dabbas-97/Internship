@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useAuth, db } from '../../../../Auth'
+import { useAuth, db, toto } from '../../../../Auth'
 
 const Confirm = (props) => {
 
@@ -13,6 +13,7 @@ const Confirm = (props) => {
 
     auth.signup(email, password)
       .then(user => {
+        toto.currentUser.updateProfile({ photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fcompany.png?alt=media&token=80378acd-cb5d-4a02-989c-e1d57e5ef5bf' })
         return db.collection('users').doc(user.uid).set({
           companyId: user.uid,
           name: values.name,
