@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen } from 'react-icons/fa';
+import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen, FaEdit, FaRegEdit } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
-import { useAuth, db, toto } from '../../../../Auth'
+import { useAuth, db } from '../../../../Auth'
 import InputFiles from 'react-input-files';
-import profileImg from '../../../../images/education.png';
 import { Spinner } from 'react-bootstrap'
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -22,7 +21,6 @@ const UserInfo = () => {
     bio: '',
     phone: '',
     location: '',
-    userImg: profileImg
   })
   useEffect(() => {
     if (!loaded) {
@@ -81,7 +79,7 @@ const UserInfo = () => {
   const userInfoPage = () => {
     if (view) return (
       <React.Fragment>
-        <span className='editSpan' onClick={changeView}> <FaPen /></span>
+        <span className='editSpan' onClick={changeView}> <FaEdit /></span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
@@ -121,7 +119,7 @@ const UserInfo = () => {
       </React.Fragment>
     ); else return (
       <form onSubmit={submitChanges}>
-        <span className='editSpan' onClick={changeView}> <FaPen /></span>
+        <span className='editSpan' onClick={changeView}> <FaRegEdit /></span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
@@ -152,7 +150,7 @@ const UserInfo = () => {
           </li>
         </ul>
         <button type='submit' className='btn editInfoBtn' >
-          <span ><FaPen /></span>
+          <span ><FaEdit /></span>
           Submit Changes
           </button>
       </form>

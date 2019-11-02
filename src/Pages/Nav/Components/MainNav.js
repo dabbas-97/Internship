@@ -13,7 +13,6 @@ const MainNav = ({ history }) => {
   const [loaded, setLoaded] = useState(false)
   const [logged, setLogged] = useState(false)
   const { auth } = useAuth();
-
   useEffect(() => {
 
     if (logged) {

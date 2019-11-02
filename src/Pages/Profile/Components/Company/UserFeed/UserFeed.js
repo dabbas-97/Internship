@@ -13,7 +13,7 @@ export default class UserFeed extends Component {
           <InternshipsPost getStudentsApplied={this.props.getStudentsApplied} />
         </div>
         <div className=' appliedList text-center'>
-          <StudentsAppliesComponent studentsApplied={this.props.studentsApplied} />
+          <StudentsAppliesComponent studentsApplied={this.props.studentsApplied} postId={this.props.postId} />
         </div>
       </div>
     );

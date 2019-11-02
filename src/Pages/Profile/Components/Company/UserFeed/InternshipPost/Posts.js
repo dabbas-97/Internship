@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaUserGraduate } from 'react-icons/fa'
+import { MdDeleteForever, MdModeEdit } from 'react-icons/md'
 export function Posts(props) {
     const { myPosts } = props;
     const returnGender = (gender) => {
@@ -92,7 +94,7 @@ export function Posts(props) {
                             <div className='row'>
 
                                 <div className='col-6'>
-                                    <button className=' w-100 btn' onClick={() => props.handleDeletePosts(data.id)}> Delete</button>
+                                    <button className=' w-100 btn' onClick={() => props.handleDeletePosts(data.id)}> <MdDeleteForever /></button>
                                 </div>
 
                                 <div className='col-6'>
@@ -105,8 +107,8 @@ export function Posts(props) {
                                             gender: returnGender(data.gender),
                                             specialty: data.specialty
                                         })}>
-                                        Edit
-                                     </button>
+                                        <MdModeEdit />
+                                    </button>
                                 </div>
 
                             </div>
@@ -115,7 +117,7 @@ export function Posts(props) {
                         <li className='list-group-item applied'>
                             <div className='row'>
                                 <div className='col'>
-                                    <button className=' w-100 btn coolbtn' onClick={() => props.getStudentsApplied(data.id)}>Show Students</button>
+                                    <button className=' w-100 btn coolbtn' onClick={() => props.getStudentsApplied(data.id)}><FaUserGraduate /></button>
                                 </div>
                             </div>
                         </li>

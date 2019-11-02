@@ -56,6 +56,7 @@ export default class StudentsAppliesComponent extends Component {
                     <div className='row  '>
                         <StudentsApplies
                             studentsApplied={appliedChunks[this.state.pages]}
+                            postId={this.props.postId}
                         />
                     </div>
                     {showButtons()}

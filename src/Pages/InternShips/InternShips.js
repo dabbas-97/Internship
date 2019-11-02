@@ -274,7 +274,11 @@ const InternShips = () => {
             </div>
             <div className='m-4'>
               <div className='row'>
-                <CompaniesPosts posts={appliedChunks[specialtyPages[count]]} />
+                {postsFetched ? (<CompaniesPosts posts={appliedChunks[specialtyPages[count]]} />) : (<div className='profileSpinner'>
+                  <Spinner animation="border" role="status" variant="info" >
+                    <span ></span>
+                  </Spinner>
+                </div>)}
               </div></div>
             {showButtons()}
           </div>

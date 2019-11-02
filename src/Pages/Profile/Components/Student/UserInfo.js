@@ -11,7 +11,6 @@ import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
 import { useAuth, db } from '../../../../Auth'
-import profileImg from '../../../../images/education.png';
 import Moment from 'react-moment';
 import 'moment-timezone';
 

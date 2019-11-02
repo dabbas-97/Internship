@@ -4,8 +4,8 @@ import { IoLogoApple, IoMdMale, IoMdFemale } from 'react-icons/io';
 import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase, FaUserGraduate, FaSchool, FaCode, FaUniversity, FaBirthdayCake, FaHeart, FaPhone } from 'react-icons/fa';
 import { FiPercent } from 'react-icons/fi';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
-import { RejectModal } from '../RejectModal';
-import { AccepetModal } from '../AccepetModal';
+import RejectModal from '../RejectModal';
+import AccepetModal from '../AccepetModal';
 export class StudentsApplies extends Component {
     state = {
         reject: '',
@@ -23,10 +23,10 @@ export class StudentsApplies extends Component {
     render() {
         const showModal = () => {
             if (this.state.accept) {
-                return <AccepetModal closeJobModal={this.closeJobModal} studentId={this.state.accept} />;
+                return <AccepetModal closeJobModal={this.closeJobModal} studentId={this.state.accept} postId={this.props.postId} />;
             }
             else if (this.state.reject)
-                return (<RejectModal closeJobModal={this.closeJobModal} studentId={this.state.reject} />);
+                return (<RejectModal closeJobModal={this.closeJobModal} studentId={this.state.reject} postId={this.props.postId} />);
         };
         const { studentsApplied } = this.props;
         if (!studentsApplied) {

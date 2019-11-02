@@ -3,25 +3,14 @@ import UserInfo from './Components/Company/UserInfo';
 import UserFeed from './Components/Company/UserFeed/UserFeed';
 
 import { db, useAuth } from '../../Auth'
-import { Spinner } from 'react-bootstrap'
 
 const CompanyProfile = () => {
   const [studentsApplied, setStudentsApplied] = useState([])
+  const [postId, setPostId] = useState('')
   const { auth } = useAuth()
-  // {
-  //   id: 1,
-  //     name: 'Mohammad Khaled',
-  //       gender: 'Male',
-  //         specialties: ['Web Developer', 'PHP Developer', 'Larvel Developer'],
-  //           socialStatus: 'Engaged',
-  //             education: {
-  //     school: 'Al Al-Bait University',
-  //       field: 'Computer Science',
-  //         gpa: 'Excellent'
-  //   },
-  //   location: 'Amman'
-  // }
+
   const getStudentsApplied = async (postId) => {
+    setPostId(postId)
     const applicants = await db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(postId).collection('studentsApplied').get()
       .then(snapshot => {
         if (!snapshot.empty) {
@@ -41,7 +30,7 @@ const CompanyProfile = () => {
       <div className='row mt-3'>
 
         <div className='col-md-8 '>
-          <UserFeed studentsApplied={studentsApplied} getStudentsApplied={getStudentsApplied} />
+          <UserFeed studentsApplied={studentsApplied} getStudentsApplied={getStudentsApplied} postId={postId} />
         </div>
 
         <div className='col-md-4'>

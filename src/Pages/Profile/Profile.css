@@ -122,3 +122,7 @@ form .profileImg {
   background: #c6e9f8 !important;
   color: #000 !important;
 }
+.coolbtn:hover {
+  background: #c6e9f8 !important;
+  color: #0083f3 !important;
+}
