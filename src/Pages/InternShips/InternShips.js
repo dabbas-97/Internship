@@ -93,7 +93,7 @@ const InternShips = () => {
             addPostInfo(snapshots.docs)
             setPostsReturnd(true)
           } else console.log('no posts')
-
+          setPostsFetched(true)
         })
       }
     }
