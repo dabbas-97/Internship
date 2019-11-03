@@ -203,23 +203,27 @@ const InternShips = () => {
         const appliedChunks = pageRenderer();
 
 
-        const nextPage = () => {
+        const nextPage = async () => {
           var tempSpecialtyPages = specialtyPages
           let pages = specialtyPages[count][0];
 
           if (pages < appliedChunks.length - 1) {
+            setPostsFetched(false)
             pages++;
             tempSpecialtyPages[count][0] = pages
-            setSpecialtyPages(tempSpecialtyPages)
+            await setSpecialtyPages(tempSpecialtyPages)
+            setPostsFetched(true)
           }
         };
-        const prevPage = () => {
+        const prevPage = async () => {
           var tempSpecialtyPages = specialtyPages
           let pages = specialtyPages[count][0];
           if (pages > 0) {
+            setPostsFetched(false)
             pages--;
             tempSpecialtyPages[count][0] = pages
-            setSpecialtyPages(tempSpecialtyPages)
+            await setSpecialtyPages(tempSpecialtyPages)
+            setPostsFetched(true)
           }
         };
 
