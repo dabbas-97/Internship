@@ -119,7 +119,7 @@ const UserInfo = () => {
       </React.Fragment>
     ); else return (
       <form onSubmit={submitChanges}>
-        <span className='editSpan' onClick={changeView}> <FaRegEdit /></span>
+        <span className='editSpan' > <FaRegEdit /></span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>

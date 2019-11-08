@@ -17,9 +17,7 @@ import 'moment-timezone';
 const UserInfo = () => {
   const [view, setView] = useState(true)
   const [validDate, setValidDate] = useState(true)
-  const changeView = () => {
-    setView(!view);
-  };
+
 
   const { auth } = useAuth();
   const [userInfo, setUserInfo] = useState({
@@ -134,7 +132,7 @@ const UserInfo = () => {
   const userInfoPage = () => {
     if (view) return (
       <React.Fragment>
-        <span className='editSpan' onClick={changeView}> <FaPen /> </span>
+        <span className='editSpan' onClick={() => setView(false)}> <FaPen /> </span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
@@ -184,7 +182,7 @@ const UserInfo = () => {
       </React.Fragment>
     ); else return (
       <form onSubmit={submitChanges}>
-        <span className='editSpan' onClick={changeView}> <FaPen /> </span>
+        <span className='editSpan' > <FaPen /> </span>
 
         <div className='profileImg'>
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>

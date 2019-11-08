@@ -144,27 +144,33 @@ const InternShips = () => {
 
     if (postsInfoReturned && postsReturned) {
       if (companyInfo.length === companiesNumber && postsInfo) {
-        const finalPosts = postsInfo.map(post => {
-          const id = post.companyId
-          const company = companyInfo.filter(companies => {
-            return companies.companyId === id
-          })
-          return {
-            postId: post.postId,
-            companyId: post.companyId,
-            jobtitle: post.jobtitle,
-            jobdesc: post.jobdesc,
-            createdAt: post.createdAt,
-            gpa: post.gpa,
-            specialty: post.specialty,
-            companyBio: company[0].bio,
-            companyLocation: company[0].location,
-            companyName: company[0].name,
-            companyPhone: company[0].phone,
-          }
-        })
-        setPostsFetched(true)
-        setPosts(finalPosts)
+        const toto = async () => {
+          const finalPosts = await Promise.all(postsInfo.map(async post => {
+            const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
+            const id = post.companyId
+            const company = companyInfo.filter(companies => {
+              return companies.companyId === id
+            })
+            return {
+              applied: applied,
+              postId: post.postId,
+              companyId: post.companyId,
+              jobtitle: post.jobtitle,
+              jobdesc: post.jobdesc,
+              createdAt: post.createdAt,
+              gpa: post.gpa,
+              specialty: post.specialty,
+              companyBio: company[0].bio,
+              companyLocation: company[0].location,
+              companyName: company[0].name,
+              companyPhone: company[0].phone,
+            }
+          }))
+          setPostsFetched(true)
+          setPosts(finalPosts)
+        }
+        toto()
+
       }
 
 

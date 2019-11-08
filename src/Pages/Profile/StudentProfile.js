@@ -11,9 +11,14 @@ const StudentProfile = () => {
   useEffect(() => {
     if (!internshipsFetched) {
       async function toto() {
-        const internships = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').get().then(snapshot => {
+        const internships = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').get().then(async snapshot => {
           if (!snapshot.empty) {
-            return snapshot.docs.map(doc => doc.data())
+            const posts = await Promise.all(snapshot.docs.map(async doc => {
+              const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get().then(doc => doc.exists)
+              if (doc.data().response || exists) return doc.data()
+              else db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(doc.data().postId).delete()
+            }))
+            return await posts.filter(post => post !== undefined)
           } else return null
         })
         if (internships) {

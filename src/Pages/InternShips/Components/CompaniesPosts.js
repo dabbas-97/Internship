@@ -58,7 +58,7 @@ export function CompaniesPosts(props) {
 
 
     const specialtyPosts = posts.map(post => {
-
+        var applied = post.applied
         return (
             <div className='col-md-3 col-sm-6 ' key={post.postId}>
                 <div className='card companyPost'>
@@ -76,7 +76,9 @@ export function CompaniesPosts(props) {
                             {post.jobdesc}
                         </li>
                         <li className='list-group-item applied '>
-                            <button type='button' className='btn' onClick={() => apply(post)}>Apply Now</button>
+                            {applied ?
+                                <button type='button' className='btn disabled' >Successfully Applied!</button> :
+                                <button type='button' className='btn' onClick={() => { apply(post); applied = true }}>Apply Now</button>}
                         </li>
                         <li className='list-group-item createdAt '>
                             <div className='row'>

@@ -76,8 +76,15 @@
 }
 .companyName {
   font-size: 1.5em;
-  color: #949494;
+  color: #717171;
 }
 .zeroPadding {
   padding: 0 !important;
+}
+.companyPost .disabled {
+  cursor: default !important;
+  box-shadow: -2px 2px 0px 0 rgba(0, 0, 0, 0.16),
+    1px 1px 0px 0 rgba(0, 0, 0, 0.12);
+  background-color: #d0d0d0 !important;
+  color: #54595a !important;
 }

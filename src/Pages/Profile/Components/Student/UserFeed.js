@@ -8,7 +8,7 @@ import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
 import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import { db, useAuth } from '../../../../Auth'
-import { async } from 'q';
+
 
 const UserFeed = (props) => {
   const { internshipsApplied } = props;
@@ -18,15 +18,7 @@ const UserFeed = (props) => {
     setJobStatus('')
   };
 
-  /*
-  {
-      status: 'Accepted',
-      companyname: 'Microsoft',
-      jobtitle: 'Software Engineer',
-      message: 'We are so happy to accept you nigga!',
-      accepted: { location: 'amman', contact: 'coco@yah.com', phone: '079555' }
-    }
-  */
+
   const getStatus = async (id) => {
     //axios get...
     const responseInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc => {
