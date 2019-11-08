@@ -8,10 +8,11 @@ import { useAuth } from '../../Auth'
 const Login = ({ history }) => {
   const [user, setUser] = useState({ email: '', password: '' })
   const { auth } = useAuth()
+  const [error, setError] = useState(null);
   const loginSubmit = e => {
     e.preventDefault();
     const { email, password } = user
-    auth.signin(email, password).then(() => { history.push('/') }).catch((err) => console.log(err.message))
+    auth.signin(email, password).then(() => { history.push('/') }).catch(err => setError(err.message))
 
   };
 
@@ -19,7 +20,13 @@ const Login = ({ history }) => {
     return <Redirect to='/' />
   }
 
-
+  const errorMessage = () => {
+    if (error) {
+      return (
+        <div className='invalid-feedback text-center my-3'>{error}</div>
+      )
+    }
+  }
 
   return (
     <div className='container '>
@@ -49,7 +56,7 @@ const Login = ({ history }) => {
             required
           />
         </div>
-
+        {errorMessage()}
         <div className='text-center my-4'>
           <button type='submit' className='btn'>
             Sign In

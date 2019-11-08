@@ -16,9 +16,11 @@ import 'moment-timezone';
 
 const UserInfo = () => {
   const [view, setView] = useState(true)
+  const [validDate, setValidDate] = useState(true)
   const changeView = () => {
     setView(!view);
   };
+
   const { auth } = useAuth();
   const [userInfo, setUserInfo] = useState({
     name: '',
@@ -63,18 +65,53 @@ const UserInfo = () => {
   };
 
 
+  const isBirthdayValid = () => {
+    if (validDate) return 'd-none'
+    else return 'invalid-feedback'
+  }
+
+  const submitChanges = (e) => {
+    e.preventDefault()
+    const validateBirthday = () => {
+      const userMonth = () => {
+        switch (userInfo.month) {
+          case 'JAN': return '0'
+          case 'FEB': return '01'
+          case 'MAR': return '02'
+          case 'APR': return '03'
+          case 'MAY': return '04'
+          case 'JUN': return '05'
+          case 'JUL': return '06'
+          case 'AUG': return '07'
+          case 'SEP': return '08'
+          case 'OCT': return '09'
+          case 'NOV': return '10'
+          case 'DEC': return '11'
+          default: break;
+        }
+      }
+      var date = new Date()
+
+      date.setFullYear(date.getFullYear() - 18)
+
+      var selectedDate = new Date(Number(userInfo.year), Number(userMonth()), Number(userInfo.day))
+      if (selectedDate.getTime() > date.getTime()) { setValidDate(false); return false }
+      else { setValidDate(true); return true }
+    }
 
 
-  const submitChanges = () => {
-    db.collection('users').doc(auth.user.uid).update({
-      name: userInfo.name,
-      gender: userInfo.gender,
-      phone: userInfo.phone,
-      hometown: userInfo.location,
-      bio: userInfo.bio,
-      birthday: `${userInfo.day}/${userInfo.month}/${userInfo.year}`
-    })
-    setView(true);
+    if (validateBirthday()) {
+      db.collection('users').doc(auth.user.uid).update({
+        name: userInfo.name,
+        gender: userInfo.gender,
+        phone: userInfo.phone,
+        hometown: userInfo.location,
+        bio: userInfo.bio,
+        birthday: `${userInfo.day}/${userInfo.month}/${userInfo.year}`
+      })
+      setView(true);
+    } else console.log('not valid date')
+
 
   };
   const imageUpload = file => {
@@ -173,6 +210,7 @@ const UserInfo = () => {
           <li className='list-group-item '>
             <span> <FaBirthdayCake /> </span>
             <Birthday handleChange={handleChange} values={userInfo} />
+            <div className={isBirthdayValid()}>Please enter a valid birthday (18+)</div>
           </li>
 
           <li className='list-group-item '>

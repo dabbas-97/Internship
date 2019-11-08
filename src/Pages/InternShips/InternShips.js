@@ -8,12 +8,10 @@ import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 
 //----------------------
-import firstCompany from '../../images/firstCompany.jpg';
+
 import { CompaniesPosts } from './Components/CompaniesPosts';
 import { db, useAuth } from '../../Auth'
 import { Spinner } from 'react-bootstrap';
-import { async, Promise } from 'q';
-import { database } from 'firebase';
 
 
 const InternShips = () => {
@@ -131,6 +129,7 @@ const InternShips = () => {
     setPostsInfo(posts.map(post => {
       return {
         postId: post.id,
+        createdAt: post.data().createdAt.toDate(),
         companyId: post.data().companyId,
         jobdesc: post.data().jobdesc,
         jobtitle: post.data().jobtitle,
@@ -155,6 +154,7 @@ const InternShips = () => {
             companyId: post.companyId,
             jobtitle: post.jobtitle,
             jobdesc: post.jobdesc,
+            createdAt: post.createdAt,
             gpa: post.gpa,
             specialty: post.specialty,
             companyBio: company[0].bio,
@@ -291,11 +291,11 @@ const InternShips = () => {
 
       return <React.Fragment>
         <div className='container opportunities'>
-          <h1>InternShips available for you</h1>
+          <h1 className='text-center'>InternShips available for you</h1>
           {opporunities}
         </div>
       </React.Fragment>
-    } else return <div className='text-center'><h1>Please create your cv first.</h1></div>
+    } else return <div className='container'><div className='text-center pleaseCreate'><h1>Please Create Your CV First.</h1></div></div>
   } else return <div className='profileSpinner'>
     <Spinner animation="border" role="status" variant="info" >
       <span ></span>

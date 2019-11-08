@@ -18,8 +18,7 @@
 .accepted,
 .rejected,
 .pending {
-  font-size: 1.2em;
-  letter-spacing: 2px;
+  font-size: 0.9em;
   padding: 1px 10px !important;
 }
 .accepted,
@@ -28,7 +27,7 @@
 }
 .accepted {
   color: white !important;
-  background-image: -webkit-linear-gradient(top, #5ec122, #09b109) !important;
+  background-color: #0daf0d !important;
 }
 .acceptedbtn {
   color: white !important;
@@ -40,7 +39,7 @@
 }
 .rejected {
   color: white !important;
-  background-image: -webkit-linear-gradient(top, #f62b2b, #d20202);
+  background-color: #cc0101 !important;
 }
 .rejectedbtn {
   color: white !important;
@@ -51,26 +50,27 @@
   background: #ec4141 !important;
 }
 .pending {
-  color: black !important;
-  background-image: -webkit-linear-gradient(top, #fcfac0, #f6f283);
+  color: #868686 !important;
+  background-color: #dadada !important;
 }
 
 .applied {
-  background: #ececec !important;
+  background: #fafafa !important;
+  color: #4a4a4a;
+  font-weight: bold;
 }
 .applied:last-child {
   background: #fafafa !important;
 }
 .profileFeed li .job {
   float: left;
-  border-radius: 50% !important;
+  border-radius: 10% !important;
   height: 30px;
   width: 30px;
-  background: linear-gradient(to bottom, #d1f3fb, #c6e9f8);
+  background: #e6e6e6;
+  border: 0.5px solid #0000002e;
 }
-.profileFeed .togglerLi .job {
-  background: linear-gradient(to bottom, #fafafa, #989393);
-}
+
 .appliedFor {
   overflow: hidden;
 }
@@ -196,8 +196,10 @@
   margin-left: 10px;
 }
 .togglerLi {
-  background: #e9f4f9 !important;
   cursor: pointer;
+  font-weight: bold;
+  color: #008ac3bd;
+  background: #fafafa !important;
 }
 .companyPosts .list-group-item {
   overflow: overlay;

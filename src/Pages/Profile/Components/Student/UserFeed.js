@@ -1,4 +1,4 @@
-import React, { Component,useState,useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import '../../UserFeed.css';
 import StudentCV from './StudentCv/StudentCV';
 import { MdBusiness, MdHelp } from 'react-icons/md';
@@ -7,13 +7,13 @@ import { Modal } from 'react-bootstrap'
 import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
 import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
-import {db,useAuth} from '../../../../Auth'
+import { db, useAuth } from '../../../../Auth'
 import { async } from 'q';
 
- const UserFeed =(props)=> {
-  const { internshipsApplied } =props;
-  const [jobStatus,setJobStatus]=useState('')
-  const {auth}= useAuth();
+const UserFeed = (props) => {
+  const { internshipsApplied } = props;
+  const [jobStatus, setJobStatus] = useState('')
+  const { auth } = useAuth();
   const closeJobModal = () => {
     setJobStatus('')
   };
@@ -29,9 +29,9 @@ import { async } from 'q';
   */
   const getStatus = async (id) => {
     //axios get...
-    const responseInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc=>{
+    const responseInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc => {
       return {
-        status:doc.data().status,
+        status: doc.data().status,
         companyname: doc.data().companyName,
         jobtitle: doc.data().jobtitle,
         message: doc.data().message,
@@ -46,24 +46,24 @@ import { async } from 'q';
         <InternshipStatus values={jobStatus} closeJobModal={closeJobModal} />
       );
   };
-  
-    
 
-    return (
-      <React.Fragment>
-        <div className='profileFeed'>
-          <div className=' text-center mb-5 mt-2 cv'>
-            <StudentCV />
-          </div>
-          <div className=' appliedList text-center'>
-            <CompaniesAppliedForComponent internshipsApplied={internshipsApplied} getStatus={getStatus} />
-          </div>
 
+
+  return (
+    <React.Fragment>
+      <div className='profileFeed'>
+        <div className=' text-center mb-5 mt-2 cv'>
+          <StudentCV />
         </div>
-        {showStatus()}
-      </React.Fragment>
-    );
-  
+        <div className=' appliedList text-center mb-5'>
+          <CompaniesAppliedForComponent internshipsApplied={internshipsApplied} getStatus={getStatus} />
+        </div>
+
+      </div>
+      {showStatus()}
+    </React.Fragment>
+  );
+
 }
 export default UserFeed
 
@@ -160,11 +160,11 @@ function CompaniesAppliedFor(props) {
     const status = () => {
       if (x.response) {
         if (x.status === 'Accepted') {
-          return <li className='accepted list-group-item text-uppercase' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+          return <li className='accepted list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
         } else {
-          return <li className='rejected list-group-item text-uppercase' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+          return <li className='rejected list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
         }
-      } else return <li className='pending list-group-item text-uppercase'>Pending</li>
+      } else return <li className='pending list-group-item '>Pending</li>
 
     }
     return (

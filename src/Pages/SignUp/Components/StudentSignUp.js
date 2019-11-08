@@ -9,7 +9,7 @@ import Success from './Success';
 import { useAuth } from '../../../Auth'
 const StudentSignUp = () => {
   const [userInfo, setUserInfo] = useState({
-    step: 1, name: '', email: '', sex: 'Female', day: '1', month: 'January', year: '2019', password: '', passmatch: '', phone: '', city: '', bio: ''
+    step: 1, name: '', email: '', sex: 'Female', day: '1', month: 'JAN', year: '1999', password: '', passmatch: '', phone: '', city: '', bio: ''
   });
   const { auth } = useAuth();
 

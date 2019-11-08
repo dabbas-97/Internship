@@ -1,5 +1,7 @@
 import React from 'react';
 import { useAuth, db } from '../../../Auth'
+import Moment from 'react-moment';
+import { MdAccessTime } from 'react-icons/md'
 
 export function CompaniesPosts(props) {
     const { posts } = props;
@@ -15,7 +17,7 @@ export function CompaniesPosts(props) {
     const apply = async (post) => {
         const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
         if (applied) {
-            console.log('you have already applied you ape!')
+            window.alert('you have already applied to this post!')
         } else {
             const userInfo = await db.collection('users').doc(auth.user.uid).get().then(doc => doc.data())
             const userCV = await db.collection('cv').doc(auth.user.uid).get().then(doc => doc.data())
@@ -49,7 +51,7 @@ export function CompaniesPosts(props) {
                     studentSpecialities: userCV.specialities,
                     studentGpa: userCV.gpa
                 })
-            }).then(() => console.log('you have applied successfully!!')).catch(err => console.log(err.message))
+            }).then(() => window.alert('you have applied successfully!!')).catch(err => console.log(err.message))
 
         }
 
@@ -74,6 +76,18 @@ export function CompaniesPosts(props) {
                         </li>
                         <li className='list-group-item applied '>
                             <button type='button' className='btn' onClick={() => apply(post)}>Apply Now</button>
+                        </li>
+                        <li className='list-group-item createdAt '>
+                            <div className='row'>
+                                <div className='col-4'>
+                                    <MdAccessTime />
+                                </div>
+                                <div className='col-8 '>
+                                    <Moment fromNow>{post.createdAt}</Moment>
+                                </div>
+                            </div>
+
+
                         </li>
                     </ul>
                 </div>

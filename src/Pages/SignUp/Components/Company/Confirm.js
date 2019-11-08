@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useAuth, db, toto } from '../../../../Auth'
 
@@ -7,7 +7,7 @@ const Confirm = (props) => {
   const { auth } = useAuth();
   const { values } = props;
   const { email, password } = values;
-
+  const [error, setError] = useState(null);
   const next = e => {
     e.preventDefault();
 
@@ -24,10 +24,16 @@ const Confirm = (props) => {
           type: 'company'
         })
 
-      }).then(() => props.nextStep()).catch(err => console.log(err))
+      }).then(() => props.nextStep()).catch(err => setError(err.message))
 
   };
-
+  const errorMessage = () => {
+    if (error) {
+      return (
+        <div className='invalid-feedback text-center my-3'>{error}</div>
+      )
+    }
+  }
 
   const isBio = () => {
     if (values.bio === '') return 'd-none';
@@ -59,6 +65,7 @@ const Confirm = (props) => {
           Company's Description: <span>{values.bio}</span>
         </li>
       </ul>
+      {errorMessage()}
       <div className=' form-inline justify-content-center form-row my-1'>
         <div className='text-center m-4 '>
           <button type='button' className='btn' onClick={props.prevStep}>

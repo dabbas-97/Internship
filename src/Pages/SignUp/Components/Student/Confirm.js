@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useAuth, db, toto } from '../../../../Auth'
 
@@ -7,6 +7,7 @@ const Confirm = (props) => {
   const { auth } = useAuth();
   const { values } = props;
   const { email, password } = values;
+  const [error, setError] = useState(null);
 
   const next = e => {
     e.preventDefault();
@@ -24,13 +25,21 @@ const Confirm = (props) => {
           type: 'student',
           joined: new Date(),
         })
-      }).then(() => props.nextStep()).catch(err => console.log(err.message))
+      }).then(() => props.nextStep()).catch(err => setError(err.message))
 
   };
   const isBio = () => {
     if (values.bio === '') return 'd-none';
     else return 'list-group-item';
   };
+  const errorMessage = () => {
+    if (error) {
+      return (
+        <div className='invalid-feedback text-center my-3'>{error}</div>
+      )
+    }
+  }
+
   return (
     <React.Fragment>
       <ul className='list-group text-center'>
@@ -95,7 +104,7 @@ const Confirm = (props) => {
         </li>
 
       </ul>
-
+      {errorMessage()}
       <div className=' form-inline justify-content-center form-row my-1'>
         <div className='text-center m-4 '>
           <button type='button' className='btn' onClick={props.prevStep}>

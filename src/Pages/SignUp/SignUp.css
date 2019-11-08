@@ -13,3 +13,6 @@ form li {
 form label {
   font-weight: bold;
 }
+.invalid-feedback {
+  display: block !important;
+}

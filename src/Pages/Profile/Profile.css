@@ -126,3 +126,6 @@ form .profileImg {
   background: #c6e9f8 !important;
   color: #0083f3 !important;
 }
+.profileInfo .invalid-feedback {
+  display: inline !important;
+}

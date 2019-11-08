@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { Birthday } from './Birthday';
+import { async } from 'q';
 export class StudentInfo extends Component {
   state = {
+    validDate: true,
     validPhone: false,
     validCity: false,
     validName: false,
@@ -13,8 +15,8 @@ export class StudentInfo extends Component {
   render() {
     const { name, phone, city, bio } = this.props.values;
     const nextValidate = () => {
-      let { validPhone, validCity, validName } = this.state;
-      if (validPhone && validCity && validName) this.props.nextStep();
+      let { validPhone, validCity, validName, validDate } = this.state;
+      if (validPhone && validCity && validName && validDate) this.props.nextStep();
     };
 
     //City Matching
@@ -75,6 +77,43 @@ export class StudentInfo extends Component {
         isValidName(false);
       }
     };
+    const isBirthdayValid = () => {
+      if (this.state.validDate) return 'd-none'
+      else return 'invalid-feedback'
+    }
+
+
+
+    const validateBirthday = input => async e => {
+      await this.props.handleChange(input)(e);
+      const { year, day, month } = await this.props.values
+      console.log(year, month, day)
+      const userMonth = () => {
+        switch (month) {
+          case 'JAN': return '0'
+          case 'FEB': return '01'
+          case 'MAR': return '02'
+          case 'APR': return '03'
+          case 'MAY': return '04'
+          case 'JUN': return '05'
+          case 'JUL': return '06'
+          case 'AUG': return '07'
+          case 'SEP': return '08'
+          case 'OCT': return '09'
+          case 'NOV': return '10'
+          case 'DEC': return '11'
+          default: break;
+        }
+      }
+      var date = new Date()
+
+      date.setFullYear(date.getFullYear() - 18)
+
+      var selectedDate = new Date(Number(year), Number(userMonth()), Number(day))
+      if (selectedDate.getTime() > date.getTime()) this.setState({ validDate: false });
+      else this.setState({ validDate: true });
+
+    };
 
     return (
       <React.Fragment>
@@ -121,9 +160,10 @@ export class StudentInfo extends Component {
           <div className='form-group my-1 col-8 '>
             <label className='mr-1'>Birthday: </label>
             <Birthday
-              handleChange={this.props.handleChange}
+              handleChange={validateBirthday}
               values={this.props.values}
             />
+            <div className={isBirthdayValid()}>Please enter a valid birthday (18+)</div>
           </div>
         </div>
         <hr />
