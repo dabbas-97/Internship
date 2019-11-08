@@ -6,7 +6,6 @@ import { MdAccessTime } from 'react-icons/md'
 export function CompaniesPosts(props) {
     const { posts } = props;
     const { auth } = useAuth()
-
     if (!posts) {
         return (<div className='appliedFor m-4  col  '>
             <h6 className='text-muted'>There are no posts for this specialty</h6>
@@ -17,7 +16,7 @@ export function CompaniesPosts(props) {
     const apply = async (post) => {
         const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
         if (applied) {
-            window.alert('you have already applied to this post!')
+            window.alert('You Have Already Applied To This Post!')
         } else {
             const userInfo = await db.collection('users').doc(auth.user.uid).get().then(doc => doc.data())
             const userCV = await db.collection('cv').doc(auth.user.uid).get().then(doc => doc.data())
@@ -51,18 +50,20 @@ export function CompaniesPosts(props) {
                     studentSpecialities: userCV.specialities,
                     studentGpa: userCV.gpa
                 })
-            }).then(() => window.alert('you have applied successfully!!')).catch(err => console.log(err.message))
+            }).then(() => window.alert('You Have Successfully Applied To This Post!')).catch(err => console.log(err.message))
 
         }
 
     }
+
+
     const specialtyPosts = posts.map(post => {
 
         return (
             <div className='col-md-3 col-sm-6 ' key={post.postId}>
                 <div className='card companyPost'>
                     <ul className='list-group list-group-flush text-center'>
-                        <li className='list-group-item applied '>
+                        <li className='list-group-item applied companyName '>
                             {post.companyName}
                         </li>
                         <li className='list-group-item applied '>
@@ -82,7 +83,7 @@ export function CompaniesPosts(props) {
                                 <div className='col-4'>
                                     <MdAccessTime />
                                 </div>
-                                <div className='col-8 '>
+                                <div className='col-8 zeroPadding'>
                                     <Moment fromNow>{post.createdAt}</Moment>
                                 </div>
                             </div>
@@ -94,5 +95,9 @@ export function CompaniesPosts(props) {
             </div>
         );
     });
-    return (<React.Fragment>{specialtyPosts}</React.Fragment>);
+    return (
+        <React.Fragment>
+            {specialtyPosts}
+        </React.Fragment>
+    );
 }

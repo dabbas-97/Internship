@@ -58,9 +58,6 @@ const Confirm = (props) => {
         <li className='list-group-item'>
           Location: <span>{values.city}</span>
         </li>
-        <li className='list-group-item'>
-          Phone Number: <span>{values.phone}</span>
-        </li>
         <li className={isBio()}>
           Company's Description: <span>{values.bio}</span>
         </li>

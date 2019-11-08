@@ -74,3 +74,10 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   font-size: 1.7em;
 }
+.companyName {
+  font-size: 1.5em;
+  color: #949494;
+}
+.zeroPadding {
+  padding: 0 !important;
+}
