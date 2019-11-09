@@ -27,6 +27,7 @@ export function Posts(props) {
         </h6>
         </div>);
     }
+
     const info = myPosts.map(data => {
 
         return (
@@ -94,7 +95,7 @@ export function Posts(props) {
                             <div className='row'>
 
                                 <div className='col-6'>
-                                    <button className=' w-100 btn' onClick={() => props.handleDeletePosts(data.id)}> <MdDeleteForever /></button>
+                                    <button className=' w-100 btn' onClick={() => { props.handleDeletePosts(data.id); props.getStudentsApplied(null) }}> <MdDeleteForever /></button>
                                 </div>
 
                                 <div className='col-6'>
