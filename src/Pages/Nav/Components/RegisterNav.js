@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { FiUser } from 'react-icons/fi'
 import { Link, withRouter, NavLink } from 'react-router-dom';
 
 import { useAuth } from '../../../Auth'
@@ -16,7 +17,7 @@ const RegisterNav = ({ history }) => {
       <ul className='navbar-nav mx-auto '>
         <li className='nav-item dropdown'>
           <Link className='nav-link  dropdown-toggle' data-toggle="dropdown" to='#'>
-            Profile
+            <FiUser /> {auth.user.displayName}
           </Link>
           <div className=' dropdown-menu'>
 

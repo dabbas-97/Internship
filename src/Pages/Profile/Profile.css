@@ -129,3 +129,17 @@ form .profileImg {
 .profileInfo .invalid-feedback {
   display: inline !important;
 }
+.acceptedBtnDisabled {
+  color: #fdf9f9 !important;
+  background: #49b549 !important;
+  cursor: default !important;
+}
+.rejectedBtnDisabled {
+  color: #fdf9f9 !important;
+  background: #e44242 !important;
+  cursor: default !important;
+}
+.rejectedBtnDisabled:hover,
+.acceptedBtnDisabled:hover {
+  color: white !important;
+}

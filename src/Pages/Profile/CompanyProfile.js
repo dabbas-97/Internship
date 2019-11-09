@@ -12,9 +12,15 @@ const CompanyProfile = () => {
   const getStudentsApplied = async (postId) => {
     setPostId(postId)
     const applicants = await db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(postId).collection('studentsApplied').get()
-      .then(snapshot => {
+      .then(async snapshot => {
         if (!snapshot.empty) {
-          return snapshot.docs.map(doc => { console.log(doc.data()); return doc.data() })
+          return await Promise.all(snapshot.docs.map(async doc => {
+            const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status)
+            console.log(doc.data());
+            if (status) return { ...doc.data(), status }
+            else return doc.data()
+
+          }))
         } else return null
       })
     if (applicants) {

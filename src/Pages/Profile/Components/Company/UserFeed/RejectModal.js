@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { db, useAuth } from '../../../../../Auth';
+import { db } from '../../../../../Auth';
 
 const RejectModal = ({ studentId, closeJobModal, postId }) => {
-    const { auth } = useAuth();
     const [message, setMessage] = useState('')
 
     const submitReject = async e => {
@@ -15,9 +14,10 @@ const RejectModal = ({ studentId, closeJobModal, postId }) => {
                 status: 'Rejected',
                 response: true
             }).then(() => {
+                window.alert('You Have Rejected The Student Successfully');
                 closeJobModal()
             })
-        } else { console.log('you have already responsed to this post !!'); closeJobModal() }
+        } else { window.alert('You Have Already Responeded To This Post!'); closeJobModal() }
 
     };
 

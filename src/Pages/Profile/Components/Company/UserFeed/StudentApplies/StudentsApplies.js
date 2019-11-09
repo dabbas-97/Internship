@@ -6,6 +6,7 @@ import { FiPercent } from 'react-icons/fi';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import RejectModal from '../RejectModal';
 import AccepetModal from '../AccepetModal';
+import Buttons from '../../../../../Buttons';
 export class StudentsApplies extends Component {
     state = {
         reject: '',
@@ -105,6 +106,40 @@ export class StudentsApplies extends Component {
                     default: break;
                 }
             }
+            const buttons = () => {
+                if (data.status === 'Accepted') {
+                    return (
+                        <div className='text-center mx-1 '>
+                            <button type='button' className='btn acceptedBtnDisabled w-100' >
+                                Accepted <MdCheck />
+                            </button>
+                        </div>
+                    )
+                } else if (data.status === 'Rejected') {
+                    return (
+                        <div className='text-center mx-1 '>
+                            <button type='button' className='btn rejectedBtnDisabled w-100' >
+                                Rejected <MdClose />
+                            </button>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div className='form-inline justify-content-center my-1'>
+                            <div className='text-center mx-1 '>
+                                <button type='button' className='btn rejectedbtn' onClick={() => this.handleModal('reject', data.studentId)}>
+                                    Reject <MdClose />
+                                </button>
+                            </div>
+                            <div className='text-center mx-1 '>
+                                <button type='button' className='btn acceptedbtn' onClick={() => this.handleModal('accept', data.studentId)}>
+                                    Accept <MdCheck />
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+            }
             return (
                 <div className='col-md-6' key={data.studentId}>
                     <div className='card '>
@@ -186,18 +221,7 @@ export class StudentsApplies extends Component {
                             </li>
 
                             <li className='list-group-item applied '>
-                                <div className='form-inline justify-content-center my-1'>
-                                    <div className='text-center mx-1 '>
-                                        <button type='button' className='btn rejectedbtn' onClick={() => this.handleModal('reject', data.studentId)}>
-                                            Reject <MdClose />
-                                        </button>
-                                    </div>
-                                    <div className='text-center mx-1 '>
-                                        <button type='button' className='btn acceptedbtn' onClick={() => this.handleModal('accept', data.studentId)}>
-                                            Accept <MdCheck />
-                                        </button>
-                                    </div>
-                                </div>
+                                {buttons()}
                             </li>
                         </ul>
                     </div>

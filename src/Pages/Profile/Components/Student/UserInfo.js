@@ -10,7 +10,7 @@ import {
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
-import { useAuth, db } from '../../../../Auth'
+import { useAuth, db, toto } from '../../../../Auth'
 import Moment from 'react-moment';
 import 'moment-timezone';
 
@@ -99,6 +99,7 @@ const UserInfo = () => {
 
 
     if (validateBirthday()) {
+      toto.currentUser.updateProfile({ displayName: userInfo.name })
       db.collection('users').doc(auth.user.uid).update({
         name: userInfo.name,
         gender: userInfo.gender,

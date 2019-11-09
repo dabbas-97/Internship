@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen, FaEdit, FaRegEdit } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
-import { useAuth, db } from '../../../../Auth'
+import { useAuth, db, toto } from '../../../../Auth'
 import InputFiles from 'react-input-files';
 import { Spinner } from 'react-bootstrap'
 import Moment from 'react-moment';
@@ -50,6 +50,7 @@ const UserInfo = () => {
     setUserInfo({ ...userInfo, [input]: e.target.value })
   }
   const submitChanges = () => {
+    toto.currentUser.updateProfile({ displayName: userInfo.name })
     db.collection('users').doc(auth.user.uid).update({
       name: userInfo.name,
       phone: userInfo.phone,

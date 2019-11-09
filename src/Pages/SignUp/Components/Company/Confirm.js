@@ -13,7 +13,10 @@ const Confirm = (props) => {
 
     auth.signup(email, password)
       .then(user => {
-        toto.currentUser.updateProfile({ photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fcompany.png?alt=media&token=80378acd-cb5d-4a02-989c-e1d57e5ef5bf' })
+        toto.currentUser.updateProfile({
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fcompany.png?alt=media&token=80378acd-cb5d-4a02-989c-e1d57e5ef5bf',
+          displayName: values.name
+        })
         return db.collection('users').doc(user.uid).set({
           companyId: user.uid,
           name: values.name,
@@ -44,23 +47,47 @@ const Confirm = (props) => {
     <React.Fragment>
       <ul className='list-group text-center'>
         <li className='list-group-item '>
-          Email: <span>{values.email}</span>
+          <div className='row'>
+            <div className='col-4'>Email:</div>
+            <div className='col-8'> <span>{values.email}</span></div>
+          </div>
         </li>
+
         <li className='list-group-item'>
-          Password: <span>{values.password}</span>
+          <div className='row'>
+            <div className='col-4'> Password:</div>
+            <div className='col-8'> <span>{values.password}</span></div>
+          </div>
         </li>
+
         <li className='list-group-item'>
-          Name: <span>{values.name}</span>
+          <div className='row'>
+            <div className='col-4'> Name:</div>
+            <div className='col-8'><span>{values.name}</span></div>
+          </div>
         </li>
+
         <li className='list-group-item'>
-          Phone Number: <span>{values.phone}</span>
+          <div className='row'>
+            <div className='col-4'> Phone Number: </div>
+            <div className='col-8'><span>{values.phone}</span></div>
+          </div>
         </li>
+
         <li className='list-group-item'>
-          Location: <span>{values.city}</span>
+          <div className='row'>
+            <div className='col-4'>  Location:</div>
+            <div className='col-8'> <span>{values.city}</span></div>
+          </div>
         </li>
+
         <li className={isBio()}>
-          Company's Description: <span>{values.bio}</span>
+          <div className='row'>
+            <div className='col-4'> Company's Description: </div>
+            <div className='col-8'> <span>{values.bio}</span></div>
+          </div>
         </li>
+
       </ul>
       {errorMessage()}
       <div className=' form-inline justify-content-center form-row my-1'>
