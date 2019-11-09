@@ -14,8 +14,32 @@ const StudentProfile = () => {
         const internships = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').get().then(async snapshot => {
           if (!snapshot.empty) {
             const posts = await Promise.all(snapshot.docs.map(async doc => {
-              const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get().then(doc => doc.exists)
-              if (doc.data().response || exists) return doc.data()
+              const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
+                .then(doc => {
+                  if (doc.exists) {
+                    return doc.data()
+                  } else return null
+                })
+              if (doc.data().response || exists) {
+                const companyInfo = await db.collection('users').doc(doc.data().companyId).get()
+                  .then(doc => {
+                    if (doc.exists) {
+                      return doc.data()
+                    } else return null
+                  })
+                const jobInfo = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
+                  .then(doc => doc.data())
+
+                return {
+                  response: doc.data().response,
+                  companyName: companyInfo.name,
+                  jobdesc: jobInfo.jobdesc,
+                  jobtitle: jobInfo.jobtitle,
+                  specialty: jobInfo.specialty,
+                  status: doc.data().status,
+                  postId: doc.data().postId
+                }
+              }
               else db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(doc.data().postId).delete()
             }))
             return await posts.filter(post => post !== undefined)

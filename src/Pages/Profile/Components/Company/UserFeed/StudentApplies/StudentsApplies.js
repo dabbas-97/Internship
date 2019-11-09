@@ -6,7 +6,6 @@ import { FiPercent } from 'react-icons/fi';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import RejectModal from '../RejectModal';
 import AccepetModal from '../AccepetModal';
-import Buttons from '../../../../../Buttons';
 export class StudentsApplies extends Component {
     state = {
         reject: '',
@@ -42,44 +41,29 @@ export class StudentsApplies extends Component {
         const info = studentsApplied.map(data => {
             const renderSpecialties = data.studentSpecialities.map(specialty => {
                 const jobIcon = () => {
-                    if (specialty === 'IOS Developer')
-                        return <IoLogoApple />;
-                    else if (specialty === 'Node JS Developer')
-                        return <DiNodejsSmall />;
-                    else if (specialty === 'Android Developer')
-                        return <FaAndroid />;
-                    else if (specialty === 'Java Developer')
-                        return <FaJava />;
-                    else if (specialty === 'Python Developer')
-                        return <FaPython />;
-                    else if (specialty === 'Linux Developer')
-                        return <FaLinux />;
-                    else if (specialty === 'Unity Developer')
-                        return <DiUnitySmall />;
-                    else if (specialty === 'Angular Developer')
-                        return <DiAngularSimple />;
-                    else if (specialty === 'PHP Developer')
-                        return <DiPhp />;
-                    else if (specialty === 'React JS Developer')
-                        return <DiReact />;
-                    else if (specialty === 'Wordpress Developer')
-                        return <DiWordpress />;
-                    else if (specialty === 'Javascript Developer')
-                        return <DiJavascript1 />;
-                    else if (specialty === 'HTML5 Developer')
-                        return <DiHtml5 />;
-                    else if (specialty === 'Database Developer')
-                        return <FaDatabase />;
-                    else if (specialty === '.NET Developer')
-                        return <DiDotnet />;
-                    else if (specialty === 'Larvel Developer')
-                        return <DiLaravel />;
-                    else if (specialty === 'Windows Applications Developer')
-                        return <DiWindows />;
-                    else if (specialty === 'Swift Developer')
-                        return <DiSwift />;
-                    else if (specialty === 'Web Developer')
-                        return <DiCodeBadge />;
+                    switch (specialty) {
+                        case 'IOS Developer': return <IoLogoApple />
+                        case 'Node JS Developer': return <DiNodejsSmall />
+                        case 'Android Developer': return <FaAndroid />
+                        case 'Java Developer': return <FaJava />
+                        case 'Python Developer': return <FaPython />
+                        case 'Linux Developer': return <FaLinux />
+                        case 'Unity Developer': return <DiUnitySmall />
+                        case 'Angular Developer': return <DiAngularSimple />
+                        case 'PHP Developer': return <DiPhp />
+                        case 'React JS Developer': return <DiReact />
+                        case 'Wordpress Developer': return <DiWordpress />
+                        case 'Javascript Developer': return <DiJavascript1 />
+                        case 'HTML5 Developer': return <DiHtml5 />
+                        case 'Database Developer': return <FaDatabase />
+                        case '.NET Developer': return <DiDotnet />
+                        case 'Larvel Developer': return <DiLaravel />
+                        case 'Windows Applications Developer': return <DiWindows />
+                        case 'Swift Developer': return <DiSwift />
+                        case 'Web Developer': return <DiCodeBadge />
+                        default: break;
+                    }
+
                 };
                 return (
                     <div className='row' key={Math.random()}>
@@ -92,9 +76,9 @@ export class StudentsApplies extends Component {
             });
             const genderIcon = () => {
                 if (data.studentGender === 'Female')
-                    return <IoMdFemale />;
+                    return <span className='job pink'><IoMdFemale /></span>;
                 else
-                    return <IoMdMale />;
+                    return <span className='job blue'><IoMdMale /></span>;
             };
             const renderGpa = () => {
                 switch (data.studentGpa) {
@@ -147,30 +131,30 @@ export class StudentsApplies extends Component {
 
                         <ul className='list-group list-group-flush text-center'>
                             <li className='list-group-item applied '>
-                                <span className='job'><FaUserGraduate /> </span>
+                                <span className='job' style={{ color: '#585858' }}><FaUserGraduate /> </span>
                                 {data.studentName}
                             </li>
 
                             <li className='list-group-item applied '>
-                                <span className='job'>{genderIcon()}</span>
+                                {genderIcon()}
                                 {data.studentGender}
                             </li>
 
                             <li className='list-group-item applied '>
-                                <span className='job'><MdLocationOn /> </span>
+                                <span className='job' style={{ color: '#FBC02D' }}><MdLocationOn /> </span>
                                 {data.studentHometown}
                             </li>
 
                             <li className='list-group-item applied '>
-                                <span className='job'><FaBirthdayCake /> </span>
+                                <span className='job' style={{ color: '#FF9800' }}><FaBirthdayCake /> </span>
                                 {data.studentBirthday}
                             </li>
                             <li className='list-group-item applied '>
-                                <span className='job'><FaHeart /> </span>
+                                <span className='job red'><FaHeart /> </span>
                                 {data.studentSocial}
                             </li>
                             <li className='list-group-item applied '>
-                                <span className='job'><FaPhone /> </span>
+                                <span className='job green'><FaPhone /> </span>
                                 {data.studentPhone}
                             </li>
 

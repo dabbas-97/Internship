@@ -67,7 +67,14 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
                             <h6 className=' mt-1 h-6'> Location </h6>
                             <div className='form-row my-3'>
                                 <div className='col-12'>
-                                    <input type='text' className=' form-control' defaultValue={companyInfo.location} onChange={handleChange('location')} required />
+                                    {companyInfo.location}
+                                </div>
+                            </div>
+
+                            <h6 className=' mt-1 h-6'> Phone Number </h6>
+                            <div className='form-row my-3'>
+                                <div className='col-12'>
+                                    {companyInfo.phone}
                                 </div>
                             </div>
 
@@ -75,13 +82,6 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
                             <div className='form-row my-3'>
                                 <div className='col-12'>
                                     <input type='text' className=' form-control' defaultValue={companyInfo.contact} onChange={handleChange('contact')} required />
-                                </div>
-                            </div>
-
-                            <h6 className=' mt-1 h-6'> Phone Number </h6>
-                            <div className='form-row my-3'>
-                                <div className='col-12'>
-                                    <input type='text' className=' form-control' defaultValue={companyInfo.phone} onChange={handleChange('phone')} required />
                                 </div>
                             </div>
 

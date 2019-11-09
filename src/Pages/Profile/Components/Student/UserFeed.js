@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState } from 'react';
 import '../../UserFeed.css';
 import StudentCV from './StudentCv/StudentCV';
 import { MdBusiness, MdHelp } from 'react-icons/md';
@@ -18,19 +18,29 @@ const UserFeed = (props) => {
     setJobStatus('')
   };
 
-
+  //accepted: {    }
   const getStatus = async (id) => {
     //axios get...
-    const responseInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc => {
+    const postInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc => {
       return {
         status: doc.data().status,
-        companyname: doc.data().companyName,
-        jobtitle: doc.data().jobtitle,
         message: doc.data().message,
-        accepted: { location: doc.data().companyLocation, contact: doc.data().contact, phone: doc.data().companyPhone }
+        contact: doc.data().contact,
+        companyId: doc.data().companyId
       }
     })
-    setJobStatus(responseInfo)
+    const companyInfo = await db.collection('users').doc(postInfo.companyId).get().then(doc => doc.data())
+
+    const jobInfo = await db.collection('internships').doc(postInfo.companyId).collection('companyPosts').doc(id).get()
+      .then(doc => doc.data())
+
+    setJobStatus({
+      status: postInfo.status,
+      message: postInfo.message,
+      companyname: companyInfo.name,
+      jobtitle: jobInfo.jobtitle,
+      accepted: { location: companyInfo.location, phone: companyInfo.phone, contact: postInfo.contact }
+    })
   }
   const showStatus = () => {
     if (jobStatus)
@@ -208,13 +218,13 @@ class InternshipStatus extends Component {
     const { status, companyname, jobtitle, message } = this.props.values;
     const values = { status, companyname, jobtitle, message }
 
-    const returnMessage = () => { if (message) return (<p><span className='bold'>Message by {values.companyname}:</span>{message}</p>) }
+    const returnMessage = () => { if (message) return (<p><span className='bold'>Message by {values.companyname} : </span> {message} </p>) }
     const returnAccepted = () => {
       if (values.status === 'Accepted') return (
         <div>
-          <p><span className='bold'>Comapany Location:</span>  {this.props.values.accepted.location}</p>
-          <p><span className='bold'>Comapany Phone Number:</span> {this.props.values.accepted.phone}</p>
-          <p><span className='bold'>Contact us:</span> {this.props.values.accepted.contact}</p>
+          <p><span className='bold'>Comapany Location:  </span>  {this.props.values.accepted.location}</p>
+          <p><span className='bold'>Comapany Phone Number: </span> {this.props.values.accepted.phone}</p>
+          <p><span className='bold'>Contact us: </span> {this.props.values.accepted.contact}</p>
         </div>)
     }
     return (
@@ -224,7 +234,7 @@ class InternshipStatus extends Component {
             <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
           </Modal.Header>
           <div className='statusMessage'>
-            <p>Your internship application for <span>{values.jobtitle}</span> in <span>{values.companyname}</span> has been <span className={values.status}>{values.status}</span>.</p>
+            <p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>
             {returnMessage()}
             {returnAccepted()}
           </div>

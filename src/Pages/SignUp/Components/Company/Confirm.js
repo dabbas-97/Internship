@@ -18,6 +18,7 @@ const Confirm = (props) => {
           displayName: values.name
         })
         return db.collection('users').doc(user.uid).set({
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fcompany.png?alt=media&token=80378acd-cb5d-4a02-989c-e1d57e5ef5bf',
           companyId: user.uid,
           name: values.name,
           phone: values.phone,

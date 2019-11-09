@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import UserInfo from './Components/Company/UserInfo';
 import UserFeed from './Components/Company/UserFeed/UserFeed';
 
@@ -16,9 +16,27 @@ const CompanyProfile = () => {
         if (!snapshot.empty) {
           return await Promise.all(snapshot.docs.map(async doc => {
             const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status)
-            console.log(doc.data());
-            if (status) return { ...doc.data(), status }
-            else return doc.data()
+            const studentInfo = await db.collection('users').doc(doc.data().studentId).get()
+              .then(doc => doc.data())
+            const studentCV = await db.collection('cv').doc(doc.data().studentId).get()
+              .then(doc => doc.data())
+            const allInfo = {
+              studentId: doc.data().studentId,
+              studentName: studentInfo.name,
+              studentPhoto: studentInfo.photoURL,
+              studentGender: studentInfo.gender,
+              studentHometown: studentInfo.hometown,
+              studentBirthday: studentInfo.birthday,
+              studentPhone: studentInfo.phone,
+              studentSchool: studentCV.school,
+              studentField: studentCV.field,
+              studentGpa: studentCV.gpa,
+              studentSpecialities: studentCV.specialities,
+              studentSocial: studentCV.socialStatus,
+            }
+            if (status) return { ...allInfo, status }
+            else return allInfo
+
 
           }))
         } else return null

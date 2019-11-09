@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import Buttons from '../../../../../Buttons'
 import { StudentsApplies } from './StudentsApplies'
 
-export default class StudentsAppliesComponent extends Component {
+const StudentsAppliesComponent = (props) => {
+    const [pages, setPages] = useState(0)
+    const [studentsApplied, setStudentsApplied] = useState([])
 
-    state = {
-        pages: 0,
+    useEffect(() => {
+        setStudentsApplied(props.studentsApplied)
+    }, [props.studentsApplied])
 
-    };
+    useEffect(() => {
+        setPages(0)
 
+    }, [studentsApplied])
 
-
-
-
-    //to split the companies applied for into 2 elements chunks
-    pageRenderer() {
-        const { studentsApplied } = this.props;
+    const pageRenderer = () => {
         let i,
             j,
             pages = [],
@@ -26,43 +26,42 @@ export default class StudentsAppliesComponent extends Component {
         return pages;
     }
 
-    render() {
-        const appliedChunks = this.pageRenderer();
-        const nextPage = () => {
-            let { pages } = this.state;
-            if (pages < appliedChunks.length - 1) this.setState({ pages: pages + 1 });
-        };
-        const prevPage = () => {
-            let { pages } = this.state;
-            if (pages > 0) this.setState({ pages: pages - 1 });
-        };
-        const showButtons = () => {
-            if (appliedChunks.length > 1)
-                return (
-                    <Buttons
-                        prevPage={prevPage}
-                        nextPage={nextPage}
-                        pages={this.state.pages}
-                        maxPages={appliedChunks.length - 1}
+
+    const appliedChunks = pageRenderer();
+    const nextPage = () => {
+        if (pages < appliedChunks.length - 1) setPages(pages + 1);
+    };
+    const prevPage = () => {
+        if (pages > 0) setPages(pages - 1)
+    };
+    const showButtons = () => {
+        if (appliedChunks.length > 1)
+            return (
+                <Buttons
+                    prevPage={prevPage}
+                    nextPage={nextPage}
+                    pages={pages}
+                    maxPages={appliedChunks.length - 1}
+                />
+            );
+    };
+
+
+    return (
+        <div className='appliedFor m-3'>
+            <h5 className='h5'>Students who have applied to your internships.</h5>
+            <div className='feedContent m-3'>
+                <div className='row  '>
+                    <StudentsApplies
+                        studentsApplied={appliedChunks[pages]}
+                        postId={props.postId}
                     />
-                );
-        };
-
-
-        return (
-            <div className='appliedFor m-3'>
-                <h5 className='h5'>Students who have applied to your internships.</h5>
-                <div className='feedContent m-3'>
-                    <div className='row  '>
-                        <StudentsApplies
-                            studentsApplied={appliedChunks[this.state.pages]}
-                            postId={this.props.postId}
-                        />
-                    </div>
-                    {showButtons()}
-
                 </div>
+                {showButtons()}
+
             </div>
-        );
-    }
+        </div>
+    );
+
 }
+export default StudentsAppliesComponent

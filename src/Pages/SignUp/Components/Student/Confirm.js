@@ -14,8 +14,12 @@ const Confirm = (props) => {
 
     auth.signup(email, password)
       .then(user => {
-        toto.currentUser.updateProfile({ photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564', displayName: values.name })
+        toto.currentUser.updateProfile({
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564',
+          displayName: values.name
+        })
         return db.collection('users').doc(user.uid).set({
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564',
           name: values.name,
           gender: values.sex,
           birthday: `${values.day}/${values.month}/${values.year}`,

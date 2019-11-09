@@ -14,43 +14,27 @@ export function CompaniesPosts(props) {
 
 
     const apply = async (post) => {
-        const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
+        const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get()
+            .then(doc => doc.exists)
+            .catch(err => console.log(err.message))
         if (applied) {
             window.alert('You Have Already Applied To This Post!')
         } else {
-            const userInfo = await db.collection('users').doc(auth.user.uid).get().then(doc => doc.data())
-            const userCV = await db.collection('cv').doc(auth.user.uid).get().then(doc => doc.data())
             db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).set({
-                companyName: post.companyName,
                 companyId: post.companyId,
-                studentId: auth.user.uid,
-                jobtitle: post.jobtitle,
-                companyPhone: post.companyPhone,
-                companyLocation: post.companyLocation,
                 postId: post.postId,
-                specialty: post.specialty,
-                jobdesc: post.jobdesc,
-                //the following fields are going to change once the company has responsed to the student application
                 message: '',
                 contact: '',
                 status: '',
                 response: false
-            }).then(() => {
-                return db.collection('internships').doc(post.companyId).collection('companyPosts').doc(post.postId).collection('studentsApplied').doc(auth.user.uid).set({
-                    studentId: auth.user.uid,
-                    studentName: userInfo.name,
-                    studentGender: userInfo.gender,
-                    studentPhoto: auth.user.photoURL,
-                    studentBirthday: userInfo.birthday,
-                    studentHometown: userInfo.hometown,
-                    studentPhone: userInfo.phone,
-                    studentSchool: userCV.school,
-                    studentSocial: userCV.socialStatus,
-                    studentField: userCV.field,
-                    studentSpecialities: userCV.specialities,
-                    studentGpa: userCV.gpa
+            })
+                .then(() => {
+                    return db.collection('internships').doc(post.companyId).collection('companyPosts').doc(post.postId).collection('studentsApplied').doc(auth.user.uid).set({
+                        studentId: auth.user.uid,
+                    })
                 })
-            }).then(() => window.alert('You Have Successfully Applied To This Post!')).catch(err => console.log(err.message))
+                .then(() => window.alert('You Have Successfully Applied To This Post!'))
+                .catch(err => console.log(err.message))
 
         }
 
@@ -58,7 +42,6 @@ export function CompaniesPosts(props) {
 
 
     const specialtyPosts = posts.map(post => {
-        var applied = post.applied
         return (
             <div className='col-md-3 col-sm-6 ' key={post.postId}>
                 <div className='card companyPost'>
@@ -76,9 +59,9 @@ export function CompaniesPosts(props) {
                             {post.jobdesc}
                         </li>
                         <li className='list-group-item applied '>
-                            {applied ?
+                            {post.applied ?
                                 <button type='button' className='btn disabled' >Successfully Applied!</button> :
-                                <button type='button' className='btn' onClick={() => { apply(post); applied = true }}>Apply Now</button>}
+                                <button type='button' className='btn' onClick={() => apply(post)}>Apply Now</button>}
                         </li>
                         <li className='list-group-item createdAt '>
                             <div className='row'>

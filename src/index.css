@@ -14,3 +14,15 @@ body {
 .root {
   height: calc(100% - 60px);
 }
+.red {
+  color: red !important;
+}
+.blue {
+  color: #41b9ff !important;
+}
+.pink {
+  color: #f791b2 !important;
+}
+.green {
+  color: #4caf50 !important;
+}
