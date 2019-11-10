@@ -1,20 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Home.css';
 import AddFooter from '../AddFooter';
 import { HomeFirstPart } from './Components/Firstpart/HomeFirstPart';
-import { HomeSecondPart } from './Components/SecondPart/HomeSecondPart';
 import { HomeThirdPart } from './Components/ThirdPart/HomeThirdPart';
+import { useAuth } from '../../Auth'
 
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        <HomeFirstPart />
-        <HomeSecondPart />
-        <HomeThirdPart />
-      </div>
-    );
-  }
+const Home = () => {
+  const { auth } = useAuth();
+
+  return (
+    <div>
+      {!auth.user ?
+        (<HomeFirstPart />) :
+        (<HomeThirdPart />)
+      }
+    </div>
+  );
+
 }
 
 export default AddFooter(Home);

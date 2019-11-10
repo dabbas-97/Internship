@@ -1,16 +1,13 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FiUser } from 'react-icons/fi'
 import { Link, withRouter, NavLink } from 'react-router-dom';
+import { IoMdLogIn, IoMdLogOut } from 'react-icons/io'
 
 import { useAuth } from '../../../Auth'
 
 const RegisterNav = ({ history }) => {
 
   const { auth } = useAuth();
-
 
   if (auth.user) return (
     <div className=' profilelogin'>
@@ -26,7 +23,7 @@ const RegisterNav = ({ history }) => {
            </Link>
 
             <button className='dropdown-item ' type='button' onClick={() => auth.signout().then(() => history.push('/'))}>
-              Logout <FontAwesomeIcon icon={faSignOutAlt} />
+              Logout <IoMdLogOut />
             </button>
 
           </div>
@@ -39,7 +36,7 @@ const RegisterNav = ({ history }) => {
       <ul className='navbar-nav mx-auto '>
         <li className='nav-item'>
           <NavLink className='nav-link ' to='/login'>
-            Login <FontAwesomeIcon icon={faSignInAlt} />
+            Login <IoMdLogIn />
           </NavLink>
         </li>
       </ul>

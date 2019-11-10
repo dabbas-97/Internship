@@ -20,7 +20,7 @@ const StudentProfile = () => {
                     return doc.data()
                   } else return null
                 })
-              if (doc.data().response || exists) {
+              if (exists) {
                 const companyInfo = await db.collection('users').doc(doc.data().companyId).get()
                   .then(doc => {
                     if (doc.exists) {

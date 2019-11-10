@@ -16,7 +16,9 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
     useEffect(() => {
         if (!companyInfoFetched) {
             const fetch = async () => {
-                const info = await db.collection('users').doc(auth.user.uid).get().then(doc => doc.data()).catch(err => console.log(err.message))
+                const info = await db.collection('users').doc(auth.user.uid).get()
+                    .then(doc => doc.data())
+                    .catch(err => console.log(err.message))
                 setCompanyInfo({
                     location: info.location,
                     phone: info.phone,
@@ -34,8 +36,6 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
         const response = await db.collection('users').doc(studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().response)
         if (!response) {
             db.collection('users').doc(studentId).collection('postsAppliedFor').doc(postId).update({
-                companyLocation: companyInfo.location,
-                companyPhone: companyInfo.phone,
                 contact: companyInfo.contact,
                 message: message,
                 status: 'Accepted',
