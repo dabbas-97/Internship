@@ -163,7 +163,7 @@ export class StudentsApplies extends Component {
                                     <div className='col'>
                                         <span className='job'><FaSchool /> </span>
                                         Education
-                               </div>
+                                    </div>
                                 </div>
                             </li>
 
