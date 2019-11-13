@@ -60,8 +60,25 @@ const StudentProfile = () => {
 
   }, [internshipsApplied])
 
+  const deleteUser = async () => {
+    let id = await auth.user.uid
+    auth.user.delete()
+      .then(() => {
+        db.collection('users').doc(id).delete()
+        db.collection('users').doc(id).collection('postsAppliedFor').get().then(snapshot => {
+          if (!snapshot.empty) {
+            snapshot.docs.forEach(doc => {
+              db.collection('users').doc(id).collection('postsAppliedFor').doc(doc.id).delete()
+            })
+          }
+        })
+        db.collection('cv').doc(id).delete()
+      })
+      .catch(err => console.log(err.message))
+  }
   return (
     <div className='container'>
+      {/* <button className='btn' onClick={() => deleteUser()}>deletee</button> */}
       <div className='row mt-3'>
         <div className='col-md-8 '>
           {internshipsFetched ? (

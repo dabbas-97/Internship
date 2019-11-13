@@ -12,39 +12,48 @@ const CompanyProfile = () => {
   const getStudentsApplied = async (postId) => {
     if (postId) {
       setPostId(postId)
+      setStudentsApplied(null)
       const applicants = await db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(postId).collection('studentsApplied').get()
         .then(async snapshot => {
           if (!snapshot.empty) {
-            return await Promise.all(snapshot.docs.map(async doc => {
-              const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status)
-              const studentInfo = await db.collection('users').doc(doc.data().studentId).get()
-                .then(doc => doc.data())
-              const studentCV = await db.collection('cv').doc(doc.data().studentId).get()
-                .then(doc => doc.data())
-              const allInfo = {
-                studentId: doc.data().studentId,
-                studentName: studentInfo.name,
-                studentPhoto: studentInfo.photoURL,
-                studentGender: studentInfo.gender,
-                studentHometown: studentInfo.hometown,
-                studentBirthday: studentInfo.birthday,
-                studentPhone: studentInfo.phone,
-                studentSchool: studentCV.school,
-                studentField: studentCV.field,
-                studentGpa: studentCV.gpa,
-                studentSpecialities: studentCV.specialities,
-                studentSocial: studentCV.socialStatus,
-              }
-              if (status) return { ...allInfo, status }
-              else return allInfo
-
-
+            const info = await Promise.all(snapshot.docs.map(async doc => {
+              const studentId = await doc.data().studentId
+              const studentInfo = await db.collection('users').doc(studentId).get()
+                .then(doc => {
+                  if (doc.exists) return doc.data()
+                  else {
+                    db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(postId).collection('studentsApplied').doc(studentId).delete()
+                    return null
+                  }
+                })
+              if (studentInfo) {
+                const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status)
+                const studentCV = await db.collection('cv').doc(doc.data().studentId).get()
+                  .then(doc => doc.data())
+                const allInfo = {
+                  studentId: doc.data().studentId,
+                  studentName: studentInfo.name,
+                  studentPhoto: studentInfo.photoURL,
+                  studentGender: studentInfo.gender,
+                  studentHometown: studentInfo.hometown,
+                  studentBirthday: studentInfo.birthday,
+                  studentPhone: studentInfo.phone,
+                  studentSchool: studentCV.school,
+                  studentField: studentCV.field,
+                  studentGpa: studentCV.gpa,
+                  studentSpecialities: studentCV.specialities,
+                  studentSocial: studentCV.socialStatus,
+                }
+                if (status) return { ...allInfo, status }
+                else return allInfo
+              } return null
             }))
+            return await Promise.all(info.filter(student => student))
           } else return null
         })
       if (applicants) {
         setStudentsApplied(applicants)
-      } else console.log('no students applied to any of your posts')
+      } else setStudentsApplied([])
     } else {
       setStudentsApplied([])
       setPostId('')

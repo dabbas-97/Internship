@@ -73,7 +73,7 @@ const StudentSignUp = () => {
       case 4:
         return <Success />;
       default:
-        return <Redirect to='/' />;
+        return <Redirect to='/SignUp' />;
     }
   }
 

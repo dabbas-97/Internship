@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export function HomeFirstPart() {
   return (
     <div className=' firstPart'>
-      <div className='container '>
+      <div className='container ' style={{ height: '88vh' }}>
         <div className=' Home'>
           <div className='row'>
             <div className='col'>

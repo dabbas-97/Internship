@@ -5,6 +5,9 @@ export class PostedInternships extends Component {
     state = {
         pages: 0
     };
+    resetPages = () => {
+        this.setState({ pages: 0 })
+    }
     pageRenderer() {
         const { posts } = this.props;
         let i, j, pages = [], chunk = 2;
@@ -17,13 +20,15 @@ export class PostedInternships extends Component {
         const myPosts = this.pageRenderer();
         const nextPage = () => {
             let { pages } = this.state;
-            if (pages < myPosts.length - 1)
-                this.setState({ pages: pages + 1 });
+            if (pages < myPosts.length - 1) this.setState({ pages: pages + 1 });
+            this.props.getStudentsApplied(null)
+
+
         };
         const prevPage = () => {
             let { pages } = this.state;
-            if (pages > 0)
-                this.setState({ pages: pages - 1 });
+            if (pages > 0) this.setState({ pages: pages - 1 });
+            this.props.getStudentsApplied(null)
         };
         const showButtons = () => {
             if (myPosts.length > 1)
@@ -34,7 +39,13 @@ export class PostedInternships extends Component {
             return (
                 <div className=' m-5'>
                     <div className='row'>
-                        <Posts myPosts={myPosts[this.state.pages]} handleDeletePosts={this.props.handleDeletePosts} handleEditPosts={this.props.handleEditPosts} getStudentsApplied={this.props.getStudentsApplied} />
+                        <Posts
+                            myPosts={myPosts[this.state.pages]}
+                            handleDeletePosts={this.props.handleDeletePosts}
+                            handleEditPosts={this.props.handleEditPosts}
+                            getStudentsApplied={this.props.getStudentsApplied}
+                            resetPages={this.resetPages}
+                        />
                     </div>
                     {showButtons()}
                 </div>

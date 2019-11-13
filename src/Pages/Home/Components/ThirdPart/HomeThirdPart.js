@@ -5,7 +5,7 @@ import { IoIosChatboxes } from 'react-icons/io';
 export function HomeThirdPart() {
   return (
     <div className='thirdPart'>
-      <div className='container'>
+      <div className='container' style={{ height: '88vh' }}>
         <div className=' Home'>
           <div className='row'>
             <div className='col'>
@@ -15,7 +15,7 @@ export function HomeThirdPart() {
           <div className='row'>
             <div className='col'>
               <p className='p-lg-2'>
-                You can now chat with other users of the platform.
+                You can now chat with other users.
             </p>
             </div>
           </div>{' '}

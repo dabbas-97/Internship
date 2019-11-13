@@ -20,7 +20,6 @@ const InternShips = () => {
   const [postsReturned, setPostsReturnd] = useState(false)
   const [postsInfoReturned, setPostsInfoReturned] = useState(false)
   const [postsFetched, setPostsFetched] = useState(false)
-  const [gotSpecialities, setGotSpecialities] = useState(false)
 
   const [gpa, setGpa] = useState(null)
   const [gender, setGender] = useState(null)
@@ -65,12 +64,7 @@ const InternShips = () => {
 
     }
   }, [])
-  useEffect(() => {
-    if (specialities) {
-      setGotSpecialities(true)
-    }
 
-  }, [specialities])
 
   useEffect(() => {
     if (!gender) {
@@ -90,8 +84,7 @@ const InternShips = () => {
           if (!snapshots.empty) {
             addPostInfo(snapshots.docs)
             setPostsReturnd(true)
-          } else console.log('no posts')
-          setPostsFetched(true)
+          } else { console.log('no posts'); setPostsFetched(true) }
         })
       }
     }

@@ -85,15 +85,23 @@ export function Posts(props) {
                             </div>
                         </li>
 
-                        <li className='list-group-item applied '>
+                        <li className='list-group-item applied togglerLi ' data-toggle='collapse' href={'#jobdesc' + data.id} role='button' aria-expanded='false'>
                             <div className='row '>
                                 <div className='col-2'>
                                     <span className='job'><FaInfo /></span>
                                 </div>
                                 <div className='col-10'>
-                                    {data.jobdesc}
+                                    Job Description
                                 </div>
                             </div>
+                        </li>
+                        <li className='list-group-item applied collapse ' id={'jobdesc' + data.id} >
+
+
+
+                            {data.jobdesc}
+
+
                         </li>
 
                         <li className='list-group-item applied '>
@@ -134,7 +142,7 @@ export function Posts(props) {
                             <div className='row'>
 
                                 <div className='col-6'>
-                                    <button className=' w-100 btn' onClick={() => { props.handleDeletePosts(data.id); props.getStudentsApplied(null) }}> <MdDeleteForever /></button>
+                                    <button className=' w-100 btn' onClick={() => { props.handleDeletePosts(data.id); props.getStudentsApplied(null); props.resetPages() }}> <MdDeleteForever /></button>
                                 </div>
 
                                 <div className='col-6'>

@@ -13,11 +13,12 @@ import InputFiles from 'react-input-files';
 import { useAuth, db, toto } from '../../../../Auth'
 import Moment from 'react-moment';
 import 'moment-timezone';
+import { Spinner } from 'react-bootstrap'
 
 const UserInfo = () => {
   const [view, setView] = useState(true)
   const [validDate, setValidDate] = useState(true)
-
+  const [loaded, setLoaded] = useState(false)
 
   const { auth } = useAuth();
   const [userInfo, setUserInfo] = useState({
@@ -34,25 +35,29 @@ const UserInfo = () => {
     userImg: ''
   })
   useEffect(() => {
-    db.collection('users').doc(auth.user.uid).get()
-      .then(doc => {
-        setUserInfo(
-          {
-            userImg: auth.user.photoURL,
-            name: doc.data().name,
-            gender: doc.data().gender,
-            phone: doc.data().phone,
-            location: doc.data().hometown,
-            bio: doc.data().bio,
-            birthday: doc.data().birthday,
-            day: doc.data().birthday.split('/')[0],
-            month: doc.data().birthday.split('/')[1],
-            year: doc.data().birthday.split('/')[2],
-            joined: doc.data().joined.toDate()
-          }
-        )
-      }
-      ).catch(err => console.log(err.message))
+    if (!loaded) {
+      db.collection('users').doc(auth.user.uid).get()
+        .then(doc => {
+          setUserInfo(
+            {
+              userImg: auth.user.photoURL,
+              name: doc.data().name,
+              gender: doc.data().gender,
+              phone: doc.data().phone,
+              location: doc.data().hometown,
+              bio: doc.data().bio,
+              birthday: doc.data().birthday,
+              day: doc.data().birthday.split('/')[0],
+              month: doc.data().birthday.split('/')[1],
+              year: doc.data().birthday.split('/')[2],
+              joined: doc.data().joined.toDate()
+            }
+          )
+          setLoaded(true)
+        }
+        ).catch(err => console.log(err.message))
+    }
+    return () => { setLoaded(true) }
   }, [])
 
 
@@ -237,7 +242,11 @@ const UserInfo = () => {
   }
 
 
-  return <div className='profileInfo'>{userInfoPage()}</div>
+  return loaded ? (<div className='profileInfo'>{userInfoPage()}</div>) : (<div className='profileSpinner'>
+    <Spinner animation="border" role="status" variant="info" >
+      <span ></span>
+    </Spinner>
+  </div>)
 
 }
 

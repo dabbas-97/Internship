@@ -159,9 +159,11 @@ const UserInfo = () => {
   }
 
 
-  return loaded ? (<div className='profileInfo'>{userInfoPage()}</div>) : (<Spinner animation="border" role="status" variant="info" >
-    <span ></span>
-  </Spinner>)
+  return loaded ? (<div className='profileInfo'>{userInfoPage()}</div>) : (<div className='profileSpinner'>
+    <Spinner animation="border" role="status" variant="info" >
+      <span ></span>
+    </Spinner>
+  </div>)
 
 }
 export default UserInfo

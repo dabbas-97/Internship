@@ -14,6 +14,8 @@
 }
 .feedContent .list-group-item {
   border: 0.2px solid rgba(0, 0, 0, 0.36);
+  max-height: 200px;
+  overflow: hidden;
 }
 .accepted,
 .rejected,
@@ -201,13 +203,16 @@
   color: #008ac3bd;
   background: #fafafa !important;
 }
-.companyPosts .list-group-item {
+.companyPosts .col-10 {
   overflow: overlay;
   max-height: 100px;
 }
 
 .companyPosts span {
   font-size: 0.95em;
+}
+.companyPosts .job {
+  color: rgb(6, 155, 218);
 }
 .modal-title {
   margin: 0 auto !important;

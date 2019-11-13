@@ -24,7 +24,7 @@
 .thirdPart::before {
   content: '';
   position: absolute;
-  background-image: linear-gradient(to right, blue 0%, red 100%),
+  background-image: linear-gradient(to right, #08dc22 0%, #0070ff 100%),
     url('../../images/thirdPart.jpg');
   background-blend-mode: lighten;
   opacity: 0.2;
@@ -47,4 +47,6 @@
   border-radius: 15px;
   background: #f0f8ffbf;
   color: #585858;
+}
+.Home .container {
 }

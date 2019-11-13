@@ -63,6 +63,8 @@
 }
 .specialty .list-group-item {
   border: none !important;
+  max-height: 100px;
+  overflow: overlay;
 }
 .pleaseCreate h1,
 .opportunities h1 {

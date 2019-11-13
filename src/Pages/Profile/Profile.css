@@ -143,3 +143,6 @@ form .profileImg {
 .acceptedBtnDisabled:hover {
   color: white !important;
 }
+.profileSpinner {
+  margin: 0 auto;
+}

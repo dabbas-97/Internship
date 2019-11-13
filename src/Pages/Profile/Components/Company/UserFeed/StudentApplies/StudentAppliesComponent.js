@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import Buttons from '../../../../../Buttons'
 import { StudentsApplies } from './StudentsApplies'
+import { Spinner } from 'react-bootstrap'
 
 const StudentsAppliesComponent = (props) => {
     const [pages, setPages] = useState(0)
     const [studentsApplied, setStudentsApplied] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setStudentsApplied(props.studentsApplied)
+        if (props.studentsApplied) {
+            setStudentsApplied(props.studentsApplied)
+            setLoading(false)
+        } else setLoading(true)
+
     }, [props.studentsApplied])
 
     useEffect(() => {
         setPages(0)
 
     }, [studentsApplied])
+
 
     const pageRenderer = () => {
         let i,
@@ -51,13 +58,28 @@ const StudentsAppliesComponent = (props) => {
         <div className='appliedFor m-3'>
             <h5 className='h5'>Students who have applied to your internships.</h5>
             <div className='feedContent m-3'>
-                <div className='row  '>
-                    <StudentsApplies
-                        studentsApplied={appliedChunks[pages]}
-                        postId={props.postId}
-                    />
-                </div>
-                {showButtons()}
+
+                {!loading ? (
+                    <React.Fragment>
+                        <div className='row  '>
+                            <StudentsApplies
+                                studentsApplied={appliedChunks[pages]}
+                                postId={props.postId}
+                            />
+                        </div>
+                        {showButtons()}
+                    </React.Fragment>
+                ) :
+                    (
+                        <div className='profileSpinner'>
+                            <Spinner animation="border" role="status" variant="info" >
+                                <span ></span>
+                            </Spinner>
+                        </div>
+                    )
+                }
+
+
 
             </div>
         </div>
