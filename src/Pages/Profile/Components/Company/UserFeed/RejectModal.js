@@ -14,7 +14,6 @@ const RejectModal = ({ studentId, closeJobModal, postId }) => {
                 status: 'Rejected',
                 response: true
             }).then(() => {
-                window.alert('You Have Rejected The Student Successfully');
                 closeJobModal()
             })
         } else { window.alert('You Have Already Responeded To This Post!'); closeJobModal() }

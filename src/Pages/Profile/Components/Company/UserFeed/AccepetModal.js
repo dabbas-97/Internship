@@ -41,7 +41,6 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
                 status: 'Accepted',
                 response: true
             }).then(() => {
-                window.alert('You Have Accepted The Student Successfully');
                 closeJobModal()
             })
         } else { window.alert('You Have Already Responeded To This Post!'); closeJobModal() }

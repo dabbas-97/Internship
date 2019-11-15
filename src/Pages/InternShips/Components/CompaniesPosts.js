@@ -33,7 +33,6 @@ export function CompaniesPosts(props) {
                         studentId: auth.user.uid,
                     })
                 })
-                .then(() => window.alert('You Have Successfully Applied To This Post!'))
                 .catch(err => console.log(err.message))
 
         }
