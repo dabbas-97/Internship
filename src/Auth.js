@@ -75,9 +75,8 @@ function useProvideAuth() {
 
 
     // Subscribe to user on mount
-    // Because this sets state in the callback it will cause any ...
-    // ... component that utilizes this hook to re-render with the ...
-    // ... latest auth object.
+    // Because this sets state in the callback it will cause any 
+    // component that utilizes this hook to re-render with the latest auth object.
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(user => {
             if (user) {

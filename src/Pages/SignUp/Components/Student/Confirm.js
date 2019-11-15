@@ -6,20 +6,24 @@ const Confirm = (props) => {
 
   const { auth } = useAuth();
   const { values } = props;
-  const { email, password } = values;
+  const { email, password, sex } = values;
   const [error, setError] = useState(null);
 
   const next = e => {
     e.preventDefault();
-
+    var img
+    if (sex === 'Female') img = 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2FfemaleStudent.png?alt=media&token=61a4d9af-adce-4498-b933-97dd3eeead9e'
+    else if (sex === 'Male') img = 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564'
     auth.signup(email, password)
       .then(user => {
         toto.currentUser.updateProfile({
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564',
+          photoURL: img,
           displayName: values.name
         })
+
+
         return db.collection('users').doc(user.uid).set({
-          photoURL: 'https://firebasestorage.googleapis.com/v0/b/internship-platform-11678.appspot.com/o/profileImages%2Fstudent.png?alt=media&token=bcf22f46-7263-4c2d-a6dc-010dd6091564',
+          photoURL: img,
           name: values.name,
           gender: values.sex,
           birthday: `${values.day}/${values.month}/${values.year}`,
