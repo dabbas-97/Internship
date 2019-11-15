@@ -51,13 +51,17 @@ export default class Messages extends Component {
 
     sendMessage = (e) => {
         e.preventDefault()
-        const { myMessage } = this.state
-        const { userId, chatId } = this.props
-        db.collection('chat').doc(chatId).collection('messages').add({
-            content: myMessage,
-            userId: userId,
-            createdAt: new Date()
-        }).then(() => this.setState({ myMessage: '' }))
+        const myMessage = this.state.myMessage.trim()
+
+        if (myMessage) {
+            const { userId, chatId } = this.props
+            db.collection('chat').doc(chatId).collection('messages').add({
+                content: myMessage,
+                userId: userId,
+                createdAt: new Date()
+            }).then(() => this.setState({ myMessage: '' }))
+        }
+
 
     }
     render() {

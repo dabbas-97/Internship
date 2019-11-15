@@ -33,7 +33,8 @@ const Confirm = (props) => {
           type: 'student',
           joined: new Date(),
         })
-      }).then(() => props.nextStep()).catch(err => setError(err.message))
+      })
+      .catch(err => setError(err.message))
 
   };
   const isBio = () => {

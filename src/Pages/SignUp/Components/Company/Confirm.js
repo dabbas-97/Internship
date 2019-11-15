@@ -28,7 +28,8 @@ const Confirm = (props) => {
           type: 'company'
         })
 
-      }).then(() => props.nextStep()).catch(err => setError(err.message))
+      })
+      .catch(err => setError(err.message))
 
   };
   const errorMessage = () => {

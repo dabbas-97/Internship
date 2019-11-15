@@ -5,7 +5,6 @@ import { UserInfo } from './UserInfo';
 import { StudentInfo } from './Student/StudentInfo';
 import Confirm from './Student/Confirm';
 import logoImg from '../../../images/logo.PNG';
-import Success from './Success';
 import { useAuth } from '../../../Auth'
 const StudentSignUp = () => {
   const [userInfo, setUserInfo] = useState({
@@ -70,8 +69,6 @@ const StudentSignUp = () => {
             values={values}
           />
         );
-      case 4:
-        return <Success />;
       default:
         return <Redirect to='/SignUp' />;
     }

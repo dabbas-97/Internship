@@ -5,7 +5,6 @@ import { UserInfo } from './UserInfo';
 import { CompanyInfo } from './Company/CompanyInfo';
 import Confirm from './Company/Confirm';
 import logoImg from '../../../images/logo.PNG';
-import Success from './Success';
 import { useAuth } from '../../../Auth'
 
 const CompanySignUp = () => {
@@ -69,8 +68,7 @@ const CompanySignUp = () => {
             values={values}
           />
         );
-      case 4:
-        return <Success />;
+
       default:
         return <Redirect to='/SignUp' />;
     }
