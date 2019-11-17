@@ -10,55 +10,58 @@ const StudentProfile = () => {
   const [internshipsFetched, setInternshipsFetched] = useState(false)
   useEffect(() => {
     if (!internshipsFetched) {
-      async function toto() {
-        const internships = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').get().then(async snapshot => {
-          if (!snapshot.empty) {
-            const posts = await Promise.all(snapshot.docs.map(async doc => {
-              const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
-                .then(doc => {
-                  if (doc.exists) {
-                    return doc.data()
-                  } else return null
-                })
-              if (exists) {
-                const companyInfo = await db.collection('users').doc(doc.data().companyId).get()
+      async function getInternships() {
+        const internships = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').get()
+          .then(async snapshot => {
+            if (!snapshot.empty) {
+              const posts = await Promise.all(snapshot.docs.map(async doc => {
+                const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
                   .then(doc => {
                     if (doc.exists) {
                       return doc.data()
                     } else return null
                   })
-                const jobInfo = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
-                  .then(doc => doc.data())
+                  .catch(err => console.log(err.message))
+                if (exists) {
+                  const companyInfo = await db.collection('users').doc(doc.data().companyId).get()
+                    .then(doc => {
+                      if (doc.exists) {
+                        return doc.data()
+                      } else return null
+                    })
+                    .catch(err => console.log(err.message))
+                  const jobInfo = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
+                    .then(doc => doc.data())
+                    .catch(err => console.log(err.message))
 
-                return {
-                  response: doc.data().response,
-                  companyName: companyInfo.name,
-                  jobdesc: jobInfo.jobdesc,
-                  jobtitle: jobInfo.jobtitle,
-                  specialty: jobInfo.specialty,
-                  status: doc.data().status,
-                  postId: doc.data().postId
+                  return {
+                    companyPhoto: companyInfo.photoURL,
+                    response: doc.data().response,
+                    companyName: companyInfo.name,
+                    jobdesc: jobInfo.jobdesc,
+                    jobtitle: jobInfo.jobtitle,
+                    specialty: jobInfo.specialty,
+                    status: doc.data().status,
+                    postId: doc.data().postId
+                  }
                 }
-              }
-              else db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(doc.data().postId).delete()
-            }))
-            return await posts.filter(post => post !== undefined)
-          } else return null
-        })
+                else db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(doc.data().postId).delete()
+              }))
+              return await posts.filter(post => post !== undefined)
+            } else return null
+          })
+          .catch(err => console.log(err.message))
         if (internships) {
           setInternshipsApplied(internships)
-        } else console.log('you havent applied to any posts!')
+        }
         setInternshipsFetched(true)
       }
-      toto()
+      getInternships()
     }
 
   }, [internshipsFetched])
 
-  useEffect(() => {
-    console.log(internshipsApplied)
 
-  }, [internshipsApplied])
 
   const deleteUser = async () => {
     let id = await auth.user.uid
@@ -72,6 +75,7 @@ const StudentProfile = () => {
             })
           }
         })
+          .catch(err => console.log(err.message))
         db.collection('cv').doc(id).delete()
       })
       .catch(err => console.log(err.message))

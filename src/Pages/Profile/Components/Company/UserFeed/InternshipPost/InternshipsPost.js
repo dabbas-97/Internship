@@ -36,6 +36,7 @@ const InternshipsPost = ({ getStudentsApplied }) => {
             })
           } setLoaded(true)
         })
+        .catch(err => console.log(err.message))
     }
     return () => { setLoaded(true) }
 

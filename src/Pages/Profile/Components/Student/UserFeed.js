@@ -21,18 +21,22 @@ const UserFeed = (props) => {
   //accepted: {    }
   const getStatus = async (id) => {
     //axios get...
-    const postInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get().then(doc => {
-      return {
-        status: doc.data().status,
-        message: doc.data().message,
-        contact: doc.data().contact,
-        companyId: doc.data().companyId
-      }
-    })
-    const companyInfo = await db.collection('users').doc(postInfo.companyId).get().then(doc => doc.data())
-
+    const postInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get()
+      .then(doc => {
+        return {
+          status: doc.data().status,
+          message: doc.data().message,
+          contact: doc.data().contact,
+          companyId: doc.data().companyId
+        }
+      })
+      .catch(err => console.log(err.message))
+    const companyInfo = await db.collection('users').doc(postInfo.companyId).get()
+      .then(doc => doc.data())
+      .catch(err => console.log(err.message))
     const jobInfo = await db.collection('internships').doc(postInfo.companyId).collection('companyPosts').doc(id).get()
       .then(doc => doc.data())
+      .catch(err => console.log(err.message))
 
     setJobStatus({
       status: postInfo.status,
@@ -88,7 +92,6 @@ class CompaniesAppliedForComponent extends Component {
 
   render() {
     const appliedChunks = this.pageRenderer();
-    console.log(appliedChunks)
     const nextPage = () => {
       let { pages } = this.state;
       if (pages < appliedChunks.length - 1) this.setState({ pages: pages + 1 });
@@ -172,7 +175,7 @@ function CompaniesAppliedFor(props) {
     return (
       <div className='col-md-6' key={x.postId}>
         <div className='card '>
-
+          <img src={x.companyPhoto} className='card-img-top' alt={x.companyName} />
           <ul className='list-group list-group-flush text-center'>
 
             <li className='list-group-item applied '>

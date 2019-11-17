@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaPen, FaEdit, FaRegEdit } from 'react-icons/fa';
+import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaEdit, FaRegEdit } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
-import { useAuth, db, toto } from '../../../../Auth'
+import { useAuth, db, storage, config } from '../../../../Auth'
 import InputFiles from 'react-input-files';
 import { Spinner } from 'react-bootstrap'
 import Moment from 'react-moment';
@@ -28,7 +28,7 @@ const UserInfo = () => {
         .then(doc => {
           setUserInfo(
             {
-              userImg: auth.user.photoURL,
+              userImg: doc.data().photoURL,
               name: doc.data().name,
               phone: doc.data().phone,
               location: doc.data().location,
@@ -50,7 +50,6 @@ const UserInfo = () => {
     setUserInfo({ ...userInfo, [input]: e.target.value })
   }
   const submitChanges = () => {
-    toto.currentUser.updateProfile({ displayName: userInfo.name })
     db.collection('users').doc(auth.user.uid).update({
       name: userInfo.name,
       phone: userInfo.phone,
@@ -67,6 +66,14 @@ const UserInfo = () => {
     if (file.length > 0) {
       let src = URL.createObjectURL(file[0]);
       setUserInfo({ ...userInfo, userImg: src })
+      storage.ref().child(`usersImages/${auth.user.uid}`).put(file[0])
+        .then(() => {
+          const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/usersImages%2F${auth.user.uid}?alt=media`
+          return db.collection('users').doc(auth.user.uid).update({
+            photoURL: imageUrl
+          })
+        })
+        .catch(err => console.log(err.message))
     }
   };
   const calendarStrings = {

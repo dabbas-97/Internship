@@ -16,10 +16,12 @@ const MainNav = ({ history }) => {
   useEffect(() => {
 
     if (logged) {
-      db.collection('users').doc(auth.user.uid).get().then(doc => {
-        setType(doc.data().type)
-        setLoaded(true)
-      })
+      db.collection('users').doc(auth.user.uid).get()
+        .then(doc => {
+          setType(doc.data().type)
+          setLoaded(true)
+        })
+        .catch(err => console.log(err.message))
     } else setLoaded(false)
 
     return () => {

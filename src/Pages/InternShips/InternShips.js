@@ -49,18 +49,19 @@ const InternShips = () => {
 
   useEffect(() => {
     if (!gotCV) {
-      db.collection('cv').doc(auth.user.uid).get().then(doc => {
-        if (doc.exists) {
-          setSpecialities(doc.data().specialities)
-          setGpa(doc.data().gpa)
-          setGotCV(true)
-        } else {
-          console.log(`No 'CV' record for this user`)
-          setGotCV(true)
-        }
+      db.collection('cv').doc(auth.user.uid).get()
+        .then(doc => {
+          if (doc.exists) {
+            setSpecialities(doc.data().specialities)
+            setGpa(doc.data().gpa)
+            setGotCV(true)
+          } else {
+            setGotCV(true)
+          }
 
 
-      })
+        })
+        .catch(err => console.log(err.message))
 
     }
   }, [])
@@ -68,24 +69,27 @@ const InternShips = () => {
 
   useEffect(() => {
     if (!gender) {
-      db.collection('users').doc(auth.user.uid).get().then(doc => {
-        if (doc.exists) {
-          setGender(doc.data().gender)
-        } else console.log(`User doesnt have a record in "users" collection`)
-      })
+      db.collection('users').doc(auth.user.uid).get()
+        .then(doc => {
+          if (doc.exists) {
+            setGender(doc.data().gender)
+          }
+        })
+        .catch(err => console.log(err.message))
     }
   }, [])
 
   useEffect(() => {
     if (gender && gpa) {
       if (!postsReturned) {
-        console.log(gpa, gender)
-        db.collectionGroup('companyPosts').where('gender', 'array-contains', gender).where('gpa', '<=', gpa).get().then(snapshots => {
-          if (!snapshots.empty) {
-            addPostInfo(snapshots.docs)
-            setPostsReturnd(true)
-          } else { console.log('no posts'); setPostsFetched(true) }
-        })
+        db.collectionGroup('companyPosts').where('gender', 'array-contains', gender).where('gpa', '<=', gpa).get()
+          .then(snapshots => {
+            if (!snapshots.empty) {
+              addPostInfo(snapshots.docs)
+              setPostsReturnd(true)
+            } else setPostsFetched(true)
+          })
+          .catch(err => console.log(err.message))
       }
     }
   }, [gpa, gender])
@@ -97,9 +101,11 @@ const InternShips = () => {
         const companies = [...new Set(postsInfo.map(post => post.companyId))] //removing duplicates 
         setCompaniesNumber(companies.length)
         const fetchData = (companyId) => {
-          db.collection('users').doc(companyId).get().then(doc => {
-            setCompanyInfo(companyInfo => [...companyInfo, doc.data()])
-          })
+          db.collection('users').doc(companyId).get()
+            .then(doc => {
+              setCompanyInfo(companyInfo => [...companyInfo, doc.data()])
+            })
+            .catch(err => console.log(err.message))
 
 
         }
@@ -137,7 +143,7 @@ const InternShips = () => {
 
     if (postsInfoReturned && postsReturned) {
       if (companyInfo.length === companiesNumber && postsInfo) {
-        const toto = async () => {
+        const fullPosts = async () => {
           const finalPosts = await Promise.all(postsInfo.map(async post => {
             const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
             const id = post.companyId
@@ -162,7 +168,7 @@ const InternShips = () => {
           setPostsFetched(true)
           setPosts(finalPosts)
         }
-        toto()
+        fullPosts()
 
       }
 
@@ -173,10 +179,7 @@ const InternShips = () => {
 
   }, [postsInfoReturned, companyInfo])
 
-  useEffect(() => {
-    console.log(posts)
 
-  }, [posts])
 
 
   if (gotCV) {

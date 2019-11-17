@@ -26,10 +26,12 @@ const CompanyProfile = () => {
                     return null
                   }
                 })
+                .catch(err => console.log(err.message))
               if (studentInfo) {
-                const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status)
+                const status = await db.collection('users').doc(doc.data().studentId).collection('postsAppliedFor').doc(postId).get().then(doc => doc.data().status).catch(err => console.log(err.message))
                 const studentCV = await db.collection('cv').doc(doc.data().studentId).get()
                   .then(doc => doc.data())
+                  .catch(err => console.log(err.message))
                 const allInfo = {
                   studentId: doc.data().studentId,
                   studentName: studentInfo.name,
@@ -51,6 +53,7 @@ const CompanyProfile = () => {
             return await Promise.all(info.filter(student => student))
           } else return null
         })
+        .catch(err => console.log(err.message))
       if (applicants) {
         setStudentsApplied(applicants)
       } else setStudentsApplied([])

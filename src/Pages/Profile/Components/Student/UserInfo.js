@@ -10,7 +10,7 @@ import {
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
-import { useAuth, db, toto } from '../../../../Auth'
+import { useAuth, db, storage, config } from '../../../../Auth'
 import Moment from 'react-moment';
 import 'moment-timezone';
 import { Spinner } from 'react-bootstrap'
@@ -40,7 +40,7 @@ const UserInfo = () => {
         .then(doc => {
           setUserInfo(
             {
-              userImg: auth.user.photoURL,
+              userImg: doc.data().photoURL,
               name: doc.data().name,
               gender: doc.data().gender,
               phone: doc.data().phone,
@@ -104,7 +104,6 @@ const UserInfo = () => {
 
 
     if (validateBirthday()) {
-      toto.currentUser.updateProfile({ displayName: userInfo.name })
       db.collection('users').doc(auth.user.uid).update({
         name: userInfo.name,
         gender: userInfo.gender,
@@ -114,7 +113,7 @@ const UserInfo = () => {
         birthday: `${userInfo.day}/${userInfo.month}/${userInfo.year}`
       })
       setView(true);
-    } else console.log('not valid date')
+    }
 
 
   };
@@ -122,6 +121,14 @@ const UserInfo = () => {
     if (file.length > 0) {
       let src = URL.createObjectURL(file[0]);
       setUserInfo({ ...userInfo, userImg: src })
+      storage.ref().child(`usersImages/${auth.user.uid}`).put(file[0])
+        .then(() => {
+          const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/usersImages%2F${auth.user.uid}?alt=media`
+          return db.collection('users').doc(auth.user.uid).update({
+            photoURL: imageUrl
+          })
+        })
+        .catch(err => console.log(err.message))
     }
   };
   const handleChange = input => e => {

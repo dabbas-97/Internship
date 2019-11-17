@@ -15,8 +15,8 @@ export default class Messages extends Component {
             this.setState({ loading: true })
             this.unsubscribe = db.collection('chat').doc(chatId).collection('messages').orderBy('createdAt').onSnapshot(async snapshot => {
                 const messages = await Promise.all(snapshot.docs.map(async doc => {
-                    const userImg = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().photoURL)
-                    const userName = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().name)
+                    const userImg = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().photoURL).catch(err => console.log(err.message))
+                    const userName = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().name).catch(err => console.log(err.message))
                     return {
                         ...doc.data(),
                         userImg, userName,
@@ -59,7 +59,9 @@ export default class Messages extends Component {
                 content: myMessage,
                 userId: userId,
                 createdAt: new Date()
-            }).then(() => this.setState({ myMessage: '' }))
+            })
+                .then(() => this.setState({ myMessage: '' }))
+                .catch(err => console.log(err.message))
         }
 
 

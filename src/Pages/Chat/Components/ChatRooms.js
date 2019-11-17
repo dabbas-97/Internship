@@ -8,7 +8,7 @@ export default class ChatRooms extends Component {
 
     componentDidMount = async () => {
         const { userId } = this.props
-        const userType = await db.collection('users').doc(userId).get().then(doc => doc.data().type)
+        const userType = await db.collection('users').doc(userId).get().then(doc => doc.data().type).catch(err => console.log(err.message))
         this.setState({ loading: true })
         this.unsubscribe = db.collection('chat').onSnapshot(async snapshot => {
             const chatRooms = await Promise.all(snapshot.docs.map(async doc => {
@@ -20,7 +20,6 @@ export default class ChatRooms extends Component {
                     };
                 }
             }));
-            console.log(chatRooms);
             this.setState({ chatRooms: chatRooms.filter(room => room), loading: false });
 
         });

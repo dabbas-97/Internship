@@ -16,6 +16,7 @@ const RejectModal = ({ studentId, closeJobModal, postId }) => {
             }).then(() => {
                 closeJobModal()
             })
+                .catch(err => console.log(err.message))
         } else { window.alert('You Have Already Responeded To This Post!'); closeJobModal() }
 
     };

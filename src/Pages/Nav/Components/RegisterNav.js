@@ -14,7 +14,7 @@ const RegisterNav = ({ history }) => {
       <ul className='navbar-nav mx-auto '>
         <li className='nav-item dropdown'>
           <Link className='nav-link  dropdown-toggle' data-toggle="dropdown" to='#'>
-            <FiUser /> {auth.user.displayName}
+            <FiUser />
           </Link>
           <div className=' dropdown-menu'>
 
@@ -22,7 +22,7 @@ const RegisterNav = ({ history }) => {
               My Profile
            </Link>
 
-            <button className='dropdown-item ' type='button' onClick={() => auth.signout().then(() => history.push('/'))}>
+            <button className='dropdown-item ' type='button' onClick={() => auth.signout().then(() => history.push('/')).catch(err => console.log(err.message))}>
               Logout <IoMdLogOut />
             </button>
 

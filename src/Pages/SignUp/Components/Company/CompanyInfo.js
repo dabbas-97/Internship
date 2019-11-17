@@ -82,7 +82,7 @@ export class CompanyInfo extends Component {
           <input
             type='text'
             className={this.state.validNameClass}
-            placeholder='Coco Jambos inc.'
+            placeholder='Company Name'
             onChange={validateName}
             defaultValue={name}
           />

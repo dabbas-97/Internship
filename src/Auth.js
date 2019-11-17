@@ -4,12 +4,9 @@ import * as firebase from "firebase/app";
 
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
-
-
-// Add your Firebase credentials
-firebase.initializeApp({
-
+export const config = {
     apiKey: "AIzaSyAH0hTQvTmtxFoUPQeoIEYP6O4HKNWbWQs",
     authDomain: "internship-platform-11678.firebaseapp.com",
     databaseURL: "https://internship-platform-11678.firebaseio.com",
@@ -18,9 +15,12 @@ firebase.initializeApp({
     messagingSenderId: "51675847999",
     appId: "1:51675847999:web:27a0758f36d80daddcc78a",
     measurementId: "G-E7KT6TQW7Y"
-});
+}
+
+// Add your Firebase credentials
+firebase.initializeApp(config);
 export const db = firebase.firestore();
-export const toto = firebase.auth();
+export const storage = firebase.storage();
 
 export const authContext = createContext();
 
@@ -50,7 +50,8 @@ function useProvideAuth() {
             .then(response => {
                 setUser(response.user);
                 return response.user;
-            });
+            })
+            .catch(err => console.log(err.message))
     };
 
     const signup = (email, password) => {
@@ -60,7 +61,8 @@ function useProvideAuth() {
             .then(response => {
                 setUser(response.user);
                 return response.user;
-            });
+            })
+            .catch(err => console.log(err.message))
     };
 
     const signout = () => {
@@ -69,7 +71,8 @@ function useProvideAuth() {
             .signOut()
             .then(() => {
                 setUser(false);
-            });
+            })
+            .catch(err => console.log(err.message))
     };
 
 

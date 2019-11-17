@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import { Birthday } from './Birthday';
-import { async } from 'q';
 export class StudentInfo extends Component {
   state = {
     validDate: true,
@@ -87,7 +86,6 @@ export class StudentInfo extends Component {
     const validateBirthday = input => async e => {
       await this.props.handleChange(input)(e);
       const { year, day, month } = await this.props.values
-      console.log(year, month, day)
       const userMonth = () => {
         switch (month) {
           case 'JAN': return '0'
