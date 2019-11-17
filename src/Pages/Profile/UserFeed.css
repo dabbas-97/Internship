@@ -244,6 +244,7 @@
   background: #f1f1f1;
   border-radius: 5px;
   color: #2ca5d6;
+  border: 1px solid #00000021;
 }
 .statusMessage p span {
   font-weight: bold;
