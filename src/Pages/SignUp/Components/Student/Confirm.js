@@ -16,9 +16,6 @@ const Confirm = (props) => {
     else if (sex === 'Male') img = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/profileImages%2Fstudent.png?alt=media`
     auth.signup(email, password)
       .then(user => {
-
-
-
         return db.collection('users').doc(user.uid).set({
           photoURL: img,
           name: values.name,

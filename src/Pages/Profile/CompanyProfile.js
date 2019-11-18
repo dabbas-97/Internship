@@ -62,13 +62,37 @@ const CompanyProfile = () => {
       setPostId('')
     }
   }
+  // const deleteUser = async () => {
+  //   let id = await auth.user.uid
+  //   auth.user.delete()
+  //     .then(() => {
+  //       db.collection('users').doc(id).delete()
+  //       db.collection('internships').doc(id).collection('postedInternships').get().then(snapshot => {
+  //         if (!snapshot.empty) {
+  //           snapshot.docs.forEach(doc => {
+  //             const currentDocId = doc.id
+  //             db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).collection('studentsApplied').get()
+  //               .then(snapshot => {
+  //                 if (!snapshot.empty) {
+  //                   snapshot.docs.forEach(doc => {
+  //                     db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).collection('studentsApplied').doc(doc.id).delete()
+  //                   })
+  //                 }
+  //               })
+  //             db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).delete()
+  //           })
+  //         }
+  //       })
+  //         .catch(err => console.log(err.message))
 
+  //     })
+  //     .catch(err => console.log(err.message))
+  // }
 
 
   return (
     <div className='container'>
       <div className='row mt-3'>
-
         <div className='col-md-8 '>
           <UserFeed studentsApplied={studentsApplied} getStudentsApplied={getStudentsApplied} postId={postId} />
         </div>

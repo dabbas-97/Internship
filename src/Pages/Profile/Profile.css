@@ -95,12 +95,12 @@
 form .profileImg {
   cursor: pointer;
   margin: 0 auto;
-  border-radius: 15px;
   transition: background 0.1s 0.1s cubic-bezier(0.42, 0, 0.09, 0.13);
   display: table;
+  position: relative;
 }
 .profileImg:hover {
-  background: #75747470;
+  background: #75747433;
 }
 
 .profileInfo form input,
@@ -145,4 +145,19 @@ form .profileImg {
 }
 .profileSpinner {
   margin: 0 auto;
+}
+.imageUploadSpinner {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  background: #7199ca33;
+  border-radius: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center !important;
+  height: 100%;
+}
+.imageUploadSpinner .spinner-border {
+  margin: auto !important;
+  color: #c6e9f8;
 }

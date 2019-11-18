@@ -11,17 +11,12 @@ import 'moment-timezone';
 const UserInfo = () => {
   const [view, setView] = useState(true)
   const [loaded, setLoaded] = useState(false)
+  const [imageUploading, setImageUploading] = useState(false)
   const changeView = () => {
     setView(!view);
   };
   const { auth } = useAuth();
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    joined: '',
-    bio: '',
-    phone: '',
-    location: '',
-  })
+  const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
     if (!loaded) {
       db.collection('users').doc(auth.user.uid).get()
@@ -49,14 +44,19 @@ const UserInfo = () => {
   const handleChange = input => e => {
     setUserInfo({ ...userInfo, [input]: e.target.value })
   }
-  const submitChanges = () => {
-    db.collection('users').doc(auth.user.uid).update({
-      name: userInfo.name,
-      phone: userInfo.phone,
-      location: userInfo.location,
-      bio: userInfo.bio,
-    })
-    setView(true);
+  const submitChanges = (e) => {
+    e.preventDefault()
+    const { name, phone, location, bio } = userInfo
+    if (name.trim() && phone.trim() && location.trim()) {
+      db.collection('users').doc(auth.user.uid).update({
+        name: name.trim(),
+        phone: phone.trim(),
+        location: location.trim(),
+        bio: bio.trim(),
+      })
+      setView(true);
+    }
+
 
   };
 
@@ -64,6 +64,7 @@ const UserInfo = () => {
 
   const imageUpload = file => {
     if (file.length > 0) {
+      setImageUploading(true)
       let src = URL.createObjectURL(file[0]);
       setUserInfo({ ...userInfo, userImg: src })
       storage.ref().child(`usersImages/${auth.user.uid}`).put(file[0])
@@ -73,6 +74,7 @@ const UserInfo = () => {
             photoURL: imageUrl
           })
         })
+        .then(() => setImageUploading(false))
         .catch(err => console.log(err.message))
     }
   };
@@ -93,6 +95,11 @@ const UserInfo = () => {
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
             <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
           </InputFiles>
+          {imageUploading && (<div className='imageUploadSpinner'>
+            <Spinner animation="border" role="status" >
+              <span ></span>
+            </Spinner>
+          </div>)}
         </div>
 
         <ul className='list-group list-group-flush text-center'>
@@ -133,6 +140,11 @@ const UserInfo = () => {
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
             <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
           </InputFiles>
+          {imageUploading && (<div className='imageUploadSpinner'>
+            <Spinner animation="border" role="status" >
+              <span ></span>
+            </Spinner>
+          </div>)}
         </div>
 
         <ul className='list-group list-group-flush text-center'>

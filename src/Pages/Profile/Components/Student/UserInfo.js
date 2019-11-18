@@ -19,21 +19,10 @@ const UserInfo = () => {
   const [view, setView] = useState(true)
   const [validDate, setValidDate] = useState(true)
   const [loaded, setLoaded] = useState(false)
+  const [imageUploading, setImageUploading] = useState(false)
 
   const { auth } = useAuth();
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    gender: '',
-    phone: '',
-    day: '',
-    month: '',
-    year: '',
-    joined: '',
-    birthday: '',
-    bio: '',
-    location: '',
-    userImg: ''
-  })
+  const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
     if (!loaded) {
       db.collection('users').doc(auth.user.uid).get()
@@ -75,6 +64,7 @@ const UserInfo = () => {
 
   const submitChanges = (e) => {
     e.preventDefault()
+    const { name, gender, phone, location, bio } = userInfo
     const validateBirthday = () => {
       const userMonth = () => {
         switch (userInfo.month) {
@@ -103,13 +93,13 @@ const UserInfo = () => {
     }
 
 
-    if (validateBirthday()) {
+    if (validateBirthday() && name.trim() && phone.trim() && location.trim()) {
       db.collection('users').doc(auth.user.uid).update({
-        name: userInfo.name,
-        gender: userInfo.gender,
-        phone: userInfo.phone,
-        hometown: userInfo.location,
-        bio: userInfo.bio,
+        name: name.trim(),
+        gender: gender,
+        phone: phone.trim(),
+        hometown: location.trim(),
+        bio: bio.trim(),
         birthday: `${userInfo.day}/${userInfo.month}/${userInfo.year}`
       })
       setView(true);
@@ -119,6 +109,7 @@ const UserInfo = () => {
   };
   const imageUpload = file => {
     if (file.length > 0) {
+      setImageUploading(true)
       let src = URL.createObjectURL(file[0]);
       setUserInfo({ ...userInfo, userImg: src })
       storage.ref().child(`usersImages/${auth.user.uid}`).put(file[0])
@@ -128,6 +119,7 @@ const UserInfo = () => {
             photoURL: imageUrl
           })
         })
+        .then(() => setImageUploading(false))
         .catch(err => console.log(err.message))
     }
   };
@@ -151,6 +143,11 @@ const UserInfo = () => {
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
             <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
           </InputFiles>
+          {imageUploading && (<div className='imageUploadSpinner'>
+            <Spinner animation="border" role="status" >
+              <span ></span>
+            </Spinner>
+          </div>)}
         </div>
 
         <ul className='list-group list-group-flush text-center'>
@@ -201,6 +198,11 @@ const UserInfo = () => {
           <InputFiles onChange={imageUpload} style={{ outline: 'none' }}>
             <img src={userInfo.userImg} className='proImg rounded-circle' alt='profile ' />
           </InputFiles>
+          {imageUploading && (<div className='imageUploadSpinner'>
+            <Spinner animation="border" role="status" >
+              <span ></span>
+            </Spinner>
+          </div>)}
         </div>
 
         <ul className='list-group list-group-flush text-center'>
