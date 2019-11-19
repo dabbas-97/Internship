@@ -53,6 +53,8 @@ li .active {
 .navbar .spinner-border {
   color: #88dbff !important;
 }
-.loginNav{
-  margin-left:200px
+@media (min-width: 992px) {
+  .loginNav {
+    margin-left: 200px;
+  }
 }
