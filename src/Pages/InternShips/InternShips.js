@@ -87,7 +87,8 @@ const InternShips = () => {
             if (!snapshots.empty) {
               addPostInfo(snapshots.docs)
               setPostsReturnd(true)
-            } else setPostsFetched(true)
+            }
+            setPostsFetched(true)
           })
           .catch(err => console.log(err.message))
       }

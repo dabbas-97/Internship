@@ -15,7 +15,11 @@ import StudentSignUp from './Pages/SignUp/Components/StudentSignUp';
 import CompanySignUp from './Pages/SignUp/Components/CompanySignUp';
 import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute'
+
+
+
 class App extends React.Component {
+
   render() {
     return (
       <AuthProvider>

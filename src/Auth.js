@@ -51,7 +51,6 @@ function useProvideAuth() {
                 setUser(response.user);
                 return response.user;
             })
-            .catch(err => console.log(err.message))
     };
 
     const signup = (email, password) => {
@@ -62,7 +61,6 @@ function useProvideAuth() {
                 setUser(response.user);
                 return response.user;
             })
-            .catch(err => console.log(err.message))
     };
 
     const signout = () => {
@@ -72,7 +70,6 @@ function useProvideAuth() {
             .then(() => {
                 setUser(false);
             })
-            .catch(err => console.log(err.message))
     };
 
 

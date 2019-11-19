@@ -12,7 +12,7 @@ const Login = ({ history }) => {
   const loginSubmit = e => {
     e.preventDefault();
     const { email, password } = user
-    auth.signin(email, password).then(() => { history.push('/') }).catch(err => setError(err.message))
+    auth.signin(email, password).catch(err => setError(err.message))
 
   };
 
