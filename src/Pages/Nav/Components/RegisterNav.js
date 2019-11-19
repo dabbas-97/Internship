@@ -10,13 +10,13 @@ const RegisterNav = ({ history }) => {
   const { auth } = useAuth();
 
   if (auth.user) return (
-    <div className=' profilelogin'>
-      <ul className='navbar-nav mx-auto '>
+  
+      <ul className='navbar-nav loginNav'>
         <li className='nav-item dropdown'>
           <Link className='nav-link  dropdown-toggle' data-toggle="dropdown" to='#'>
             <FiUser />
           </Link>
-          <div className=' dropdown-menu'>
+          <div className=' dropdown-menu dropdown-menu-right'>
 
             <Link className='dropdown-item ' to='/profile'>
               My Profile
@@ -29,18 +29,18 @@ const RegisterNav = ({ history }) => {
           </div>
         </li>
       </ul>
-    </div>)
+    )
 
   return (
-    <div className=' profilelogin'>
-      <ul className='navbar-nav mx-auto '>
+    
+      <ul className='navbar-nav loginNav' >
         <li className='nav-item'>
           <NavLink className='nav-link ' to='/login'>
             Login <IoMdLogIn />
           </NavLink>
         </li>
       </ul>
-    </div>)
+   )
 
 
 

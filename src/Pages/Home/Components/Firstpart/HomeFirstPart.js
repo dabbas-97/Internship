@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 export function HomeFirstPart() {
   return (
     <div className=' firstPart'>
-      <div className='container ' style={{ height: '88vh' }}>
+      <div className='container ' style={{ height: '100%' }}>
         <div className=' Home'>
           <div className='row'>
             <div className='col'>
-              <h1 className='h1-responsive'>Welcome To Internship Platform.</h1>
+              <h3 className='h3-responsive'>Welcome To Internship Platform.</h3>
             </div>
           </div>
           <div className='row'>
             <div className='col'>
-              <p className='p-3'>
+            <p className='p-lg-2'>
                 Internship Platform is a platform that is built to help IT
                 students find companies who offer internships opportunities.
             </p>

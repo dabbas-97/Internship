@@ -22,7 +22,7 @@ class About extends Component {
           <div className='m-5'>
             <div className='row'>
 
-              <div className='col-6'>
+              <div className='col-sm col-lg-6'>
                 <div className='card mb-3'>
                   <div className="card-header">Computer Science Department</div>
                   <div className="card-body">
@@ -32,7 +32,7 @@ class About extends Component {
                 </div>
               </div>
 
-              <div className='col-6'>
+              <div className='col-sm col-lg-6'>
                 <div className='card mb-3'>
                   <div className="card-header">Software Engineering Department</div>
                   <div className="card-body">
@@ -46,7 +46,7 @@ class About extends Component {
 
             <div className='row'>
 
-              <div className='col-6'>
+              <div className='col-sm col-lg-6'>
                 <div className='card mb-3'>
                   <div className="card-header">Computer Information Systems Department</div>
                   <div className="card-body">
@@ -56,7 +56,7 @@ class About extends Component {
                 </div>
               </div>
 
-              <div className='col-6'>
+              <div className='col-sm col-lg-6 '>
                 <div className='card mb-3'>
                   <div className="card-header">Business Information Technology Department</div>
                   <div className="card-body">
