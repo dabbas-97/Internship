@@ -87,8 +87,8 @@ const InternShips = () => {
             if (!snapshots.empty) {
               addPostInfo(snapshots.docs)
               setPostsReturnd(true)
-            }
-            setPostsFetched(true)
+            } else { console.log('no posts'); setPostsFetched(true) }
+
           })
           .catch(err => console.log(err.message))
       }
@@ -143,39 +143,40 @@ const InternShips = () => {
   useEffect(() => {
 
     if (postsInfoReturned && postsReturned) {
-      if (companyInfo.length === companiesNumber && postsInfo) {
-        const fullPosts = async () => {
-          const finalPosts = await Promise.all(postsInfo.map(async post => {
-            const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
-            const id = post.companyId
-            const company = companyInfo.filter(companies => {
-              return companies.companyId === id
-            })
-            return {
-              applied: applied,
-              postId: post.postId,
-              companyId: post.companyId,
-              jobtitle: post.jobtitle,
-              jobdesc: post.jobdesc,
-              createdAt: post.createdAt,
-              gpa: post.gpa,
-              specialty: post.specialty,
-              companyBio: company[0].bio,
-              companyLocation: company[0].location,
-              companyName: company[0].name,
-              companyPhone: company[0].phone,
-            }
-          }))
-          setPostsFetched(true)
-          setPosts(finalPosts)
-        }
-        fullPosts()
 
+
+      const fullPosts = async () => {
+        const finalPosts = await Promise.all(postsInfo.map(async post => {
+          const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
+          const id = post.companyId
+          const company = companyInfo.filter(companies => {
+            return companies.companyId === id
+          })
+          return {
+            applied: applied,
+            postId: post.postId,
+            companyId: post.companyId,
+            jobtitle: post.jobtitle,
+            jobdesc: post.jobdesc,
+            createdAt: post.createdAt,
+            gpa: post.gpa,
+            specialty: post.specialty,
+            companyBio: company[0].bio,
+            companyLocation: company[0].location,
+            companyName: company[0].name,
+            companyPhone: company[0].phone,
+          }
+        }))
+        setPostsFetched(true)
+        setPosts(finalPosts)
       }
-
-
+      fullPosts()
 
     }
+
+
+
+
 
 
   }, [postsInfoReturned, companyInfo])
