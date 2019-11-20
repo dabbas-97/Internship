@@ -92,6 +92,7 @@ const InternShips = () => {
             .then(doc => doc.data())
             .catch(err => console.log(err.message))
         }))
+          .catch(err => console.log(err.message))
         setCompanyInfo(info)
         setPostsInfoReturned(true)
       }
@@ -158,9 +159,9 @@ const InternShips = () => {
 
   if (cvFetched) {
 
-    if (cvReturned){
+    if (cvReturned) {
 
-    
+
 
       if (specialities) {
         const opporunities = specialities.map(specialty => {
@@ -281,7 +282,7 @@ const InternShips = () => {
         </div>
       )
 
-      }else return <div className='container'><div className='text-center pleaseCreate'><h1>Please Create Your CV First.</h1></div></div>
+    } else return <div className='container'><div className='text-center pleaseCreate'><h1>Please Create Your CV First.</h1></div></div>
 
   } else return <div className='profileSpinner'>
     <Spinner animation="border" role="status" variant="info" >
