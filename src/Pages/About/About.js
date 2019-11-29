@@ -13,12 +13,26 @@ class About extends Component {
             <img src={huLogo} alt='Hashmite University' />
           </div>
           <hr />
-          <div className='row'>
 
+          <div className='row'>
+            <div className='col text-center'>
+              <h3 >Supervisor</h3>
+            </div>
+          </div>
+          <div className='m-5'>
+            <div className='card mb-3 w-50 mx-auto'>
+              <div className="card-header">Dean of Faculty of Information Technology </div>
+              <div className="card-body">
+                <h5 className="card-title">Dr. Sahar Al-Edwan</h5>
+              </div>
+            </div>
+          </div>
+          <div className='row'>
             <div className='col text-center'>
               <h3 >Team Members</h3>
             </div>
           </div>
+
           <div className='m-5'>
             <div className='row'>
 

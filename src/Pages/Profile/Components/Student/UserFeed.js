@@ -231,7 +231,7 @@ class InternshipStatus extends Component {
     const { status, companyname, jobtitle, message, interviewDate } = this.props.values;
     const values = { status, companyname, jobtitle, message, interviewDate }
 
-    const returnMessage = () => { if (message) return (<p><span className='bold'>Message by {values.companyname} : </span> {message} </p>) }
+
     const returnAccepted = () => {
       if (values.status === 'Accepted' || 'Interview') return (
         <div>
@@ -257,7 +257,7 @@ class InternshipStatus extends Component {
                 <p>You have an interview scheduled at: <span><Moment format='DD/MMM/YYYY  HH:mm ' >{values.interviewDate.toDate()}</Moment></span> . </p>
               </React.Fragment>)
                 : (<p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>)}
-              {returnMessage()}
+              {values.status === 'Interview' ? (<p><span className='bold'>Interview Description: </span>  {message} </p>) : (<p><span className='bold'>Message by {values.companyname} : </span> {message} </p>)}
               {returnAccepted()}
             </div>
           </React.Fragment>)}

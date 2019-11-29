@@ -277,10 +277,13 @@
   background: #d9e61d !important;
   color: #5d5d5d !important;
 }
-.modal-class {
-  width: 46% !important;
-  max-width: 50% !important;
-}
+
 .feedContent .collapse {
   overflow-y: auto;
+}
+@media (min-width: 992px) {
+  .modal-class {
+    width: 46% !important;
+    max-width: 50% !important;
+  }
 }
