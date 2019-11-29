@@ -12,7 +12,6 @@ const RejectModal = ({ studentId, closeJobModal, postId }) => {
             db.collection('users').doc(studentId).collection('postsAppliedFor').doc(postId).update({
                 message: message,
                 status: 'Rejected',
-                response: true
             }).then(() => {
                 closeJobModal()
             })
@@ -27,7 +26,7 @@ const RejectModal = ({ studentId, closeJobModal, postId }) => {
 
     return (
         <React.Fragment>
-            <Modal show={true} onHide={closeJobModal}>
+            <Modal show={true} onHide={closeJobModal} dialogClassName="modal-class">
 
                 <Modal.Header closeButton>
                     <Modal.Title>Reject Student</Modal.Title>

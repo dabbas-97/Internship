@@ -43,7 +43,7 @@ export class EditPostForm extends Component {
         };
         return (
             <React.Fragment>
-                <Modal show={true} onHide={handleClose}>
+                <Modal show={true} onHide={handleClose} dialogClassName="modal-class">
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Post</Modal.Title>
                     </Modal.Header>

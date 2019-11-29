@@ -26,7 +26,6 @@ export function CompaniesPosts(props) {
                 message: '',
                 contact: '',
                 status: '',
-                response: false
             })
                 .then(() => {
                     return db.collection('internships').doc(post.companyId).collection('companyPosts').doc(post.postId).collection('studentsApplied').doc(auth.user.uid).set({

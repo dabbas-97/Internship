@@ -8,6 +8,9 @@ import { IoLogoApple, IoMdBriefcase } from 'react-icons/io';
 import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase } from 'react-icons/fa';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import { db, useAuth } from '../../../../Auth'
+import Moment from 'react-moment';
+import 'moment-timezone';
+//for moment
 
 
 const UserFeed = (props) => {
@@ -20,14 +23,14 @@ const UserFeed = (props) => {
 
   //accepted: {    }
   const getStatus = async (id) => {
-    //axios get...
     const postInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get()
       .then(doc => {
         return {
           status: doc.data().status,
           message: doc.data().message,
           contact: doc.data().contact,
-          companyId: doc.data().companyId
+          companyId: doc.data().companyId,
+          interviewDate: doc.data().interviewDate
         }
       })
       .catch(err => console.log(err.message))
@@ -40,6 +43,7 @@ const UserFeed = (props) => {
 
     setJobStatus({
       status: postInfo.status,
+      interviewDate: postInfo.interviewDate,
       message: postInfo.message,
       companyname: companyInfo.name,
       jobtitle: jobInfo.jobtitle,
@@ -163,13 +167,15 @@ function CompaniesAppliedFor(props) {
     };
 
     const status = () => {
-      if (x.response) {
-        if (x.status === 'Accepted') {
-          return <li className='accepted list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
-        } else {
-          return <li className='rejected list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
-        }
-      } else return <li className='pending list-group-item '>Pending</li>
+
+      if (x.status === 'Accepted') {
+        return <li className='accepted list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+      } else if (x.status === 'Rejected') {
+        return <li className='rejected list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
+      } else if (x.status === 'Interview') {
+        return <li className='interview list-group-item ' onClick={() => props.getStatus(x.postId)}>Interview <Moment to={x.interviewDate.toDate()}>{new Date()}</Moment></li>
+      }
+      else return <li className='pending list-group-item '>Pending</li>
 
     }
     return (
@@ -218,12 +224,12 @@ function CompaniesAppliedFor(props) {
 
 class InternshipStatus extends Component {
   render() {
-    const { status, companyname, jobtitle, message } = this.props.values;
-    const values = { status, companyname, jobtitle, message }
+    const { status, companyname, jobtitle, message, interviewDate } = this.props.values;
+    const values = { status, companyname, jobtitle, message, interviewDate }
 
     const returnMessage = () => { if (message) return (<p><span className='bold'>Message by {values.companyname} : </span> {message} </p>) }
     const returnAccepted = () => {
-      if (values.status === 'Accepted') return (
+      if (values.status === 'Accepted' || 'Interview') return (
         <div>
           <p><span className='bold'>Comapany Location:  </span>  {this.props.values.accepted.location}</p>
           <p><span className='bold'>Comapany Phone Number: </span> {this.props.values.accepted.phone}</p>
@@ -232,12 +238,16 @@ class InternshipStatus extends Component {
     }
     return (
       <React.Fragment>
-        <Modal show={true} onHide={this.props.closeJobModal} >
+        <Modal show={true} onHide={this.props.closeJobModal} dialogClassName="modal-class">
           <Modal.Header closeButton>
             <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
           </Modal.Header>
           <div className='statusMessage'>
-            <p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>
+            {values.status === 'Interview' ? (<React.Fragment>
+              <p><span>{values.companyname}</span> has responded to your internship application for <span>{values.jobtitle}</span>.</p>
+              <p>You have an interview scheduled at: <span><Moment format='DD/MMM/YYYY  HH:mm ' >{values.interviewDate.toDate()}</Moment></span> . </p>
+            </React.Fragment>)
+              : (<p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>)}
             {returnMessage()}
             {returnAccepted()}
           </div>

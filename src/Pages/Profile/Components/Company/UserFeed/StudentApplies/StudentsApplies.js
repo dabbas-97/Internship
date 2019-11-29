@@ -1,32 +1,36 @@
 import React, { Component } from 'react';
 import { MdLocationOn, MdSchool, MdClose, MdCheck } from 'react-icons/md';
 import { IoLogoApple, IoMdMale, IoMdFemale } from 'react-icons/io';
-import { FaAndroid, FaJava, FaPython, FaLinux, FaDatabase, FaUserGraduate, FaSchool, FaCode, FaUniversity, FaBirthdayCake, FaHeart, FaPhone } from 'react-icons/fa';
+import { FaRegCalendarCheck, FaAndroid, FaJava, FaPython, FaLinux, FaDatabase, FaUserGraduate, FaSchool, FaCode, FaUniversity, FaBirthdayCake, FaHeart, FaPhone } from 'react-icons/fa';
 import { FiPercent } from 'react-icons/fi';
 import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, DiJavascript1, DiDotnet, DiHtml5, DiWindows, DiSwift, DiCodeBadge, DiNodejsSmall } from 'react-icons/di';
 import RejectModal from '../RejectModal';
 import AccepetModal from '../AccepetModal';
+import InterviewModal from '../InterviewModal';
 export class StudentsApplies extends Component {
     state = {
         reject: '',
         accept: ''
     };
     closeJobModal = () => {
-        this.setState({ accept: '', reject: '' });
+        this.setState({ accept: '', reject: '', interview: '' });
     };
     handleModal = (type, studentId) => {
         if (type === 'accept')
             this.setState({ accept: studentId });
-        else
+        else if (type === 'reject')
             this.setState({ reject: studentId });
+        else if (type === 'interview')
+            this.setState({ interview: studentId });
     };
     render() {
         const showModal = () => {
-            if (this.state.accept) {
+            if (this.state.accept)
                 return <AccepetModal closeJobModal={this.closeJobModal} studentId={this.state.accept} postId={this.props.postId} />;
-            }
             else if (this.state.reject)
                 return (<RejectModal closeJobModal={this.closeJobModal} studentId={this.state.reject} postId={this.props.postId} />);
+            else if (this.state.interview)
+                return (<InterviewModal closeJobModal={this.closeJobModal} studentId={this.state.interview} postId={this.props.postId} />);
         };
         const { studentsApplied } = this.props;
         if (!studentsApplied) {
@@ -109,18 +113,29 @@ export class StudentsApplies extends Component {
                     )
                 } else {
                     return (
-                        <div className='form-inline justify-content-center my-1'>
-                            <div className='text-center mx-1 '>
-                                <button type='button' className='btn rejectedbtn' onClick={() => this.handleModal('reject', data.studentId)}>
-                                    Reject <MdClose />
-                                </button>
+                        <React.Fragment>
+                            <div className='row my-1'>
+                                <div className='col-6 text-center'>
+                                    <button type='button' className='btn rejectedbtn w-100' onClick={() => this.handleModal('reject', data.studentId)}>
+                                        Reject <MdClose />
+                                    </button>
+                                </div>
+                                <div className='text-center col-6 '>
+                                    <button type='button' className='btn acceptedbtn w-100' onClick={() => this.handleModal('accept', data.studentId)}>
+                                        Accept <MdCheck />
+                                    </button>
+                                </div>
                             </div>
-                            <div className='text-center mx-1 '>
-                                <button type='button' className='btn acceptedbtn' onClick={() => this.handleModal('accept', data.studentId)}>
-                                    Accept <MdCheck />
-                                </button>
+                            <div className='row my-3'>
+                                <div className='text-center col '>
+                                    {data.status === 'Interview' ? <button type='button' className='btn disabled w-100'>
+                                        Interview Scheduled  <FaRegCalendarCheck />
+                                    </button> : <button type='button' className='btn w-100' onClick={() => this.handleModal('interview', data.studentId)}>
+                                            Schedule an interview <FaRegCalendarCheck />
+                                        </button>}
+                                </div>
                             </div>
-                        </div>
+                        </React.Fragment>
                     )
                 }
             }

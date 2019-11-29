@@ -13,23 +13,29 @@
   object-fit: contain;
 }
 .feedContent .list-group-item {
-  border: 0.2px solid rgba(0, 0, 0, 0.36);
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
   max-height: 200px;
   overflow: hidden;
 }
 .accepted,
 .rejected,
-.pending {
+.pending,
+.interview {
   font-size: 0.9em;
   padding: 1px 10px !important;
 }
 .accepted,
-.rejected {
+.rejected,
+.interview {
   cursor: pointer;
 }
 .accepted {
   color: white !important;
   background-color: #0daf0d !important;
+}
+.accepted:hover {
+  background-color: #27c527 !important;
 }
 .acceptedbtn {
   color: white !important;
@@ -42,6 +48,16 @@
 .rejected {
   color: white !important;
   background-color: #cc0101 !important;
+}
+.rejected:hover {
+  background-color: #ff0011 !important;
+}
+.interview {
+  color: white !important;
+  background-color: #137105 !important;
+}
+.interview:hover {
+  background-color: #36b523 !important;
 }
 .rejectedbtn {
   color: white !important;
@@ -175,6 +191,7 @@
 .cvul li {
   background: white;
   color: #2ca5d6;
+  border: none;
 }
 .cvul h5 {
   font-size: 1.9em;
@@ -255,4 +272,12 @@
 }
 .Rejected {
   color: red !important;
+}
+.interviewbtn {
+  background: #d9e61d !important;
+  color: #5d5d5d !important;
+}
+.modal-class {
+  width: 46% !important;
+  max-width: 50% !important;
 }

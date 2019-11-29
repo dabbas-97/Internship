@@ -36,7 +36,7 @@ const StudentProfile = () => {
 
                   return {
                     companyPhoto: companyInfo.photoURL,
-                    response: doc.data().response,
+                    interviewDate: doc.data().interviewDate,
                     companyName: companyInfo.name,
                     jobdesc: jobInfo.jobdesc,
                     jobtitle: jobInfo.jobtitle,
@@ -63,23 +63,24 @@ const StudentProfile = () => {
 
 
 
-  const deleteUser = async () => {
-    let id = await auth.user.uid
-    auth.user.delete()
-      .then(() => {
-        db.collection('users').doc(id).delete()
-        db.collection('users').doc(id).collection('postsAppliedFor').get().then(snapshot => {
-          if (!snapshot.empty) {
-            snapshot.docs.forEach(doc => {
-              db.collection('users').doc(id).collection('postsAppliedFor').doc(doc.id).delete()
-            })
-          }
-        })
-          .catch(err => console.log(err.message))
-        db.collection('cv').doc(id).delete()
-      })
-      .catch(err => console.log(err.message))
-  }
+  // const deleteUser = async () => {
+  //   let id = await auth.user.uid
+  //   auth.user.delete()
+  //     .then(() => {
+  //       db.collection('users').doc(id).delete()
+  //       db.collection('users').doc(id).collection('postsAppliedFor').get().then(snapshot => {
+  //         if (!snapshot.empty) {
+  //           snapshot.docs.forEach(doc => {
+  //             db.collection('users').doc(id).collection('postsAppliedFor').doc(doc.id).delete()
+  //           })
+  //         }
+  //       })
+  //         .catch(err => console.log(err.message))
+  //       db.collection('cv').doc(id).delete()
+  //     })
+  //     .catch(err => console.log(err.message))
+  // }
+
   return (
     <div className='container'>
       {/* <button className='btn' onClick={() => deleteUser()}>deletee</button> */}

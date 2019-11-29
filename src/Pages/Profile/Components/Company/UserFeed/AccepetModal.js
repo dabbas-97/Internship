@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { db, useAuth } from '../../../../../Auth';
+import { Spinner } from 'react-bootstrap'
 
 const AccepetModal = ({ studentId, closeJobModal, postId }) => {
     const { auth } = useAuth();
@@ -11,10 +12,12 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
     })
     const [message, setMessage] = useState('')
     const [companyInfoFetched, setCompanyInfoFetched] = useState(false)
+    const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
         if (!companyInfoFetched) {
+            setLoading(true)
             const fetch = async () => {
                 const info = await db.collection('users').doc(auth.user.uid).get()
                     .then(doc => doc.data())
@@ -25,6 +28,7 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
                     contact: auth.user.email
                 })
                 setCompanyInfoFetched(true)
+                setLoading(false)
             }
             fetch()
         }
@@ -39,7 +43,6 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
                 contact: companyInfo.contact,
                 message: message,
                 status: 'Accepted',
-                response: true
             }).then(() => {
                 closeJobModal()
             })
@@ -54,43 +57,41 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
     };
     return (
         <React.Fragment>
-            <Modal show={true} onHide={closeJobModal} dialogClassName=''>
+            <Modal show={true} onHide={closeJobModal} dialogClassName="modal-class">
                 <Modal.Header closeButton>
                     <Modal.Title className=' align-content-center'>Accept Student</Modal.Title>
                 </Modal.Header>
 
-                <form onSubmit={submitAccept}>
+                {loading ? (<div className='profileSpinner'>
+                    <Spinner animation="border" role="status" variant="info" >
+                        <span ></span>
+                    </Spinner>
+                </div>) : (<form onSubmit={submitAccept}>
                     <ul className='list-group text-center cvul'>
-                        <li className='list-group-item py-5 '>
+                        <li className='list-group-item py-1 mt-1 '>
 
-                            <h6 className=' mt-1 h-6'> Location </h6>
-                            <div className='form-row my-3'>
-                                <div className='col-12'>
-                                    {companyInfo.location}
-                                </div>
+                            <h6 className=' my-3 h-6'> Location </h6>
+                            <div className='h5'>
+                                {companyInfo.location}
                             </div>
+                        </li>
 
-                            <h6 className=' mt-1 h-6'> Phone Number </h6>
-                            <div className='form-row my-3'>
-                                <div className='col-12'>
-                                    {companyInfo.phone}
-                                </div>
+                        <li className='list-group-item py-1 mt-1'>
+                            <h6 className=' my-3 h-6'> Phone Number </h6>
+                            <div className='h5'>
+                                {companyInfo.phone}
                             </div>
+                        </li>
 
-                            <h6 className=' mt-1 h-6'> Contact Email </h6>
-                            <div className='form-row my-3'>
-                                <div className='col-12'>
-                                    <input type='text' className=' form-control' defaultValue={companyInfo.contact} onChange={handleChange('contact')} required />
-                                </div>
-                            </div>
-
-                            <h6 className=' mt-1 h-6'> Message </h6>
-                            <div className='form-row my-3'>
-                                <div className='col-12'>
-                                    <textarea type='text' className=' form-control' defaultValue={message} onChange={handleChange('message')} required />
-                                </div>
-                            </div>
-
+                        <li className='list-group-item py-1 mt-1'>
+                            <h6 className=' my-3 h-6'> Contact Email </h6>
+                            <input type='text' className=' form-control' defaultValue={companyInfo.contact} onChange={handleChange('contact')} required />
+                        </li>
+                        <li className='list-group-item py-1 mt-1'>
+                            <h6 className=' my-3 h-6'> Message </h6>
+                            <textarea type='text' className=' form-control' defaultValue={message} onChange={handleChange('message')} required />
+                        </li>
+                        <li className='list-group-item mb-4'>
                             <div className='row'>
                                 <div className='col-6'>
                                     <button type='button' className='btn w-100' onClick={closeJobModal}>Cancel</button>
@@ -103,7 +104,7 @@ const AccepetModal = ({ studentId, closeJobModal, postId }) => {
 
                         </li>
                     </ul>
-                </form>
+                </form>)}
             </Modal>
         </React.Fragment>
     );

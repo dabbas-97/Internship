@@ -83,7 +83,13 @@
 .formLog li:nth-child(odd) {
   background: #cacacac9;
 }
-
+.editCV li {
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border: none;
+}
+.list-group-flush:last-child .list-group-item:last-child {
+  border-radius: 0 0 5px 5px;
+}
 .cv,
 .internshipsPosting,
 .appliedList {
