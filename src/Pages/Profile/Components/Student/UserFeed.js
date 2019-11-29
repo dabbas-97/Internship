@@ -10,12 +10,13 @@ import { DiUnitySmall, DiAngularSimple, DiPhp, DiReact, DiLaravel, DiWordpress, 
 import { db, useAuth } from '../../../../Auth'
 import Moment from 'react-moment';
 import 'moment-timezone';
-//for moment
+import { Spinner } from 'react-bootstrap'
 
 
 const UserFeed = (props) => {
   const { internshipsApplied } = props;
   const [jobStatus, setJobStatus] = useState('')
+  const [loading, setLoading] = useState(false)
   const { auth } = useAuth();
   const closeJobModal = () => {
     setJobStatus('')
@@ -23,6 +24,7 @@ const UserFeed = (props) => {
 
   //accepted: {    }
   const getStatus = async (id) => {
+    setLoading(true)
     const postInfo = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(id).get()
       .then(doc => {
         return {
@@ -49,11 +51,12 @@ const UserFeed = (props) => {
       jobtitle: jobInfo.jobtitle,
       accepted: { location: companyInfo.location, phone: companyInfo.phone, contact: postInfo.contact }
     })
+    setLoading(false)
   }
   const showStatus = () => {
     if (jobStatus)
       return (
-        <InternshipStatus values={jobStatus} closeJobModal={closeJobModal} />
+        <InternshipStatus values={jobStatus} closeJobModal={closeJobModal} loading={loading} />
       );
   };
 
@@ -224,6 +227,7 @@ function CompaniesAppliedFor(props) {
 
 class InternshipStatus extends Component {
   render() {
+    const { loading } = this.props
     const { status, companyname, jobtitle, message, interviewDate } = this.props.values;
     const values = { status, companyname, jobtitle, message, interviewDate }
 
@@ -239,18 +243,24 @@ class InternshipStatus extends Component {
     return (
       <React.Fragment>
         <Modal show={true} onHide={this.props.closeJobModal} dialogClassName="modal-class">
-          <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
-          </Modal.Header>
-          <div className='statusMessage'>
-            {values.status === 'Interview' ? (<React.Fragment>
-              <p><span>{values.companyname}</span> has responded to your internship application for <span>{values.jobtitle}</span>.</p>
-              <p>You have an interview scheduled at: <span><Moment format='DD/MMM/YYYY  HH:mm ' >{values.interviewDate.toDate()}</Moment></span> . </p>
-            </React.Fragment>)
-              : (<p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>)}
-            {returnMessage()}
-            {returnAccepted()}
-          </div>
+          {loading ? (<div className='profileSpinner'>
+            <Spinner animation="border" role="status" variant="info" >
+              <span ></span>
+            </Spinner>
+          </div>) : (<React.Fragment>
+            <Modal.Header closeButton>
+              <Modal.Title style={{ textAlign: "center" }}>Internship {values.status}</Modal.Title>
+            </Modal.Header>
+            <div className='statusMessage'>
+              {values.status === 'Interview' ? (<React.Fragment>
+                <p><span>{values.companyname}</span> has responded to your internship application for <span>{values.jobtitle}</span>.</p>
+                <p>You have an interview scheduled at: <span><Moment format='DD/MMM/YYYY  HH:mm ' >{values.interviewDate.toDate()}</Moment></span> . </p>
+              </React.Fragment>)
+                : (<p>Your internship application for <span> {values.jobtitle} </span> in <span> {values.companyname} </span> has been <span className={values.status}> {values.status} </span>.</p>)}
+              {returnMessage()}
+              {returnAccepted()}
+            </div>
+          </React.Fragment>)}
 
         </Modal>
       </React.Fragment>

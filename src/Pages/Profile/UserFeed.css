@@ -281,3 +281,6 @@
   width: 46% !important;
   max-width: 50% !important;
 }
+.feedContent .collapse {
+  overflow-y: auto;
+}
