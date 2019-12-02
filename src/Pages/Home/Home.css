@@ -18,7 +18,7 @@
 }
 .firstPart .container,
 .thirdPart .container {
-  padding: 6em;
+  padding: 6em 0.1em;
 }
 
 .thirdPart::before {

@@ -64,7 +64,9 @@
 .specialty .list-group-item {
   border: none !important;
   max-height: 100px;
-  overflow: overlay;
+}
+.specialty .collapse {
+  overflow-y: auto !important;
 }
 .pleaseCreate h1,
 .opportunities h1 {

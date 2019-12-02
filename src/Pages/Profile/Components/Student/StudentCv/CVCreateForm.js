@@ -71,7 +71,7 @@ export function CVCreateForm(props) {
                                     <Universities school={values.education.school} handleChange={props.handleChange} />
                                 </div>
                             </div>
-                            <div className='from-col-3'>
+                            <div className='col-3'>
                                 <div className='from-group my-1'>
                                     <select name='gpa' className='mx-1 custom-select ' onChange={props.handleChange('gpa')} value={values.gpa}>
                                         <option value='3.5'>Excellent</option>

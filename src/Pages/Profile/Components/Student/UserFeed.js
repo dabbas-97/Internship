@@ -176,7 +176,7 @@ function CompaniesAppliedFor(props) {
       } else if (x.status === 'Rejected') {
         return <li className='rejected list-group-item ' onClick={() => props.getStatus(x.postId)}>{x.status}</li>
       } else if (x.status === 'Interview') {
-        return <li className='interview list-group-item ' onClick={() => props.getStatus(x.postId)}>Interview <Moment to={x.interviewDate.toDate()}>{new Date()}</Moment></li>
+        return <li className={new Date() >= x.interviewDate.toDate() ? 'interviewOverdue list-group-item ' : 'interview list-group-item'} onClick={() => props.getStatus(x.postId)}>Interview <Moment to={x.interviewDate.toDate()}>{new Date()}</Moment></li>
       }
       else return <li className='pending list-group-item '>Pending</li>
 
