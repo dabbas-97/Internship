@@ -23,6 +23,7 @@ const CompanyProfile = () => {
                   if (doc.exists) return doc.data()
                   else {
                     db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(postId).collection('studentsApplied').doc(studentId).delete()
+                    db.collection('users').doc(studentId).collection('postsAppliedFor').doc(postId).delete()
                     return null
                   }
                 })
@@ -62,32 +63,18 @@ const CompanyProfile = () => {
       setPostId('')
     }
   }
-  // const deleteUser = async () => {
-  //   let id = await auth.user.uid
-  //   auth.user.delete()
-  //     .then(() => {
-  //       db.collection('users').doc(id).delete()
-  //       db.collection('internships').doc(id).collection('postedInternships').get().then(snapshot => {
-  //         if (!snapshot.empty) {
-  //           snapshot.docs.forEach(doc => {
-  //             const currentDocId = doc.id
-  //             db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).collection('studentsApplied').get()
-  //               .then(snapshot => {
-  //                 if (!snapshot.empty) {
-  //                   snapshot.docs.forEach(doc => {
-  //                     db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).collection('studentsApplied').doc(doc.id).delete()
-  //                   })
-  //                 }
-  //               })
-  //             db.collection('internships').doc(id).collection('postedInternships').doc(currentDocId).delete()
-  //           })
-  //         }
-  //       })
-  //         .catch(err => console.log(err.message))
+  const deleteUser = async () => {
+    var answer = window.confirm("Are You Sure You Want To Delete Your Account?")
+    if (answer) {
+      await db.collection('users').doc(auth.user.uid).delete().catch(err => console.log(err.message))
+      auth.user.delete().catch(err => {
+        auth.signout()
+        console.log(err.message)
+      })
+    }
 
-  //     })
-  //     .catch(err => console.log(err.message))
-  // }
+
+  }
 
 
   return (
@@ -98,7 +85,7 @@ const CompanyProfile = () => {
         </div>
 
         <div className='col-md-4'>
-          <UserInfo />
+          <UserInfo deleteUser={deleteUser} />
         </div>
 
       </div>

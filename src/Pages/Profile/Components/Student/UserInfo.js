@@ -8,6 +8,7 @@ import {
   FaPen
 } from 'react-icons/fa';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
+import { TiDelete } from 'react-icons/ti';
 import { Birthday } from '../../../SignUp/Components/Student/Birthday';
 import InputFiles from 'react-input-files';
 import { useAuth, db, storage, config } from '../../../../Auth'
@@ -15,7 +16,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import { Spinner } from 'react-bootstrap'
 
-const UserInfo = () => {
+const UserInfo = ({ deleteUser }) => {
   const [view, setView] = useState(true)
   const [validDate, setValidDate] = useState(true)
   const [loaded, setLoaded] = useState(false)
@@ -251,7 +252,12 @@ const UserInfo = () => {
   }
 
 
-  return loaded ? (<div className='profileInfo'>{userInfoPage()}</div>) : (<div className='profileSpinner'>
+  return loaded ? (<React.Fragment>
+    <div className='profileInfo'>{userInfoPage()}</div>
+    <div className='deleteAcc' onClick={() => deleteUser()}>Delete Account <TiDelete /></div>
+  </React.Fragment>
+
+  ) : (<div className='profileSpinner'>
     <Spinner animation="border" role="status" variant="info" >
       <span ></span>
     </Spinner>

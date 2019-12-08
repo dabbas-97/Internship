@@ -15,6 +15,7 @@ const StudentProfile = () => {
           .then(async snapshot => {
             if (!snapshot.empty) {
               const posts = await Promise.all(snapshot.docs.map(async doc => {
+                const applyId = doc.id
                 const exists = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
                   .then(doc => {
                     if (doc.exists) {
@@ -27,23 +28,29 @@ const StudentProfile = () => {
                     .then(doc => {
                       if (doc.exists) {
                         return doc.data()
-                      } else return null
+                      } else {
+                        db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(applyId).delete()
+                        return null
+                      }
                     })
                     .catch(err => console.log(err.message))
-                  const jobInfo = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
-                    .then(doc => doc.data())
-                    .catch(err => console.log(err.message))
+                  if (companyInfo) {
+                    const jobInfo = await db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).get()
+                      .then(doc => doc.data())
+                      .catch(err => console.log(err.message))
 
-                  return {
-                    companyPhoto: companyInfo.photoURL,
-                    interviewDate: doc.data().interviewDate,
-                    companyName: companyInfo.name,
-                    jobdesc: jobInfo.jobdesc,
-                    jobtitle: jobInfo.jobtitle,
-                    specialty: jobInfo.specialty,
-                    status: doc.data().status,
-                    postId: doc.data().postId
-                  }
+                    return {
+                      companyPhoto: companyInfo.photoURL,
+                      interviewDate: doc.data().interviewDate,
+                      companyName: companyInfo.name,
+                      jobdesc: jobInfo.jobdesc,
+                      jobtitle: jobInfo.jobtitle,
+                      specialty: jobInfo.specialty,
+                      status: doc.data().status,
+                      postId: doc.data().postId
+                    }
+                  } else db.collection('internships').doc(doc.data().companyId).collection('companyPosts').doc(doc.data().postId).collection('studentApplied').doc(auth.use.uid).delete()
+
                 }
                 else db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(doc.data().postId).delete()
               }))
@@ -63,27 +70,21 @@ const StudentProfile = () => {
 
 
 
-  // const deleteUser = async () => {
-  //   let id = await auth.user.uid
-  //   auth.user.delete()
-  //     .then(() => {
-  //       db.collection('users').doc(id).delete()
-  //       db.collection('users').doc(id).collection('postsAppliedFor').get().then(snapshot => {
-  //         if (!snapshot.empty) {
-  //           snapshot.docs.forEach(doc => {
-  //             db.collection('users').doc(id).collection('postsAppliedFor').doc(doc.id).delete()
-  //           })
-  //         }
-  //       })
-  //         .catch(err => console.log(err.message))
-  //       db.collection('cv').doc(id).delete()
-  //     })
-  //     .catch(err => console.log(err.message))
-  // }
+  const deleteUser = async () => {
+    var answer = window.confirm("Are You Sure You Want To Delete Your Account?")
+    if (answer) {
+      await db.collection('users').doc(auth.user.uid).delete().catch(err => console.log(err.message))
+      await db.collection('cv').doc(auth.user.uid).delete().catch(err => console.log(err.message))
+      auth.user.delete().catch(err => {
+        auth.signout()
+        console.log(err.message)
+      })
+    }
+
+  }
 
   return (
     <div className='container'>
-      {/* <button className='btn' onClick={() => deleteUser()}>deletee</button> */}
       <div className='row mt-3'>
         <div className='col-md-8 '>
           {internshipsFetched ? (
@@ -98,7 +99,7 @@ const StudentProfile = () => {
           }
         </div>
         <div className='col-md-4'>
-          <UserInfo />
+          <UserInfo deleteUser={deleteUser} />
         </div>
       </div>
     </div>

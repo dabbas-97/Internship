@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { Link, withRouter, Redirect } from 'react-router-dom';
 import logoImg from '../../images/logo.PNG';
 
-import { useAuth } from '../../Auth'
+import { useAuth, db } from '../../Auth'
 
 const Login = ({ history }) => {
   const [user, setUser] = useState({ email: '', password: '' })
   const { auth } = useAuth()
   const [error, setError] = useState(null);
-  const loginSubmit = e => {
+  const [type, setType] = useState(null);
+  const loginSubmit = async e => {
     e.preventDefault();
     const { email, password } = user
     auth.signin(email, password).catch(err => setError(err.message))
-
   };
 
-  if (auth.user) {
+  useEffect(() => {
+    if (auth.user) {
+      db.collection('users').doc(auth.user.uid).get()
+        .then(doc => {
+          if (doc.exists) setType(doc.data().type)
+          else {
+            setError('There is no user record corresponding to this identifier. The user may have been deleted.')
+            auth.user.delete().catch(err => {
+              auth.signout()
+            })
+          }
+        })
+    }
+
+  }, [auth.user])
+
+  if (auth.user && type) {
     return <Redirect to='/' />
   }
+
 
   const errorMessage = () => {
     if (error) {

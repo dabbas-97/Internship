@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FaUserTie, FaQuoteLeft, FaQuoteRight, FaEdit, FaRegEdit } from 'react-icons/fa';
+import { TiDelete } from 'react-icons/ti';
 import { MdAssignmentInd, MdLocationOn, MdPhone } from 'react-icons/md';
 import { useAuth, db, storage, config } from '../../../../Auth'
 import InputFiles from 'react-input-files';
@@ -8,7 +9,7 @@ import { Spinner } from 'react-bootstrap'
 import Moment from 'react-moment';
 import 'moment-timezone';
 
-const UserInfo = () => {
+const UserInfo = ({ deleteUser }) => {
   const [view, setView] = useState(true)
   const [loaded, setLoaded] = useState(false)
   const [imageUploading, setImageUploading] = useState(false)
@@ -178,7 +179,12 @@ const UserInfo = () => {
   }
 
 
-  return loaded ? (<div className='profileInfo'>{userInfoPage()}</div>) : (<div className='profileSpinner'>
+  return loaded ? (
+    <React.Fragment>
+      <div className='profileInfo'>{userInfoPage()}</div>
+      <div className='deleteAcc' onClick={() => deleteUser()}>Delete Account <TiDelete /></div>
+    </React.Fragment>
+  ) : (<div className='profileSpinner'>
     <Spinner animation="border" role="status" variant="info" >
       <span ></span>
     </Spinner>

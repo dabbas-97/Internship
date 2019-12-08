@@ -100,6 +100,16 @@ const StudentCV = () => {
     setIsCV(true)
   };
 
+  const deleteCv = () => {
+    var answer = window.confirm("Are You Sure You Want To Delete Your CV?")
+    if (answer) {
+      db.collection('cv').doc(auth.user.uid).delete()
+        .then(() => setIsCV(false))
+        .catch(err => console.log(err.message))
+    }
+
+  }
+
   const { socialStatus, education, gpa } = cvInfo;
   const values = {
     socialStatus,
@@ -136,6 +146,7 @@ const StudentCV = () => {
           handleDrag={handleDrag}
           onSubmit={submitCV}
           values={values}
+          deleteCv={deleteCv}
         />
       );
   };

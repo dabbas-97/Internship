@@ -167,3 +167,22 @@ form .profileImg {
   margin: auto !important;
   color: #c6e9f8;
 }
+
+.deleteAcc {
+  color: red;
+  cursor: pointer;
+  display: table;
+  margin: 10px auto;
+  font-weight: bold;
+  background: #0000000f;
+  padding: 2px 20px;
+  border: 1px solid #0000002b;
+  border-radius: 5px;
+  transition: background 0.1s 0.1s cubic-bezier(0.42, 0, 0.09, 0.13),
+    border 0.1s 0.1s cubic-bezier(0.42, 0, 0.09, 0.13);
+}
+.deleteAcc:hover {
+  color: #ff4040;
+  background: #00000005;
+  border: 1px solid #ff00002b;
+}

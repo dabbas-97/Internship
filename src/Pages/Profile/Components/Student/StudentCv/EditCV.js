@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from './Button';
 import { CVCreateForm } from "./CVCreateForm";
+import { MdDeleteForever } from 'react-icons/md'
 //************************************************************************Edit CV Class *****************************************/
 export class EditCV extends Component {
     state = { type: 'edit' };
@@ -62,6 +63,10 @@ export class EditCV extends Component {
                         </ul>
 
                         <Button nextStep={this.props.nextStep} type={this.state.type} />
+
+                        <button className='btn  m-4 px-5 py-2' onClick={this.props.deleteCv}><MdDeleteForever /></button>
+
+
                     </div>);
                 case 2:
                     return (<CVCreateForm values={this.props.values} handleChange={this.props.handleChange} tags={this.props.tags} suggestions={this.props.suggestions} handleDelete={this.props.handleDelete} handleAddition={this.props.handleAddition} handleDrag={this.props.handleDrag} onSubmit={this.props.onSubmit} />);

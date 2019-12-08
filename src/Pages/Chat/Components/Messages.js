@@ -15,13 +15,26 @@ export default class Messages extends Component {
             this.setState({ loading: true })
             this.unsubscribe = db.collection('chat').doc(chatId).collection('messages').orderBy('createdAt').onSnapshot(async snapshot => {
                 const messages = await Promise.all(snapshot.docs.map(async doc => {
-                    const userImg = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().photoURL).catch(err => console.log(err.message))
-                    const userName = await db.collection('users').doc(doc.data().userId).get().then(doc => doc.data().name).catch(err => console.log(err.message))
-                    return {
+                    const userImg = await db.collection('users').doc(doc.data().userId).get().then(doc => {
+                        if (doc.exists) return doc.data().photoURL
+                        else return null
+                    }).catch(err => console.log(err.message))
+                    const userName = await db.collection('users').doc(doc.data().userId).get().then(doc => {
+                        if (doc.exists) return doc.data().name
+                        else return null
+                    }).catch(err => console.log(err.message))
+                    if (userName) {
+                        return {
+                            ...doc.data(),
+                            userImg, userName,
+                            id: doc.id
+                        }
+                    } else return {
                         ...doc.data(),
-                        userImg, userName,
+                        userName: 'Deleted User',
                         id: doc.id
                     }
+
 
 
                 }))
@@ -90,7 +103,7 @@ export default class Messages extends Component {
 
                 return (
                     <div className="incoming_msg" key={message.id}>
-                        <div className="incoming_msg_img"> <img src={message.userImg} alt="sunil" /> </div>
+                        <div className="incoming_msg_img"> <img src={message.userImg} alt='' /> </div>
                         <div className="received_msg">
                             <div className="received_withd_msg">
                                 <span className="time_date"> {message.userName} </span>

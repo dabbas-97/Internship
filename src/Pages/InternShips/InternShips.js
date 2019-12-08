@@ -89,7 +89,13 @@ const InternShips = () => {
       const getCompaniesInfo = async () => {
         const info = await Promise.all(companies.map(companyId => {
           return db.collection('users').doc(companyId).get()
-            .then(doc => doc.data())
+            .then(doc => {
+              if (doc.exists) {
+                return doc.data()
+              } else {
+                return { companyId: companyId, deleted: true }
+              }
+            })
             .catch(err => console.log(err.message))
         }))
           .catch(err => console.log(err.message))
@@ -125,26 +131,29 @@ const InternShips = () => {
         const finalPosts = await Promise.all(postsInfo.map(async post => {
           const applied = await db.collection('users').doc(auth.user.uid).collection('postsAppliedFor').doc(post.postId).get().then(doc => doc.exists).catch(err => console.log(err.message))
           const id = post.companyId
-          const company = companyInfo.filter(companies => {
-            return companies.companyId === id
+          const company = companyInfo.filter(company => {
+            return company.companyId === id
           })
-          return {
-            applied: applied,
-            postId: post.postId,
-            companyId: post.companyId,
-            jobtitle: post.jobtitle,
-            jobdesc: post.jobdesc,
-            createdAt: post.createdAt,
-            gpa: post.gpa,
-            specialty: post.specialty,
-            companyBio: company[0].bio,
-            companyLocation: company[0].location,
-            companyName: company[0].name,
-            companyPhone: company[0].phone,
+          if (!company[0].deleted) {
+            return {
+              applied: applied,
+              postId: post.postId,
+              companyId: post.companyId,
+              jobtitle: post.jobtitle,
+              jobdesc: post.jobdesc,
+              createdAt: post.createdAt,
+              gpa: post.gpa,
+              specialty: post.specialty,
+              companyName: company[0].name,
+            }
+          } else {
+            db.collection('internships').doc(post.companyId).collection('companyPosts').doc(post.postId).delete()
+            return null
           }
+
         }))
         setPostsFetched(true)
-        setPosts(finalPosts)
+        setPosts(finalPosts.filter(post => post))
       }
       fullPosts()
 

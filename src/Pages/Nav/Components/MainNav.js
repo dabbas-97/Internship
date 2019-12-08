@@ -21,7 +21,7 @@ const MainNav = ({ history }) => {
           setType(doc.data().type)
           setLoaded(true)
         })
-        .catch(err => console.log(err.message))
+        .catch(err => { console.log(err.message) })
     } else setLoaded(false)
 
     return () => {

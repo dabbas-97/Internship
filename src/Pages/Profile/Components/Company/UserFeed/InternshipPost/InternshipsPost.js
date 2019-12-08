@@ -99,11 +99,11 @@ const InternshipsPost = ({ getStudentsApplied }) => {
 
   const handleDeletePosts = id => {
 
+    var answer = window.confirm("Are You Sure You Want To Delete This Post?")
+    if (answer) {
+      db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(id).delete().then(() => setPosts(posts.filter(post => post.id !== id)))
+    }
 
-    db.collection('internships').doc(auth.user.uid).collection('companyPosts').doc(id).delete()
-
-
-    setPosts(posts.filter(post => post.id !== id))
   };
 
   const clearPostInfo = () => {
