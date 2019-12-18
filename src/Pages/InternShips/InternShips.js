@@ -152,8 +152,9 @@ const InternShips = () => {
           }
 
         }))
+        const filteredposts = finalPosts.filter(post => post);
         setPostsFetched(true)
-        setPosts(finalPosts.filter(post => post))
+        setPosts(filteredposts.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1))
       }
       fullPosts()
 
